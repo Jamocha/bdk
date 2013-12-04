@@ -4,3 +4,11 @@
 *.jar
 *.war
 *.ear
+/util/target/
+/net/target/
+/io/target/
+/nio/target/
+/lang/target/
+/concurrent/target/
+/api/target/
+/core/target/
