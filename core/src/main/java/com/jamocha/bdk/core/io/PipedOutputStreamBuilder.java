@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,30 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-
-/**
- *
- * @author saden
- */
-public class PipedOutputStreamBuilder implements Builder<PipedOutputStream> {
-
-    private PipedInputStream input;
-
-    @Required
-    public PipedOutputStreamBuilder setInput(PipedInputStream input) {
-        this.input = input;
-
-        return this;
-    }
-
-    public PipedOutputStream build() throws Exception {
-        return new PipedOutputStream(input);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class PipedOutputStreamBuilder implements Builder<PipedOutputStream> {
+
+    private PipedInputStream input;
+
+    @Required
+    public PipedOutputStreamBuilder setInput(PipedInputStream input) {
+        this.input = input;
+
+        return this;
+    }
+
+    @Override
+    public PipedOutputStream build() throws IOException {
+        return new PipedOutputStream(input);
+    }
+
+}

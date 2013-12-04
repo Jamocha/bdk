@@ -13,42 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-
-/**
- *
- * @author saden
- */
-
-public class BufferedInputStreamBuilder
-        implements Builder<BufferedInputStream> {
-
-    public static final Integer DEFAULT_SIZE = 8192;
-    private InputStream inputStream;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public BufferedInputStreamBuilder setInput(InputStream inputStream) {
-        this.inputStream = inputStream;
-
-        return this;
-    }
-
-    @Optional
-    public BufferedInputStreamBuilder setSize(Integer size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public BufferedInputStream build() throws Exception {
-        return new BufferedInputStream(inputStream, size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class BufferedInputStreamBuilder
+        implements Builder<BufferedInputStream> {
+
+    public static final Integer DEFAULT_SIZE = 8_192;
+    private InputStream inputStream;
+    private Integer size = DEFAULT_SIZE;
+
+    @Required
+    public BufferedInputStreamBuilder setInput(InputStream inputStream) {
+        this.inputStream = inputStream;
+
+        return this;
+    }
+
+    @Optional
+    public BufferedInputStreamBuilder setSize(Integer size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public BufferedInputStream build() {
+        return new BufferedInputStream(inputStream, size);
+    }
+
+}

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,44 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-
-/**
- *
- * @author saden
- */
-public class PipedInputStreamBuilder implements Builder<PipedInputStream> {
-
-    public static final Integer DEFAULT_SIZE = 1024;
-    private PipedOutputStream output;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public PipedInputStreamBuilder setOutput(PipedOutputStream output) {
-        this.output = output;
-
-        return this;
-    }
-
-    @Optional
-    public PipedInputStreamBuilder setSize(Integer size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public PipedInputStream build() throws Exception {
-        if (output == null) {
-            return new PipedInputStream(size);
-        }
-
-        return new PipedInputStream(output, size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class PipedInputStreamBuilder implements Builder<PipedInputStream> {
+
+    public static final Integer DEFAULT_SIZE = 1_024;
+    private PipedOutputStream output;
+    private Integer size = DEFAULT_SIZE;
+
+    @Required
+    public PipedInputStreamBuilder setOutput(PipedOutputStream output) {
+        this.output = output;
+
+        return this;
+    }
+
+    @Optional
+    public PipedInputStreamBuilder setSize(Integer size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public PipedInputStream build() throws IOException {
+        if (output == null) {
+            return new PipedInputStream(size);
+        }
+
+        return new PipedInputStream(output, size);
+    }
+
+}

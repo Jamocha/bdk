@@ -13,42 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.LineNumberReader;
-import java.io.Reader;
-
-/**
- *
- * @author saden
- */
-
-public class LineNumberReaderBuilder
-        implements Builder<LineNumberReader> {
-
-    public static final Integer DEFAULT_SIZE = 8192;
-    private Reader reader;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public LineNumberReaderBuilder setReader(Reader reader) {
-        this.reader = reader;
-
-        return this;
-    }
-
-    @Optional
-    public LineNumberReaderBuilder setSize(Integer size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public LineNumberReader build() throws Exception {
-        return new LineNumberReader(reader, size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.LineNumberReader;
+import java.io.Reader;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class LineNumberReaderBuilder
+        implements Builder<LineNumberReader> {
+
+    public static final Integer DEFAULT_SIZE = 8_192;
+    private Reader reader;
+    private Integer size = DEFAULT_SIZE;
+
+    @Required
+    public LineNumberReaderBuilder setReader(Reader reader) {
+        this.reader = reader;
+
+        return this;
+    }
+
+    @Optional
+    public LineNumberReaderBuilder setSize(Integer size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public LineNumberReader build() {
+        return new LineNumberReader(reader, size);
+    }
+
+}

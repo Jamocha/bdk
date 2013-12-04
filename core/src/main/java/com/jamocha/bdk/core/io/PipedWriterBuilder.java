@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,30 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.PipedReader;
-import java.io.PipedWriter;
-
-/**
- *
- * @author saden
- */
-public class PipedWriterBuilder implements Builder<PipedWriter> {
-
-    private PipedReader reader;
-
-    @Required
-    public PipedWriterBuilder setReader(PipedReader reader) {
-        this.reader = reader;
-
-        return this;
-    }
-
-    public PipedWriter build() throws Exception {
-        return new PipedWriter(reader);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.IOException;
+import java.io.PipedReader;
+import java.io.PipedWriter;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class PipedWriterBuilder implements Builder<PipedWriter> {
+
+    private PipedReader reader;
+
+    @Required
+    public PipedWriterBuilder setReader(PipedReader reader) {
+        this.reader = reader;
+
+        return this;
+    }
+
+    @Override
+    public PipedWriter build() throws IOException {
+        return new PipedWriter(reader);
+    }
+
+}

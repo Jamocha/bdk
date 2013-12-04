@@ -13,42 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.BufferedOutputStream;
-import java.io.OutputStream;
-
-/**
- *
- * @author saden
- */
-
-public class BufferedOutputStreamBuilder
-        implements Builder<BufferedOutputStream> {
-
-    public static final Integer DEFAULT_SIZE = 8192;
-    private OutputStream outputStream;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public BufferedOutputStreamBuilder setOutput(OutputStream outputStream) {
-        this.outputStream = outputStream;
-
-        return this;
-    }
-
-    @Optional
-    public BufferedOutputStreamBuilder setSize(Integer size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public BufferedOutputStream build() throws Exception {
-        return new BufferedOutputStream(outputStream, size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.BufferedOutputStream;
+import java.io.OutputStream;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class BufferedOutputStreamBuilder
+        implements Builder<BufferedOutputStream> {
+
+    public static final Integer DEFAULT_SIZE = 8_192;
+    private OutputStream outputStream;
+    private Integer size = DEFAULT_SIZE;
+
+    @Required
+    public BufferedOutputStreamBuilder setOutput(OutputStream outputStream) {
+        this.outputStream = outputStream;
+
+        return this;
+    }
+
+    @Optional
+    public BufferedOutputStreamBuilder setSize(Integer size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public BufferedOutputStream build() {
+        return new BufferedOutputStream(outputStream, size);
+    }
+
+}

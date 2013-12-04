@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 @Documented
 @Inherited

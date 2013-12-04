@@ -17,7 +17,7 @@ package com.jamocha.bdk.api;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  * @param <T>
  */
 public interface Builder<T> {

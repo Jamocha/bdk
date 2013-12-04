@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,44 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.PipedReader;
-import java.io.PipedWriter;
-
-/**
- *
- * @author saden
- */
-public class PipedReaderBuilder implements Builder<PipedReader> {
-
-    public static final Integer DEFAULT_SIZE = 1024;
-    private PipedWriter writer;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public PipedReaderBuilder setWriter(PipedWriter writer) {
-        this.writer = writer;
-
-        return this;
-    }
-
-    @Optional
-    public PipedReaderBuilder setSize(Integer size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public PipedReader build() throws Exception {
-        if (writer == null) {
-            return new PipedReader(size);
-        }
-
-        return new PipedReader(writer, size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.IOException;
+import java.io.PipedReader;
+import java.io.PipedWriter;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class PipedReaderBuilder implements Builder<PipedReader> {
+
+    public static final Integer DEFAULT_SIZE = 1_024;
+    private PipedWriter writer;
+    private Integer size = DEFAULT_SIZE;
+
+    @Required
+    public PipedReaderBuilder setWriter(PipedWriter writer) {
+        this.writer = writer;
+
+        return this;
+    }
+
+    @Optional
+    public PipedReaderBuilder setSize(Integer size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public PipedReader build() throws IOException {
+        if (writer == null) {
+            return new PipedReader(size);
+        }
+
+        return new PipedReader(writer, size);
+    }
+
+}

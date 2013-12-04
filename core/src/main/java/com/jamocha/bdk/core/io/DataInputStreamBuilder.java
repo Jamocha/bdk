@@ -13,32 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.DataInputStream;
-import java.io.InputStream;
-
-/**
- *
- * @author saden
- */
-
-public class DataInputStreamBuilder
-        implements Builder<DataInputStream> {
-
-    private InputStream inputStream;
-
-    @Required
-    public DataInputStreamBuilder setInput(InputStream inputStream) {
-        this.inputStream = inputStream;
-
-        return this;
-    }
-
-    public DataInputStream build() throws Exception {
-        return new DataInputStream(inputStream);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.DataInputStream;
+import java.io.InputStream;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class DataInputStreamBuilder
+        implements Builder<DataInputStream> {
+
+    private InputStream inputStream;
+
+    @Required
+    public DataInputStreamBuilder setInput(InputStream inputStream) {
+        this.inputStream = inputStream;
+
+        return this;
+    }
+
+    @Override
+    public DataInputStream build() {
+        return new DataInputStream(inputStream);
+    }
+
+}

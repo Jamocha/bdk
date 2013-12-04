@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,39 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.File;
-import java.io.RandomAccessFile;
-
-/**
- * TODO: enhance actions permissions
- *
- * @author saden
- */
-public class RandomAccessFileBuilder implements Builder<RandomAccessFile> {
-
-    private File file;
-    private String mode;
-
-    @Required
-    public RandomAccessFileBuilder setName(String name) {
-        this.file = new File(name);
-
-        return this;
-    }
-
-    @Required
-    public RandomAccessFileBuilder setMode(String mode) {
-        this.mode = mode;
-
-        return this;
-    }
-
-    public RandomAccessFile build() throws Exception {
-        return new RandomAccessFile(file, mode);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+
+/**
+ * TODO: enhance actions permissions
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class RandomAccessFileBuilder implements Builder<RandomAccessFile> {
+
+    private File file;
+    private String mode;
+
+    @Required
+    public RandomAccessFileBuilder setName(String name) {
+        this.file = new File(name);
+
+        return this;
+    }
+
+    @Required
+    public RandomAccessFileBuilder setMode(String mode) {
+        this.mode = mode;
+
+        return this;
+    }
+
+    @Override
+    public RandomAccessFile build() throws FileNotFoundException {
+        return new RandomAccessFile(file, mode);
+    }
+
+}

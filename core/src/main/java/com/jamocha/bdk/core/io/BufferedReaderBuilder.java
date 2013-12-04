@@ -13,42 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.BufferedReader;
-import java.io.Reader;
-
-/**
- *
- * @author saden
- */
-
-public class BufferedReaderBuilder
-        implements Builder<BufferedReader> {
-
-    public static final Integer DEFAULT_SIZE = 8192;
-    private Reader reader;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public BufferedReaderBuilder setReader(Reader reader) {
-        this.reader = reader;
-
-        return this;
-    }
-
-    @Optional
-    public BufferedReaderBuilder setSize(Integer size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public BufferedReader build() throws Exception {
-        return new BufferedReader(reader, size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.BufferedReader;
+import java.io.Reader;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class BufferedReaderBuilder
+        implements Builder<BufferedReader> {
+
+    public static final Integer DEFAULT_SIZE = 8_192;
+    private Reader reader;
+    private Integer size = DEFAULT_SIZE;
+
+    @Required
+    public BufferedReaderBuilder setReader(Reader reader) {
+        this.reader = reader;
+
+        return this;
+    }
+
+    @Optional
+    public BufferedReaderBuilder setSize(Integer size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public BufferedReader build() {
+        return new BufferedReader(reader, size);
+    }
+
+}

@@ -13,65 +13,66 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
-import static java.nio.charset.Charset.defaultCharset;
-import static java.nio.charset.Charset.forName;
-import java.nio.charset.CharsetEncoder;
-
-/**
- *
- * @author saden
- */
-public class OutputStreamWriterBuilder implements Builder<OutputStreamWriter> {
-
-    private OutputStream outputStream;
-    private Charset charset = defaultCharset();
-    private CharsetEncoder encoder;
-
-    @Required
-    public OutputStreamWriterBuilder setOutput(OutputStream outputStream) {
-        this.outputStream = outputStream;
-
-        return this;
-    }
-
-    @Alternate
-    @Optional
-    public OutputStreamWriterBuilder setCharset(Charset charset) {
-        this.charset = charset;
-
-        return this;
-    }
-
-    @Alternate
-    @Optional
-    public OutputStreamWriterBuilder setCharset(String charsetName) {
-        this.charset = forName(charsetName);
-
-        return this;
-    }
-
-    @Optional
-    public OutputStreamWriterBuilder setDecoder(CharsetEncoder encoder) {
-        this.encoder = encoder;
-
-        return this;
-    }
-
-    public OutputStreamWriter build() throws Exception {
-        if (encoder == null) {
-            return new OutputStreamWriter(outputStream, charset);
-        }
-
-        return new OutputStreamWriter(outputStream, encoder);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Alternate;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import static java.nio.charset.Charset.defaultCharset;
+import static java.nio.charset.Charset.forName;
+import java.nio.charset.CharsetEncoder;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class OutputStreamWriterBuilder implements Builder<OutputStreamWriter> {
+
+    private OutputStream outputStream;
+    private Charset charset = defaultCharset();
+    private CharsetEncoder encoder;
+
+    @Required
+    public OutputStreamWriterBuilder setOutput(OutputStream outputStream) {
+        this.outputStream = outputStream;
+
+        return this;
+    }
+
+    @Alternate
+    @Optional
+    public OutputStreamWriterBuilder setCharset(Charset charset) {
+        this.charset = charset;
+
+        return this;
+    }
+
+    @Alternate
+    @Optional
+    public OutputStreamWriterBuilder setCharset(String charsetName) {
+        this.charset = forName(charsetName);
+
+        return this;
+    }
+
+    @Optional
+    public OutputStreamWriterBuilder setDecoder(CharsetEncoder encoder) {
+        this.encoder = encoder;
+
+        return this;
+    }
+
+    @Override
+    public OutputStreamWriter build() {
+        if (encoder == null) {
+            return new OutputStreamWriter(outputStream, charset);
+        }
+
+        return new OutputStreamWriter(outputStream, encoder);
+    }
+
+}

@@ -13,27 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.StringReader;
-
-/**
- *
- * @author saden
- */
-public class StringReaderBuilder implements Builder<StringReader> {
-
-    private String input;
-
-    @Required
-    public void setInput(String input) {
-        this.input = input;
-    }
-
-    public StringReader build() throws Exception {
-        return new StringReader(input);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.StringReader;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class StringReaderBuilder implements Builder<StringReader> {
+
+    private String input;
+
+    @Required
+    public void setInput(String input) {
+        this.input = input;
+    }
+
+    @Override
+    public StringReader build() {
+        return new StringReader(input);
+    }
+
+}

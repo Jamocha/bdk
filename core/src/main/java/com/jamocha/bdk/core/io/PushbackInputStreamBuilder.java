@@ -13,42 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
-
-/**
- *
- * @author saden
- */
-
-public class PushbackInputStreamBuilder
-        implements Builder<PushbackInputStream> {
-
-    public static final Integer DEFAULT_SIZE = 1;
-    private InputStream in;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public PushbackInputStreamBuilder setIn(InputStream in) {
-        this.in = in;
-
-        return this;
-    }
-
-    @Optional
-    public PushbackInputStreamBuilder setSize(Integer size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public PushbackInputStream build() throws Exception {
-        return new PushbackInputStream(in, size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class PushbackInputStreamBuilder
+        implements Builder<PushbackInputStream> {
+
+    public static final Integer DEFAULT_SIZE = 1;
+    private InputStream in;
+    private Integer size = DEFAULT_SIZE;
+
+    @Required
+    public PushbackInputStreamBuilder setIn(InputStream in) {
+        this.in = in;
+
+        return this;
+    }
+
+    @Optional
+    public PushbackInputStreamBuilder setSize(Integer size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public PushbackInputStream build() {
+        return new PushbackInputStream(in, size);
+    }
+
+}

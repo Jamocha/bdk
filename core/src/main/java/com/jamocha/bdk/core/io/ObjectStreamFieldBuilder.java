@@ -13,47 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.ObjectStreamField;
-
-/**
- *
- * @author saden
- */
-public class ObjectStreamFieldBuilder implements Builder<ObjectStreamField> {
-
-    public static final Boolean DEFAULT_UNSHARED = Boolean.FALSE;
-    private String name;
-    private Class<?> type;
-    private Boolean unshared = DEFAULT_UNSHARED;
-
-    @Required
-    public ObjectStreamFieldBuilder setName(String name) {
-        this.name = name;
-
-        return this;
-    }
-
-    @Required
-    public ObjectStreamFieldBuilder setType(Class<?> type) {
-        this.type = type;
-
-        return this;
-    }
-
-    @Optional
-    public ObjectStreamFieldBuilder setUnshared(boolean unshared) {
-        this.unshared = unshared;
-
-        return this;
-    }
-
-    public ObjectStreamField build() throws Exception {
-        return new ObjectStreamField(name, type, unshared);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.ObjectStreamField;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class ObjectStreamFieldBuilder implements Builder<ObjectStreamField> {
+
+    public static final Boolean DEFAULT_UNSHARED = Boolean.FALSE;
+    private String name;
+    private Class<?> type;
+    private Boolean unshared = DEFAULT_UNSHARED;
+
+    @Required
+    public ObjectStreamFieldBuilder setName(String name) {
+        this.name = name;
+
+        return this;
+    }
+
+    @Required
+    public ObjectStreamFieldBuilder setType(Class<?> type) {
+        this.type = type;
+
+        return this;
+    }
+
+    @Optional
+    public ObjectStreamFieldBuilder setUnshared(boolean unshared) {
+        this.unshared = unshared;
+
+        return this;
+    }
+
+    @Override
+    public ObjectStreamField build() {
+        return new ObjectStreamField(name, type, unshared);
+    }
+
+}

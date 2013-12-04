@@ -13,38 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.FilePermission;
-
-/**
- * TODO: enhance actions permissions
- *
- * @author saden
- */
-public class FilePermissionBuilder implements Builder<FilePermission> {
-
-    private String path;
-    private String actions;
-
-    @Required
-    public FilePermissionBuilder setPath(String path) {
-        this.path = path;
-
-        return this;
-    }
-
-    @Required
-    public FilePermissionBuilder setActions(String actions) {
-        this.actions = actions;
-
-        return this;
-    }
-
-    public FilePermission build() throws Exception {
-        return new FilePermission(path, actions);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.FilePermission;
+
+/**
+ * TODO: enhance actions permissions
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class FilePermissionBuilder implements Builder<FilePermission> {
+
+    private String path;
+    private String actions;
+
+    @Required
+    public FilePermissionBuilder setPath(String path) {
+        this.path = path;
+
+        return this;
+    }
+
+    @Required
+    public FilePermissionBuilder setActions(String actions) {
+        this.actions = actions;
+
+        return this;
+    }
+
+    @Override
+    public FilePermission build() {
+        return new FilePermission(path, actions);
+    }
+
+}

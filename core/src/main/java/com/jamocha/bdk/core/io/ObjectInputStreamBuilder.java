@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,32 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-
-/**
- *
- * @author saden
- */
-
-public class ObjectInputStreamBuilder
-        implements Builder<ObjectInputStream> {
-
-    private InputStream inputStream;
-
-    @Required
-    public ObjectInputStreamBuilder setInput(InputStream inputStream) {
-        this.inputStream = inputStream;
-
-        return this;
-    }
-
-    public ObjectInputStream build() throws Exception {
-        return new ObjectInputStream(inputStream);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class ObjectInputStreamBuilder
+        implements Builder<ObjectInputStream> {
+
+    private InputStream inputStream;
+
+    @Required
+    public ObjectInputStreamBuilder setInput(InputStream inputStream) {
+        this.inputStream = inputStream;
+
+        return this;
+    }
+
+    @Override
+    public ObjectInputStream build() throws IOException {
+        return new ObjectInputStream(inputStream);
+    }
+
+}

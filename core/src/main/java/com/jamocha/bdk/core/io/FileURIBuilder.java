@@ -13,31 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.File;
-import java.net.URI;
-
-/**
- *
- * @author saden
- */
-
-public class FileURIBuilder implements Builder<File> {
-
-    private URI uri;
-
-    @Required
-    public FileURIBuilder setUri(URI uri) {
-        this.uri = uri;
-
-        return this;
-    }
-
-    public File build() {
-        return new File(uri);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.File;
+import java.net.URI;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class FileURIBuilder implements Builder<File> {
+
+    private URI uri;
+
+    @Required
+    public FileURIBuilder setUri(URI uri) {
+        this.uri = uri;
+
+        return this;
+    }
+
+    @Override
+    public File build() {
+        return new File(uri);
+    }
+
+}

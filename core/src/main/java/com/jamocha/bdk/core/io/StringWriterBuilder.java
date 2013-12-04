@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import java.io.StringWriter;
-
-/**
- *
- * @author saden
- */
-public class StringWriterBuilder implements Builder<StringWriter> {
-
-    public static final Integer DEFAULT_SIZE = 16;
-    private Integer size;
-
-    @Optional
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public StringWriter build() throws Exception {
-        return new StringWriter(size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import java.io.StringWriter;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class StringWriterBuilder implements Builder<StringWriter> {
+
+    public static final Integer DEFAULT_SIZE = 16;
+    private Integer size;
+
+    @Optional
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    @Override
+    public StringWriter build() {
+        return new StringWriter(size);
+    }
+
+}

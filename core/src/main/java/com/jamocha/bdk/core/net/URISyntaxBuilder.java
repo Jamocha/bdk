@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,14 +23,15 @@ import java.net.URISyntaxException;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class URISyntaxBuilder implements Builder<URI> {
 
+    public static final Integer DEFAULT_PORT = -1;
     private String scheme;
     private String userInfo;
     private String host;
-    private int port = -1;
+    private int port = DEFAULT_PORT;
     private String path;
     private String query;
     private String fragment;
@@ -84,6 +85,7 @@ public class URISyntaxBuilder implements Builder<URI> {
         return this;
     }
 
+    @Override
     public URI build() throws URISyntaxException {
         return new URI(scheme, userInfo, host, port, path, query, fragment);
 

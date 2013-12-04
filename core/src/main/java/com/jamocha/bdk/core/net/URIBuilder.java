@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,21 +22,22 @@ import java.net.URISyntaxException;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class URIBuilder implements Builder<URI> {
 
-    private String str;
+    private String uri;
 
     @Required
-    public URIBuilder setStr(String str) {
-        this.str = str;
+    public URIBuilder setURI(String uri) {
+        this.uri = uri;
 
         return this;
     }
 
+    @Override
     public URI build() throws URISyntaxException {
-        return new URI(str);
+        return new URI(uri);
     }
 
 }

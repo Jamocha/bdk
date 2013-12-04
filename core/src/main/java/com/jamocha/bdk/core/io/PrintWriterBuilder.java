@@ -13,40 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.PrintWriter;
-import java.io.Writer;
-
-/**
- *
- * @author saden
- */
-public class PrintWriterBuilder implements Builder<PrintWriter> {
-
-    public static final Boolean DEFAULT_AUTOFLUSH = false;
-    private Writer writer;
-    private Boolean autoflush = DEFAULT_AUTOFLUSH;
-
-    @Required
-    public PrintWriterBuilder setWriter(Writer writer) {
-        this.writer = writer;
-
-        return this;
-    }
-
-    @Optional
-    public PrintWriterBuilder setAutoflush(boolean autoflush) {
-        this.autoflush = autoflush;
-
-        return this;
-    }
-
-    public PrintWriter build() {
-        return new PrintWriter(writer, autoflush);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.PrintWriter;
+import java.io.Writer;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class PrintWriterBuilder implements Builder<PrintWriter> {
+
+    public static final Boolean DEFAULT_AUTOFLUSH = false;
+    private Writer writer;
+    private Boolean autoflush = DEFAULT_AUTOFLUSH;
+
+    @Required
+    public PrintWriterBuilder setWriter(Writer writer) {
+        this.writer = writer;
+
+        return this;
+    }
+
+    @Optional
+    public PrintWriterBuilder setAutoflush(boolean autoflush) {
+        this.autoflush = autoflush;
+
+        return this;
+    }
+
+    @Override
+    public PrintWriter build() {
+        return new PrintWriter(writer, autoflush);
+    }
+
+}

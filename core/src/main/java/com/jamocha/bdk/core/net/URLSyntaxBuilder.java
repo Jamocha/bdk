@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ import java.net.URLStreamHandler;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class URLSyntaxBuilder implements Builder<URL> {
 
@@ -69,6 +69,7 @@ public class URLSyntaxBuilder implements Builder<URL> {
         return this;
     }
 
+    @Override
     public URL build() throws MalformedURLException {
         return new URL(protocol, host, port, file, handler);
     }

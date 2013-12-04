@@ -13,32 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import java.io.CharArrayWriter;
-
-/**
- *
- * @author saden
- */
-
-public class CharArrayWriterBuilder
-        implements Builder<CharArrayWriter> {
-
-    public static final Integer DEFAULT_SIZE = 32;
-    private Integer size = DEFAULT_SIZE;
-
-    @Optional
-    public CharArrayWriterBuilder setSize(int size) {
-        this.size = size;
-
-        return this;
-    }
-
-    public CharArrayWriter build() throws Exception {
-        return new CharArrayWriter(size);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import java.io.CharArrayWriter;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class CharArrayWriterBuilder
+        implements Builder<CharArrayWriter> {
+
+    public static final Integer DEFAULT_SIZE = 32;
+    private Integer size = DEFAULT_SIZE;
+
+    @Optional
+    public CharArrayWriterBuilder setSize(int size) {
+        this.size = size;
+
+        return this;
+    }
+
+    @Override
+    public CharArrayWriter build() {
+        return new CharArrayWriter(size);
+    }
+
+}

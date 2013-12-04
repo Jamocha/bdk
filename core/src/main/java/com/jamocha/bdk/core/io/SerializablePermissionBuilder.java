@@ -13,38 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.SerializablePermission;
-
-/**
- * TODO: enhance actions permissions
- *
- * @author saden
- */
-public class SerializablePermissionBuilder implements Builder<SerializablePermission> {
-
-    private String name;
-    private String actions;
-
-    @Required
-    public SerializablePermissionBuilder setName(String name) {
-        this.name = name;
-
-        return this;
-    }
-
-    @Required
-    public SerializablePermissionBuilder setActions(String actions) {
-        this.actions = actions;
-
-        return this;
-    }
-
-    public SerializablePermission build() throws Exception {
-        return new SerializablePermission(name, actions);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.SerializablePermission;
+
+/**
+ * TODO: enhance actions permissions
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class SerializablePermissionBuilder implements Builder<SerializablePermission> {
+
+    private String name;
+    private String actions;
+
+    @Required
+    public SerializablePermissionBuilder setName(String name) {
+        this.name = name;
+
+        return this;
+    }
+
+    @Required
+    public SerializablePermissionBuilder setActions(String actions) {
+        this.actions = actions;
+
+        return this;
+    }
+
+    @Override
+    public SerializablePermission build() {
+        return new SerializablePermission(name, actions);
+    }
+
+}

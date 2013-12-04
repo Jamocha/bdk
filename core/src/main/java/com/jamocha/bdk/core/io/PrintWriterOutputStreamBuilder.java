@@ -13,40 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.io;
-
-import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
-/**
- *
- * @author saden
- */
-public class PrintWriterOutputStreamBuilder implements Builder<PrintWriter> {
-
-    public static final Boolean DEFAULT_AUTOFLUSH = false;
-    private OutputStream outputStream;
-    private Boolean autoflush = DEFAULT_AUTOFLUSH;
-
-    @Required
-    public PrintWriterOutputStreamBuilder setOutput(OutputStream outputStream) {
-        this.outputStream = outputStream;
-
-        return this;
-    }
-
-    @Optional
-    public PrintWriterOutputStreamBuilder setAutoflush(boolean autoflush) {
-        this.autoflush = autoflush;
-
-        return this;
-    }
-
-    public PrintWriter build() {
-        return new PrintWriter(outputStream, autoflush);
-    }
-
-}
+package com.jamocha.bdk.core.io;
+
+import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
+import com.jamocha.bdk.api.annotation.Required;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+/**
+ *
+ * @author Sharmarke Aden <www.github.com/saden1>
+ */
+public class PrintWriterOutputStreamBuilder implements Builder<PrintWriter> {
+
+    public static final Boolean DEFAULT_AUTOFLUSH = false;
+    private OutputStream outputStream;
+    private Boolean autoflush = DEFAULT_AUTOFLUSH;
+
+    @Required
+    public PrintWriterOutputStreamBuilder setOutput(OutputStream outputStream) {
+        this.outputStream = outputStream;
+
+        return this;
+    }
+
+    @Optional
+    public PrintWriterOutputStreamBuilder setAutoflush(boolean autoflush) {
+        this.autoflush = autoflush;
+
+        return this;
+    }
+
+    @Override
+    public PrintWriter build() {
+        return new PrintWriter(outputStream, autoflush);
+    }
+
+}
