@@ -13,43 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.lang;
+package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ThreadGroupBuilder implements Builder<ThreadGroup> {
+public class CopyOnWriteArraySetBuilder implements Builder<CopyOnWriteArraySet> {
 
-    public static final String DEFAULT_NAME = "system";
-    private ThreadGroup parent;
-    private String name = DEFAULT_NAME;
-
-    @Required
-    public ThreadGroupBuilder setName(String name) {
-        this.name = name;
-
-        return this;
-    }
+    private Collection elements;
 
     @Optional
-    public ThreadGroupBuilder setParent(ThreadGroup parent) {
-        this.parent = parent;
+    public CopyOnWriteArraySetBuilder setElements(Collection elements) {
+        this.elements = elements;
 
         return this;
     }
 
     @Override
-    public ThreadGroup build() {
-        if (parent == null) {
-            parent = new ThreadGroup(name);
+    public CopyOnWriteArraySet build() {
+        if (elements == null) {
+            return new CopyOnWriteArraySet();
         }
 
-        return new ThreadGroup(parent, name);
+        return new CopyOnWriteArraySet<>(elements);
     }
 
 }

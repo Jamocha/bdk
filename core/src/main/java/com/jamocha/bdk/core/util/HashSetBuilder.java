@@ -13,43 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.lang;
+package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ThreadGroupBuilder implements Builder<ThreadGroup> {
+public class HashSetBuilder implements Builder<HashSet> {
 
-    public static final String DEFAULT_NAME = "system";
-    private ThreadGroup parent;
-    private String name = DEFAULT_NAME;
+    public static final Integer DEFAULT_CAPACITY = 16;
+    public static final Float DEFAULT_FACTOR = 0.75f;
+    private Collection elements;
+    private Integer capacity = DEFAULT_CAPACITY;
+    private Float factor = DEFAULT_FACTOR;
 
-    @Required
-    public ThreadGroupBuilder setName(String name) {
-        this.name = name;
+    @Optional
+    public HashSetBuilder setElements(Collection elements) {
+        this.elements = elements;
 
         return this;
     }
 
     @Optional
-    public ThreadGroupBuilder setParent(ThreadGroup parent) {
-        this.parent = parent;
+    public HashSetBuilder setCapacity(int capacity) {
+        this.capacity = capacity;
+
+        return this;
+    }
+
+    @Optional
+    public HashSetBuilder setFactor(float factor) {
+        this.factor = factor;
 
         return this;
     }
 
     @Override
-    public ThreadGroup build() {
-        if (parent == null) {
-            parent = new ThreadGroup(name);
+    public HashSet build() {
+        if (elements == null) {
+            return new HashSet(capacity, factor);
         }
 
-        return new ThreadGroup(parent, name);
+        return new HashSet<>(elements);
     }
 
 }

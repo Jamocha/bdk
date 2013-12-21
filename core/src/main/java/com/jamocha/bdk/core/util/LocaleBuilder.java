@@ -13,43 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.lang;
+package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
 import com.jamocha.bdk.api.annotation.Required;
+import java.util.Locale;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ThreadGroupBuilder implements Builder<ThreadGroup> {
+public class LocaleBuilder implements Builder<Locale> {
 
-    public static final String DEFAULT_NAME = "system";
-    private ThreadGroup parent;
-    private String name = DEFAULT_NAME;
+    public static final String DEFAULT_COUNTRY = "";
+    public static final String DEFAULT_VARIANT = "";
+
+    private String language;
+    private String country = DEFAULT_COUNTRY;
+    private String variant = DEFAULT_VARIANT;
 
     @Required
-    public ThreadGroupBuilder setName(String name) {
-        this.name = name;
+    public LocaleBuilder setLanguage(String language) {
+        this.language = language;
 
         return this;
     }
 
     @Optional
-    public ThreadGroupBuilder setParent(ThreadGroup parent) {
-        this.parent = parent;
+    public LocaleBuilder setCountry(String country) {
+        this.country = country;
+
+        return this;
+    }
+
+    @Optional
+    public LocaleBuilder setVariant(String variant) {
+        this.variant = variant;
 
         return this;
     }
 
     @Override
-    public ThreadGroup build() {
-        if (parent == null) {
-            parent = new ThreadGroup(name);
-        }
-
-        return new ThreadGroup(parent, name);
+    public Locale build() {
+        return new Locale(language, country, variant);
     }
 
 }

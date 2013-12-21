@@ -13,43 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.lang;
+package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ThreadGroupBuilder implements Builder<ThreadGroup> {
+public class ArrayListBuilder implements Builder<ArrayList> {
 
-    public static final String DEFAULT_NAME = "system";
-    private ThreadGroup parent;
-    private String name = DEFAULT_NAME;
+    public static final Integer DEFAULT_CAPACITY = 10;
+    private Collection elements;
+    private Integer capacity = DEFAULT_CAPACITY;
 
-    @Required
-    public ThreadGroupBuilder setName(String name) {
-        this.name = name;
+    @Optional
+    public ArrayListBuilder setElements(Collection elements) {
+        this.elements = elements;
 
         return this;
     }
 
     @Optional
-    public ThreadGroupBuilder setParent(ThreadGroup parent) {
-        this.parent = parent;
+    public ArrayListBuilder setCapacity(int capacity) {
+        this.capacity = capacity;
 
         return this;
     }
 
     @Override
-    public ThreadGroup build() {
-        if (parent == null) {
-            parent = new ThreadGroup(name);
+    public ArrayList build() {
+        if (elements == null) {
+            return new ArrayList(capacity);
         }
 
-        return new ThreadGroup(parent, name);
+        return new ArrayList<>(elements);
     }
 
 }

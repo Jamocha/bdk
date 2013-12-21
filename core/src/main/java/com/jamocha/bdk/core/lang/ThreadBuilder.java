@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,8 @@ package com.jamocha.bdk.core.lang;
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
 import com.jamocha.bdk.api.annotation.Required;
+import static com.jamocha.bdk.utils.Checks.isNullOrEmpty;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -27,6 +29,7 @@ public class ThreadBuilder implements Builder<Thread> {
 
     private static final Long DEFAULT_SIZE = 0L;
     private static final String DEFAULT_NAME = "Thread";
+    private static final AtomicInteger THREAD_NUMBER = new AtomicInteger();
     private Runnable runnable;
     private ThreadGroup threadGroup;
     private String name;
@@ -62,6 +65,10 @@ public class ThreadBuilder implements Builder<Thread> {
 
     @Override
     public Thread build() {
+        if (isNullOrEmpty(name)) {
+            name = DEFAULT_NAME + "-" + THREAD_NUMBER.getAndIncrement();
+        }
+
         return new Thread(threadGroup, runnable, name, size);
     }
 

@@ -13,43 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.lang;
+package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ThreadGroupBuilder implements Builder<ThreadGroup> {
+public class HashMapBuilder implements Builder<HashMap> {
 
-    public static final String DEFAULT_NAME = "system";
-    private ThreadGroup parent;
-    private String name = DEFAULT_NAME;
+    public static final Integer DEFAULT_CAPACITY = 16;
+    public static final Float DEFAULT_FACTOR = 0.75f;
 
-    @Required
-    public ThreadGroupBuilder setName(String name) {
-        this.name = name;
+    private Map entries;
+    private Integer capacity = DEFAULT_CAPACITY;
+    private Float factor = DEFAULT_FACTOR;
+
+    @Optional
+    public HashMapBuilder setEntries(Map entries) {
+        this.entries = entries;
 
         return this;
     }
 
     @Optional
-    public ThreadGroupBuilder setParent(ThreadGroup parent) {
-        this.parent = parent;
+    public HashMapBuilder setCapacity(int capacity) {
+        this.capacity = capacity;
+
+        return this;
+    }
+
+    @Optional
+    public HashMapBuilder setFactor(float factor) {
+        this.factor = factor;
 
         return this;
     }
 
     @Override
-    public ThreadGroup build() {
-        if (parent == null) {
-            parent = new ThreadGroup(name);
+    public HashMap build() {
+        if (entries == null) {
+            return new HashMap(capacity, factor);
         }
 
-        return new ThreadGroup(parent, name);
+        return new HashMap<>(entries);
     }
 
 }
