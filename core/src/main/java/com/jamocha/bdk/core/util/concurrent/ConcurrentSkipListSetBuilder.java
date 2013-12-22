@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.util;
+package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Alternate;

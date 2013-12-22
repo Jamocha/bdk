@@ -25,12 +25,61 @@ public class Checks {
         return (string == null || "".equals(string));
     }
 
-    public static boolean isNotNullOrEmpty(String string) {
-        return !isNullOrEmpty(string);
-    }
-
     public static boolean isEmpty(String string) {
         return "".equals(string);
+    }
+
+    public static boolean areZero(Integer... values) {
+        for (Integer value : values) {
+            if (value != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean areExclusive(Object first, Object second) {
+        if ((first == null && second != null)
+                || (second == null && first != null)) {
+            return true;
+        }
+
+        return true;
+    }
+
+    public static boolean areNatural(Integer... values) {
+        for (Integer value : values) {
+            if (value == null || value < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean areNatural(Long... values) {
+        for (Long value : values) {
+            if (value == null || value < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean areNull(Object... values) {
+        if (values == null) {
+            return true;
+        }
+
+        for (Object value : values) {
+            if (value != null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

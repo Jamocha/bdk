@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
+ * Copyright 2013 saden.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,35 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jamocha.bdk.core.util;
+package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  *
- * @author Sharmarke Aden <www.github.com/saden1>
+ * @author saden
  */
-public class CopyOnWriteArraySetBuilder implements Builder<CopyOnWriteArraySet> {
+public class SynchronousQueueBuilder implements Builder<SynchronousQueue> {
 
-    private Collection elements;
+    public static final Boolean DEFAULT_FAIR = false;
+    private Boolean fair = DEFAULT_FAIR;
 
     @Optional
-    public CopyOnWriteArraySetBuilder setElements(Collection elements) {
-        this.elements = elements;
+    public SynchronousQueueBuilder setFair(boolean fair) {
+        this.fair = fair;
 
         return this;
     }
 
     @Override
-    public CopyOnWriteArraySet build() {
-        if (elements == null) {
-            return new CopyOnWriteArraySet();
+    public SynchronousQueue build() {
+        if (fair == null) {
+            return new SynchronousQueue();
         }
 
-        return new CopyOnWriteArraySet<>(elements);
+        return new SynchronousQueue(fair);
     }
 
 }
