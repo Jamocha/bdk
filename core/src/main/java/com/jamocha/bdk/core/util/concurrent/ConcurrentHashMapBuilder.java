@@ -36,28 +36,28 @@ public class ConcurrentHashMapBuilder implements Builder<ConcurrentHashMap> {
     private Integer level = DEFAULT_LEVEL;
 
     @Optional
-    public ConcurrentHashMapBuilder setEntries(Map entries) {
+    public ConcurrentHashMapBuilder entries(Map entries) {
         this.entries = entries;
 
         return this;
     }
 
     @Optional
-    public ConcurrentHashMapBuilder setCapacity(int capacity) {
+    public ConcurrentHashMapBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public ConcurrentHashMapBuilder setFactor(float factor) {
+    public ConcurrentHashMapBuilder factor(float factor) {
         this.factor = factor;
 
         return this;
     }
 
     @Optional
-    public ConcurrentHashMapBuilder setLevel(int level) {
+    public ConcurrentHashMapBuilder level(int level) {
         this.level = level;
 
         return this;

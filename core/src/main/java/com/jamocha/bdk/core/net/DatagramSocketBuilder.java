@@ -18,6 +18,7 @@ package com.jamocha.bdk.core.net;
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.net.SocketException;
 
@@ -27,22 +28,59 @@ import java.net.SocketException;
  */
 public class DatagramSocketBuilder implements Builder<DatagramSocket> {
 
-    private SocketAddress address;
+    public SocketBuilder socket(SocketAddress address) {
+        return new SocketBuilder(address);
+    }
 
-    @Optional
-    public DatagramSocketBuilder setAddress(SocketAddress address) {
-        this.address = address;
-
-        return this;
+    public InetBuilder inet(int port) {
+        return new InetBuilder(port);
     }
 
     @Override
     public DatagramSocket build() throws SocketException {
-        if (address == null) {
-            return new DatagramSocket();
+        return new DatagramSocket();
+    }
+
+    public static abstract class BaseBuilder implements Builder<DatagramSocket> {
+
+    }
+
+    public static class SocketBuilder extends BaseBuilder {
+
+        private final SocketAddress address;
+
+        private SocketBuilder(SocketAddress address) {
+            this.address = address;
         }
 
-        return new DatagramSocket(address);
+        @Override
+        public DatagramSocket build() throws SocketException {
+            return new DatagramSocket(address);
+        }
+
+    }
+
+    public static class InetBuilder extends BaseBuilder {
+
+        private InetAddress address;
+        private final Integer port;
+
+        private InetBuilder(Integer port) {
+            this.port = port;
+        }
+
+        @Optional
+        public InetBuilder address(InetAddress address) {
+            this.address = address;
+
+            return this;
+        }
+
+        @Override
+        public DatagramSocket build() throws SocketException {
+            return new DatagramSocket(port, address);
+        }
+
     }
 
 }

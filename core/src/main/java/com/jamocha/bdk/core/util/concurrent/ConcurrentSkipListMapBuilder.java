@@ -35,7 +35,7 @@ public class ConcurrentSkipListMapBuilder implements Builder<ConcurrentSkipListM
 
     @Alternate
     @Optional
-    public ConcurrentSkipListMapBuilder setEntries(Map entries) {
+    public ConcurrentSkipListMapBuilder entries(Map entries) {
         this.entries = entries;
 
         return this;
@@ -43,14 +43,14 @@ public class ConcurrentSkipListMapBuilder implements Builder<ConcurrentSkipListM
 
     @Alternate
     @Optional
-    public ConcurrentSkipListMapBuilder setSortedElements(SortedMap entries) {
+    public ConcurrentSkipListMapBuilder entries(SortedMap entries) {
         this.sortedEntries = entries;
 
         return this;
     }
 
     @Optional
-    public ConcurrentSkipListMapBuilder setComparator(Comparator comparator) {
+    public ConcurrentSkipListMapBuilder comparator(Comparator comparator) {
         this.comparator = comparator;
 
         return this;

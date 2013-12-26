@@ -29,7 +29,7 @@ public class NetPermissionBuilder implements Builder<NetPermission> {
     private String path;
 
     @Required
-    public NetPermissionBuilder setPath(String path) {
+    public NetPermissionBuilder path(String path) {
         this.path = path;
 
         return this;

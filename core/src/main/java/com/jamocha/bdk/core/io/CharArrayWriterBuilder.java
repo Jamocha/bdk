@@ -30,7 +30,7 @@ public class CharArrayWriterBuilder
     private Integer size = DEFAULT_SIZE;
 
     @Optional
-    public CharArrayWriterBuilder setSize(int size) {
+    public CharArrayWriterBuilder size(int size) {
         this.size = size;
 
         return this;

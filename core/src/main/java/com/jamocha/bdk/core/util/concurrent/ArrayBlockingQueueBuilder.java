@@ -23,7 +23,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class ArrayBlockingQueueBuilder implements Builder<ArrayBlockingQueue> {
 
@@ -33,21 +33,21 @@ public class ArrayBlockingQueueBuilder implements Builder<ArrayBlockingQueue> {
     private Collection elements;
 
     @Required
-    public ArrayBlockingQueueBuilder setCapacity(int capacity) {
+    public ArrayBlockingQueueBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public ArrayBlockingQueueBuilder setFair(boolean fair) {
-        this.fair = fair;
+    public ArrayBlockingQueueBuilder fair() {
+        this.fair = true;
 
         return this;
     }
 
     @Optional
-    public ArrayBlockingQueueBuilder setElements(Collection elements) {
+    public ArrayBlockingQueueBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

@@ -21,7 +21,7 @@ import java.util.concurrent.SynchronousQueue;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class SynchronousQueueBuilder implements Builder<SynchronousQueue> {
 
@@ -29,8 +29,8 @@ public class SynchronousQueueBuilder implements Builder<SynchronousQueue> {
     private Boolean fair = DEFAULT_FAIR;
 
     @Optional
-    public SynchronousQueueBuilder setFair(boolean fair) {
-        this.fair = fair;
+    public SynchronousQueueBuilder fair() {
+        this.fair = true;
 
         return this;
     }

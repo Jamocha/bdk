@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,8 +28,8 @@ public class StringWriterBuilder implements Builder<StringWriter> {
     public static final Integer DEFAULT_SIZE = 16;
     private Integer size;
 
-    @Optional
-    public void setSize(int size) {
+    @Optional("16")
+    public void size(int size) {
         this.size = size;
     }
 

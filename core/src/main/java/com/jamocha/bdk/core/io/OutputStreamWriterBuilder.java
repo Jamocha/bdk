@@ -37,7 +37,7 @@ public class OutputStreamWriterBuilder implements Builder<OutputStreamWriter> {
     private CharsetEncoder encoder;
 
     @Required
-    public OutputStreamWriterBuilder setOutput(OutputStream outputStream) {
+    public OutputStreamWriterBuilder output(OutputStream outputStream) {
         this.outputStream = outputStream;
 
         return this;
@@ -45,7 +45,7 @@ public class OutputStreamWriterBuilder implements Builder<OutputStreamWriter> {
 
     @Alternate
     @Optional
-    public OutputStreamWriterBuilder setCharset(Charset charset) {
+    public OutputStreamWriterBuilder charset(Charset charset) {
         this.charset = charset;
 
         return this;
@@ -53,14 +53,14 @@ public class OutputStreamWriterBuilder implements Builder<OutputStreamWriter> {
 
     @Alternate
     @Optional
-    public OutputStreamWriterBuilder setCharset(String charsetName) {
-        this.charset = forName(charsetName);
+    public OutputStreamWriterBuilder charset(String charname) {
+        this.charset = forName(charname);
 
         return this;
     }
 
     @Optional
-    public OutputStreamWriterBuilder setDecoder(CharsetEncoder encoder) {
+    public OutputStreamWriterBuilder decoder(CharsetEncoder encoder) {
         this.encoder = encoder;
 
         return this;

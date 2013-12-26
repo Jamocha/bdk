@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,36 +26,102 @@ import java.net.URLStreamHandler;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class URLBuilder implements Builder<URL> {
+public class URLBuilder {
 
-    private String spec;
-    private URL context;
-    private URLStreamHandler handler;
-
-    @Required
-    public URLBuilder setSpec(String spec) {
-        this.spec = spec;
-
-        return this;
+    public StringBuilder stringBuilder() {
+        return new StringBuilder();
     }
 
-    @Optional
-    public URLBuilder setContext(URL context) {
-        this.context = context;
-
-        return this;
+    public ComponentBuilder componentBuilder() {
+        return new ComponentBuilder();
     }
 
-    @Optional
-    public URLBuilder setHandler(URLStreamHandler handler) {
-        this.handler = handler;
+    public static abstract class BaseBuilder implements Builder<URL> {
 
-        return this;
     }
 
-    @Override
-    public URL build() throws MalformedURLException {
-        return new URL(context, spec, handler);
+    public static class StringBuilder extends BaseBuilder {
+
+        private String value;
+        private URL context;
+        private URLStreamHandler handler;
+
+        @Required
+        public StringBuilder value(String value) {
+            this.value = value;
+
+            return this;
+        }
+
+        @Optional
+        public StringBuilder context(URL context) {
+            this.context = context;
+
+            return this;
+        }
+
+        @Optional
+        public StringBuilder handler(URLStreamHandler handler) {
+            this.handler = handler;
+
+            return this;
+        }
+
+        @Override
+        public URL build() throws MalformedURLException {
+            return new URL(context, value, handler);
+        }
+    }
+
+    public static class ComponentBuilder extends BaseBuilder {
+
+        public static final Integer DEFAULT_PORT = -1;
+        private String protocol;
+        private String host;
+        private int port = DEFAULT_PORT;
+        private String file;
+        private URLStreamHandler handler;
+
+        @Required
+        public ComponentBuilder protocol(String protocol) {
+            this.protocol = protocol;
+
+            return this;
+        }
+
+        @Required
+        public ComponentBuilder host(String host) {
+            this.host = host;
+
+            return this;
+        }
+
+        @Optional
+        public ComponentBuilder port(int port) {
+            this.port = port;
+
+            return this;
+        }
+
+        @Required
+        public ComponentBuilder file(String file) {
+            this.file = file;
+
+            return this;
+        }
+
+        @Optional
+        public ComponentBuilder handler(URLStreamHandler handler) {
+            this.handler = handler;
+
+            return this;
+        }
+
+        @Override
+        public URL build() throws MalformedURLException {
+            return new URL(protocol, host, port, file, handler);
+        }
+
     }
 
 }

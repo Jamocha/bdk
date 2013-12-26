@@ -29,7 +29,7 @@ public class CopyOnWriteArraySetBuilder implements Builder<CopyOnWriteArraySet> 
     private Collection elements;
 
     @Optional
-    public CopyOnWriteArraySetBuilder setElements(Collection elements) {
+    public CopyOnWriteArraySetBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

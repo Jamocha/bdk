@@ -30,7 +30,7 @@ public class DataOutputStreamBuilder
     private OutputStream outputStream;
 
     @Required
-    public DataOutputStreamBuilder setOutput(OutputStream outputStream) {
+    public DataOutputStreamBuilder output(OutputStream outputStream) {
         this.outputStream = outputStream;
 
         return this;

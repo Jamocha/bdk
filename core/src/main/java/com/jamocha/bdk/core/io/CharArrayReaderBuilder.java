@@ -34,21 +34,21 @@ public class CharArrayReaderBuilder
     private Integer length;
 
     @Required
-    public CharArrayReaderBuilder setBuffer(char[] buffer) {
+    public CharArrayReaderBuilder buffer(char[] buffer) {
         this.buffer = buffer;
 
         return this;
     }
 
     @Optional
-    public CharArrayReaderBuilder setOffset(int offset) {
+    public CharArrayReaderBuilder offset(int offset) {
         this.offset = offset;
 
         return this;
     }
 
     @Derived("buffer.length")
-    public CharArrayReaderBuilder setLength(int length) {
+    public CharArrayReaderBuilder length(int length) {
         this.length = length;
 
         return this;

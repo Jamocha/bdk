@@ -21,14 +21,14 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class CountDownLatchBuilder implements Builder<CountDownLatch> {
 
     private Integer count;
 
     @Required
-    public CountDownLatchBuilder setCount(int count) {
+    public CountDownLatchBuilder count(int count) {
         this.count = count;
 
         return this;

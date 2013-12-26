@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,18 +29,18 @@ public class PushbackInputStreamBuilder
         implements Builder<PushbackInputStream> {
 
     public static final Integer DEFAULT_SIZE = 1;
-    private InputStream in;
+    private InputStream input;
     private Integer size = DEFAULT_SIZE;
 
     @Required
-    public PushbackInputStreamBuilder setIn(InputStream in) {
-        this.in = in;
+    public PushbackInputStreamBuilder input(InputStream input) {
+        this.input = input;
 
         return this;
     }
 
-    @Optional
-    public PushbackInputStreamBuilder setSize(Integer size) {
+    @Optional("1")
+    public PushbackInputStreamBuilder size(Integer size) {
         this.size = size;
 
         return this;
@@ -48,7 +48,7 @@ public class PushbackInputStreamBuilder
 
     @Override
     public PushbackInputStream build() {
-        return new PushbackInputStream(in, size);
+        return new PushbackInputStream(input, size);
     }
 
 }

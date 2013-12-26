@@ -36,29 +36,29 @@ public class FileWriterBuilder
     private Boolean append = DEFAULT_APPEND;
 
     @Alternate
-    public FileWriterBuilder setFile(String name) {
+    public FileWriterBuilder file(String name) {
         this.file = new File(name);
 
         return this;
     }
 
     @Alternate
-    public FileWriterBuilder setFile(File file) {
+    public FileWriterBuilder file(File file) {
         this.file = file;
 
         return this;
     }
 
     @Alternate
-    public FileWriterBuilder setDescriptor(FileDescriptor descriptor) {
+    public FileWriterBuilder descriptor(FileDescriptor descriptor) {
         this.descriptor = descriptor;
 
         return this;
     }
 
     @Optional
-    public FileWriterBuilder setAppend(boolean append) {
-        this.append = append;
+    public FileWriterBuilder append() {
+        this.append = true;
 
         return this;
     }

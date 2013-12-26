@@ -31,14 +31,14 @@ public class ArrayListBuilder implements Builder<ArrayList> {
     private Integer capacity = DEFAULT_CAPACITY;
 
     @Optional
-    public ArrayListBuilder setElements(Collection elements) {
+    public ArrayListBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;
     }
 
     @Optional
-    public ArrayListBuilder setCapacity(int capacity) {
+    public ArrayListBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
+ * Copyright 2013 saden.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,42 +19,92 @@ import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
 import com.jamocha.bdk.api.annotation.Required;
 import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketAddress;
+import java.net.SocketException;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class DatagramPacketBuilder implements Builder<DatagramPacket> {
+public class DatagramPacketBuilder {
 
-    public static final Integer DEFAULT_OFFSET = 0;
-    private byte[] buffer;
-    private Integer offset = DEFAULT_OFFSET;
-    private Integer length;
-
-    @Required
-    public DatagramPacketBuilder setBuffer(byte[] buffer) {
-        this.buffer = buffer;
-
-        return this;
+    public static BufferBuilder buffer() {
+        return new BufferBuilder();
     }
 
-    @Required
-    public DatagramPacketBuilder setLength(int length) {
-        this.length = length;
-
-        return this;
+    public SocketBuilder socket(SocketAddress address) {
+        return new SocketBuilder(address);
     }
 
-    @Optional
-    public DatagramPacketBuilder setOffset(int offset) {
-        this.offset = offset;
-
-        return this;
+    public InetBuilder inet(InetAddress address, int port) {
+        return new InetBuilder(address, port);
     }
 
-    @Override
-    public DatagramPacket build() {
-        return new DatagramPacket(buffer, offset, length);
+    public static abstract class BaseBuilder<T> implements Builder<DatagramPacket> {
+
+        public static final Integer DEFAULT_OFFSET = 0;
+        byte[] buffer;
+        Integer offset = DEFAULT_OFFSET;
+        Integer length;
+
+        @Required
+        public T buffer(byte[] buffer) {
+            this.buffer = buffer;
+
+            return (T) this;
+        }
+
+        @Required
+        public T length(int length) {
+            this.length = length;
+
+            return (T) this;
+        }
+
+        @Optional
+        public T offset(int offset) {
+            this.offset = offset;
+
+            return (T) this;
+        }
     }
 
+    public static class BufferBuilder extends BaseBuilder<BufferBuilder> {
+
+        @Override
+        public DatagramPacket build() throws Exception {
+            return new DatagramPacket(buffer, offset, length);
+        }
+    }
+
+    public static class InetBuilder extends BaseBuilder<InetBuilder> {
+
+        private final InetAddress address;
+        private final Integer port;
+
+        private InetBuilder(InetAddress address, Integer port) {
+            this.address = address;
+            this.port = port;
+        }
+
+        @Override
+        public DatagramPacket build() throws Exception {
+            return new DatagramPacket(buffer, offset, length, address, port);
+        }
+    }
+
+    public static class SocketBuilder extends BaseBuilder<SocketBuilder> {
+
+        private final SocketAddress address;
+
+        private SocketBuilder(SocketAddress address) {
+            this.address = address;
+        }
+
+        @Override
+        public DatagramPacket build() throws SocketException {
+            return new DatagramPacket(buffer, offset, length, address);
+        }
+    }
 }

@@ -24,7 +24,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class PriorityBlockingQueueBuilder implements Builder<PriorityBlockingQueue> {
 
@@ -34,21 +34,21 @@ public class PriorityBlockingQueueBuilder implements Builder<PriorityBlockingQue
     private Comparator comparator;
 
     @Required
-    public PriorityBlockingQueueBuilder setCapacity(int capacity) {
+    public PriorityBlockingQueueBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public PriorityBlockingQueueBuilder setComparator(Comparator comparator) {
+    public PriorityBlockingQueueBuilder comparator(Comparator comparator) {
         this.comparator = comparator;
 
         return this;
     }
 
     @Optional
-    public PriorityBlockingQueueBuilder setElements(Collection elements) {
+    public PriorityBlockingQueueBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

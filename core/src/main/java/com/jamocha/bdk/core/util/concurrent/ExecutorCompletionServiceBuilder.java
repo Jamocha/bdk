@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutorCompletionService;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class ExecutorCompletionServiceBuilder implements Builder<ExecutorCompletionService> {
 
@@ -32,14 +32,14 @@ public class ExecutorCompletionServiceBuilder implements Builder<ExecutorComplet
     private BlockingQueue queue;
 
     @Required
-    public ExecutorCompletionServiceBuilder setExecutor(Executor executor) {
+    public ExecutorCompletionServiceBuilder executor(Executor executor) {
         this.executor = executor;
 
         return this;
     }
 
     @Optional
-    public ExecutorCompletionServiceBuilder setQueue(BlockingQueue queue) {
+    public ExecutorCompletionServiceBuilder queue(BlockingQueue queue) {
         this.queue = queue;
 
         return this;

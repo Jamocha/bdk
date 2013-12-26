@@ -35,7 +35,7 @@ public class ConcurrentSkipListSetBuilder implements Builder<ConcurrentSkipListS
 
     @Alternate
     @Optional
-    public ConcurrentSkipListSetBuilder setElements(Collection elements) {
+    public ConcurrentSkipListSetBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;
@@ -43,14 +43,14 @@ public class ConcurrentSkipListSetBuilder implements Builder<ConcurrentSkipListS
 
     @Alternate
     @Optional
-    public ConcurrentSkipListSetBuilder setSortedElements(SortedSet elements) {
+    public ConcurrentSkipListSetBuilder elements(SortedSet elements) {
         this.sortedElements = elements;
 
         return this;
     }
 
     @Optional
-    public ConcurrentSkipListSetBuilder setComparator(Comparator comparator) {
+    public ConcurrentSkipListSetBuilder comparator(Comparator comparator) {
         this.comparator = comparator;
 
         return this;

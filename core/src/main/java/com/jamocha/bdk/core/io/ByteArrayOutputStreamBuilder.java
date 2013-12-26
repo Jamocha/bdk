@@ -30,7 +30,7 @@ public class ByteArrayOutputStreamBuilder
     private Integer size = DEFAULT_SIZE;
 
     @Optional
-    public ByteArrayOutputStreamBuilder setSize(int size) {
+    public ByteArrayOutputStreamBuilder size(int size) {
         this.size = size;
 
         return this;

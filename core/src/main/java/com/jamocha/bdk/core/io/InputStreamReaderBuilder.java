@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,7 +37,7 @@ public class InputStreamReaderBuilder implements Builder<InputStreamReader> {
     private CharsetDecoder decoder;
 
     @Required
-    public InputStreamReaderBuilder setInput(InputStream inputStream) {
+    public InputStreamReaderBuilder input(InputStream inputStream) {
         this.inputStream = inputStream;
 
         return this;
@@ -45,7 +45,7 @@ public class InputStreamReaderBuilder implements Builder<InputStreamReader> {
 
     @Alternate
     @Optional
-    public InputStreamReaderBuilder setCharset(Charset charset) {
+    public InputStreamReaderBuilder charset(Charset charset) {
         this.charset = charset;
 
         return this;
@@ -53,14 +53,14 @@ public class InputStreamReaderBuilder implements Builder<InputStreamReader> {
 
     @Alternate
     @Optional
-    public InputStreamReaderBuilder setCharset(String charsetName) {
-        this.charset = forName(charsetName);
+    public InputStreamReaderBuilder charset(String charname) {
+        this.charset = forName(charname);
 
         return this;
     }
 
     @Optional
-    public InputStreamReaderBuilder setDecoder(CharsetDecoder decoder) {
+    public InputStreamReaderBuilder decoder(CharsetDecoder decoder) {
         this.decoder = decoder;
 
         return this;

@@ -29,14 +29,14 @@ public class CopyOnWriteArrayListBuilder implements Builder<CopyOnWriteArrayList
     private Object[] elements;
 
     @Optional
-    public CopyOnWriteArrayListBuilder setElements(Collection elements) {
+    public CopyOnWriteArrayListBuilder elements(Collection elements) {
         this.elements = elements.toArray();
 
         return this;
     }
 
     @Optional
-    public CopyOnWriteArrayListBuilder setElements(Object[] elements) {
+    public CopyOnWriteArrayListBuilder elements(Object[] elements) {
         this.elements = elements;
 
         return this;

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,14 +30,14 @@ public class FilePermissionBuilder implements Builder<FilePermission> {
     private String actions;
 
     @Required
-    public FilePermissionBuilder setPath(String path) {
+    public FilePermissionBuilder path(String path) {
         this.path = path;
 
         return this;
     }
 
     @Required
-    public FilePermissionBuilder setActions(String actions) {
+    public FilePermissionBuilder actions(String actions) {
         this.actions = actions;
 
         return this;

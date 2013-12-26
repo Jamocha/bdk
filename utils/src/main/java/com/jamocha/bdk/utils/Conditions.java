@@ -16,6 +16,7 @@
 package com.jamocha.bdk.utils;
 
 import static com.jamocha.bdk.utils.Messages.format;
+import static java.lang.String.valueOf;
 import java.util.NoSuchElementException;
 
 /**
@@ -61,10 +62,7 @@ import java.util.NoSuchElementException;
  * @author Kevin Bourrillion
  * @since 2.0 (imported from Google Collections Library)
  */
-public final class Conditions {
-
-    private Conditions() {
-    }
+public class Conditions {
 
     /**
      * Ensures the truth of an expression involving one or more parameters to
@@ -90,7 +88,7 @@ public final class Conditions {
      */
     public static void checkArgument(boolean expression, Object errorMessage) {
         if (!expression) {
-            throw new IllegalArgumentException(String.valueOf(errorMessage));
+            throw new IllegalArgumentException(valueOf(errorMessage));
         }
     }
 
@@ -146,7 +144,7 @@ public final class Conditions {
      */
     public static void checkState(boolean expression, Object errorMessage) {
         if (!expression) {
-            throw new IllegalStateException(String.valueOf(errorMessage));
+            throw new IllegalStateException(valueOf(errorMessage));
         }
     }
 
@@ -204,7 +202,7 @@ public final class Conditions {
      */
     public static <T> void checkNotNull(T reference, Object errorMessage) {
         if (reference == null) {
-            throw new NullPointerException(String.valueOf(errorMessage));
+            throw new NullPointerException(valueOf(errorMessage));
         }
     }
 
@@ -225,9 +223,7 @@ public final class Conditions {
      * {@link String#valueOf(Object)}.
      * @throws NullPointerException if {@code reference} is null
      */
-    public static <T> void checkNotNull(T reference,
-            String errorMessageTemplate,
-            Object... errorMessageArgs) {
+    public static <T> void checkNotNull(T reference, String errorMessageTemplate, Object... errorMessageArgs) {
         if (reference == null) {
             // If either of these parameters is null, the right thing happens anyway
             throw new NullPointerException(
@@ -391,6 +387,9 @@ public final class Conditions {
         // end < start
         return format("end index (%s) must not be less than start index (%s)",
                 end, start);
+    }
+
+    private Conditions() {
     }
 
 }

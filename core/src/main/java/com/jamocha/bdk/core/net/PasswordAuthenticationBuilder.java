@@ -27,13 +27,13 @@ public class PasswordAuthenticationBuilder implements Builder<PasswordAuthentica
     private String username;
     private char[] password;
 
-    public PasswordAuthenticationBuilder setUsername(String username) {
+    public PasswordAuthenticationBuilder username(String username) {
         this.username = username;
 
         return this;
     }
 
-    public PasswordAuthenticationBuilder setPassword(char[] password) {
+    public PasswordAuthenticationBuilder password(char[] password) {
         this.password = password;
 
         return this;

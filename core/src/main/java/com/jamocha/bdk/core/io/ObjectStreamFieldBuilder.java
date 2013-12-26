@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,22 +32,22 @@ public class ObjectStreamFieldBuilder implements Builder<ObjectStreamField> {
     private Boolean unshared = DEFAULT_UNSHARED;
 
     @Required
-    public ObjectStreamFieldBuilder setName(String name) {
+    public ObjectStreamFieldBuilder name(String name) {
         this.name = name;
 
         return this;
     }
 
     @Required
-    public ObjectStreamFieldBuilder setType(Class<?> type) {
+    public ObjectStreamFieldBuilder type(Class<?> type) {
         this.type = type;
 
         return this;
     }
 
     @Optional
-    public ObjectStreamFieldBuilder setUnshared(boolean unshared) {
-        this.unshared = unshared;
+    public ObjectStreamFieldBuilder unshared() {
+        this.unshared = true;
 
         return this;
     }

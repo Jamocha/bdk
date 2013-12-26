@@ -30,21 +30,21 @@ public class FileHierarchyBuilder implements Builder<File> {
     private String parent;
 
     @Required
-    public FileHierarchyBuilder setParent(String parent) {
+    public FileHierarchyBuilder parent(String parent) {
         this.parent = parent;
 
         return this;
     }
 
     @Required
-    public FileHierarchyBuilder setChild(String child) {
+    public FileHierarchyBuilder child(String child) {
         this.child = child;
 
         return this;
     }
 
     @Optional
-    public FileHierarchyBuilder setParent(File parent) {
+    public FileHierarchyBuilder parent(File parent) {
         this.parent = parent.getPath();
 
         return this;

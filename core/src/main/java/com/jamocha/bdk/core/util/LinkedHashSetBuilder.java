@@ -33,21 +33,21 @@ public class LinkedHashSetBuilder implements Builder<LinkedHashSet> {
     private Float factor = DEFAULT_FACTOR;
 
     @Optional
-    public LinkedHashSetBuilder setElements(Collection elements) {
+    public LinkedHashSetBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;
     }
 
     @Optional
-    public LinkedHashSetBuilder setCapacity(int capacity) {
+    public LinkedHashSetBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public LinkedHashSetBuilder setFactor(float factor) {
+    public LinkedHashSetBuilder factor(float factor) {
         this.factor = factor;
 
         return this;

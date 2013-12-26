@@ -22,7 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class LinkedBlockingQueueBuilder implements Builder<LinkedBlockingQueue> {
 
@@ -31,14 +31,14 @@ public class LinkedBlockingQueueBuilder implements Builder<LinkedBlockingQueue> 
     private Collection elements;
 
     @Optional
-    public LinkedBlockingQueueBuilder setCapacity(int capacity) {
+    public LinkedBlockingQueueBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public LinkedBlockingQueueBuilder setElements(Collection elements) {
+    public LinkedBlockingQueueBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

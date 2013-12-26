@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.net;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
 import java.io.IOException;
 import java.net.MulticastSocket;
 import java.net.SocketAddress;
@@ -27,32 +26,46 @@ import java.net.SocketAddress;
  */
 public class MulticastSocketBuilder implements Builder<MulticastSocket> {
 
-    public static final Integer DEFAULT_PORT = 0;
-
-    private Integer port = DEFAULT_PORT;
-    private SocketAddress address;
-
-    @Alternate
-    public MulticastSocketBuilder setPort(Integer port) {
-        this.port = port;
-
-        return this;
+    public PortBuilder bind(int port) {
+        return new PortBuilder(port);
     }
 
-    @Alternate
-    public MulticastSocketBuilder setAddress(SocketAddress address) {
-        this.address = address;
-
-        return this;
+    public AddressBuilder bind(SocketAddress address) {
+        return new AddressBuilder(address);
     }
 
     @Override
     public MulticastSocket build() throws IOException {
-        if (address == null) {
-            return new MulticastSocket(port);
+        return new MulticastSocket();
+    }
+
+    public static class PortBuilder implements Builder<MulticastSocket> {
+
+        private final Integer port;
+
+        private PortBuilder(Integer port) {
+            this.port = port;
         }
 
-        return new MulticastSocket(address);
+        @Override
+        public MulticastSocket build() throws IOException {
+            return new MulticastSocket(port);
+        }
+    }
+
+    public static class AddressBuilder implements Builder<MulticastSocket> {
+
+        private final SocketAddress address;
+
+        private AddressBuilder(SocketAddress address) {
+            this.address = address;
+        }
+
+        @Override
+        public MulticastSocket build() throws IOException {
+            return new MulticastSocket(address);
+        }
+
     }
 
 }

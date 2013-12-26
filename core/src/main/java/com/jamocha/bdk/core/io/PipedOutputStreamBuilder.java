@@ -30,7 +30,7 @@ public class PipedOutputStreamBuilder implements Builder<PipedOutputStream> {
     private PipedInputStream input;
 
     @Required
-    public PipedOutputStreamBuilder setInput(PipedInputStream input) {
+    public PipedOutputStreamBuilder input(PipedInputStream input) {
         this.input = input;
 
         return this;

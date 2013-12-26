@@ -34,21 +34,21 @@ public class HashMapBuilder implements Builder<HashMap> {
     private Float factor = DEFAULT_FACTOR;
 
     @Optional
-    public HashMapBuilder setEntries(Map entries) {
+    public HashMapBuilder entries(Map entries) {
         this.entries = entries;
 
         return this;
     }
 
     @Optional
-    public HashMapBuilder setCapacity(int capacity) {
+    public HashMapBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public HashMapBuilder setFactor(float factor) {
+    public HashMapBuilder factor(float factor) {
         this.factor = factor;
 
         return this;

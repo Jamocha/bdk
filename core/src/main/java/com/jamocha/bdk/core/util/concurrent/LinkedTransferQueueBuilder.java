@@ -22,14 +22,14 @@ import java.util.concurrent.LinkedTransferQueue;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class LinkedTransferQueueBuilder implements Builder<LinkedTransferQueue> {
 
     private Collection elements;
 
     @Optional
-    public LinkedTransferQueueBuilder setElements(Collection elements) {
+    public LinkedTransferQueueBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

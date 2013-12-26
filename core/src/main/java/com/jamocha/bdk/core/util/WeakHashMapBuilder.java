@@ -34,21 +34,21 @@ public class WeakHashMapBuilder implements Builder<WeakHashMap> {
     private Float factor = DEFAULT_FACTOR;
 
     @Optional
-    public WeakHashMapBuilder setEntries(Map entries) {
+    public WeakHashMapBuilder entries(Map entries) {
         this.entries = entries;
 
         return this;
     }
 
     @Optional
-    public WeakHashMapBuilder setCapacity(int capacity) {
+    public WeakHashMapBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public WeakHashMapBuilder setFactor(float factor) {
+    public WeakHashMapBuilder factor(float factor) {
         this.factor = factor;
 
         return this;

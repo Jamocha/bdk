@@ -15,9 +15,11 @@
  */
 package com.jamocha.bdk.utils;
 
+import static java.lang.String.valueOf;
+
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class Messages {
 
@@ -32,9 +34,10 @@ public class Messages {
      * @param args the arguments to be substituted into the message template.
      * Arguments are converted to strings using {@link String#valueOf(Object)}.
      * Arguments can be null.
+     * @return formatted string
      */
     public static String format(String template, Object... args) {
-        template = String.valueOf(template); // null -> "null"
+        template = valueOf(template); // null -> "null"
 
         // start substituting the arguments into the '%s' placeholders
         StringBuilder builder = new StringBuilder(
@@ -64,5 +67,8 @@ public class Messages {
         }
 
         return builder.toString();
+    }
+
+    private Messages() {
     }
 }

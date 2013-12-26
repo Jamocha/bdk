@@ -33,14 +33,14 @@ public class BufferedReaderBuilder
     private Integer size = DEFAULT_SIZE;
 
     @Required
-    public BufferedReaderBuilder setReader(Reader reader) {
+    public BufferedReaderBuilder reader(Reader reader) {
         this.reader = reader;
 
         return this;
     }
 
     @Optional
-    public BufferedReaderBuilder setSize(Integer size) {
+    public BufferedReaderBuilder size(Integer size) {
         this.size = size;
 
         return this;

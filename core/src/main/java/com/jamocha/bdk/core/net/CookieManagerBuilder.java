@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,13 +29,13 @@ public class CookieManagerBuilder implements Builder<CookieManager> {
     private CookieStore store;
     private CookiePolicy policy;
 
-    public CookieManagerBuilder setStore(CookieStore store) {
+    public CookieManagerBuilder store(CookieStore store) {
         this.store = store;
 
         return this;
     }
 
-    public CookieManagerBuilder setPolicy(CookiePolicy policy) {
+    public CookieManagerBuilder policy(CookiePolicy policy) {
         this.policy = policy;
 
         return this;

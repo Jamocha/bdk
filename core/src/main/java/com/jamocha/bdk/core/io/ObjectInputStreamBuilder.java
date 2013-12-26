@@ -31,7 +31,7 @@ public class ObjectInputStreamBuilder
     private InputStream inputStream;
 
     @Required
-    public ObjectInputStreamBuilder setInput(InputStream inputStream) {
+    public ObjectInputStreamBuilder input(InputStream inputStream) {
         this.inputStream = inputStream;
 
         return this;

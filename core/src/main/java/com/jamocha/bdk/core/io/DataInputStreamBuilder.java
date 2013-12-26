@@ -30,7 +30,7 @@ public class DataInputStreamBuilder
     private InputStream inputStream;
 
     @Required
-    public DataInputStreamBuilder setInput(InputStream inputStream) {
+    public DataInputStreamBuilder input(InputStream inputStream) {
         this.inputStream = inputStream;
 
         return this;

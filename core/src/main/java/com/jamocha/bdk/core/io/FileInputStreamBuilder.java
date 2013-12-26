@@ -32,21 +32,21 @@ public class FileInputStreamBuilder implements Builder<FileInputStream> {
     private FileDescriptor descriptor;
 
     @Alternate
-    public FileInputStreamBuilder setFile(String name) {
+    public FileInputStreamBuilder file(String name) {
         this.file = new File(name);
 
         return this;
     }
 
     @Alternate
-    public FileInputStreamBuilder setFile(File file) {
+    public FileInputStreamBuilder file(File file) {
         this.file = file;
 
         return this;
     }
 
     @Alternate
-    public FileInputStreamBuilder setDescriptor(FileDescriptor descriptor) {
+    public FileInputStreamBuilder descriptor(FileDescriptor descriptor) {
         this.descriptor = descriptor;
 
         return this;

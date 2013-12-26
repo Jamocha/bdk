@@ -33,21 +33,21 @@ public class HashSetBuilder implements Builder<HashSet> {
     private Float factor = DEFAULT_FACTOR;
 
     @Optional
-    public HashSetBuilder setElements(Collection elements) {
+    public HashSetBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;
     }
 
     @Optional
-    public HashSetBuilder setCapacity(int capacity) {
+    public HashSetBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public HashSetBuilder setFactor(float factor) {
+    public HashSetBuilder factor(float factor) {
         this.factor = factor;
 
         return this;

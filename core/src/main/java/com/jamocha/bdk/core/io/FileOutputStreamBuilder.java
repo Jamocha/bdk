@@ -36,29 +36,29 @@ public class FileOutputStreamBuilder
     private Boolean append = DEFAULT_APPEND;
 
     @Alternate
-    public FileOutputStreamBuilder setFile(String name) {
+    public FileOutputStreamBuilder file(String name) {
         this.file = new File(name);
 
         return this;
     }
 
     @Alternate
-    public FileOutputStreamBuilder setFile(File file) {
+    public FileOutputStreamBuilder file(File file) {
         this.file = file;
 
         return this;
     }
 
     @Alternate
-    public FileOutputStreamBuilder setDescriptor(FileDescriptor descriptor) {
+    public FileOutputStreamBuilder descriptor(FileDescriptor descriptor) {
         this.descriptor = descriptor;
 
         return this;
     }
 
     @Optional
-    public FileOutputStreamBuilder setAppend(boolean append) {
-        this.append = append;
+    public FileOutputStreamBuilder append() {
+        this.append = true;
 
         return this;
     }

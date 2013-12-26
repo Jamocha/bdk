@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@ import com.jamocha.bdk.api.annotation.Required;
 import java.io.SerializablePermission;
 
 /**
- * TODO: enhance actions permissions
+ * XXX: actions permissions is currently unused.
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
@@ -30,15 +30,8 @@ public class SerializablePermissionBuilder implements Builder<SerializablePermis
     private String actions;
 
     @Required
-    public SerializablePermissionBuilder setName(String name) {
+    public SerializablePermissionBuilder name(String name) {
         this.name = name;
-
-        return this;
-    }
-
-    @Required
-    public SerializablePermissionBuilder setActions(String actions) {
-        this.actions = actions;
 
         return this;
     }

@@ -34,21 +34,21 @@ public class LocaleBuilder implements Builder<Locale> {
     private String variant = DEFAULT_VARIANT;
 
     @Required
-    public LocaleBuilder setLanguage(String language) {
+    public LocaleBuilder language(String language) {
         this.language = language;
 
         return this;
     }
 
     @Optional
-    public LocaleBuilder setCountry(String country) {
+    public LocaleBuilder country(String country) {
         this.country = country;
 
         return this;
     }
 
     @Optional
-    public LocaleBuilder setVariant(String variant) {
+    public LocaleBuilder variant(String variant) {
         this.variant = variant;
 
         return this;

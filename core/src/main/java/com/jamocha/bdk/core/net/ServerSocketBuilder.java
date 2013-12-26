@@ -27,40 +27,46 @@ import java.net.ServerSocket;
  */
 public class ServerSocketBuilder implements Builder<ServerSocket> {
 
-    public static final Integer DEFAULT_BACKLOG = 50;
-
-    private Integer port;
-    private Integer backlog = DEFAULT_BACKLOG;
-    private InetAddress address;
-
-    @Optional
-    public ServerSocketBuilder setPort(Integer port) {
-        this.port = port;
-
-        return this;
-    }
-
-    @Optional
-    public ServerSocketBuilder setAddress(InetAddress address) {
-        this.address = address;
-
-        return this;
-    }
-
-    @Optional
-    public ServerSocketBuilder setBacklog(int backlog) {
-        this.backlog = backlog;
-
-        return this;
-    }
-
     @Override
     public ServerSocket build() throws IOException {
-        if (port == null && address == null) {
-            return new ServerSocket();
+        return new ServerSocket();
+    }
+
+    public BoundServerBuilder bind(int port) {
+        return new BoundServerBuilder(port);
+
+    }
+
+    public static class BoundServerBuilder implements Builder<ServerSocket> {
+
+        public static final Integer DEFAULT_BACKLOG = 50;
+
+        private final Integer port;
+        private Integer backlog = DEFAULT_BACKLOG;
+        private InetAddress address;
+
+        private BoundServerBuilder(Integer port) {
+            this.port = port;
         }
 
-        return new ServerSocket(port, backlog, address);
+        @Optional
+        public BoundServerBuilder address(InetAddress address) {
+            this.address = address;
+
+            return this;
+        }
+
+        @Optional
+        public BoundServerBuilder backlog(int backlog) {
+            this.backlog = backlog;
+
+            return this;
+        }
+
+        @Override
+        public ServerSocket build() throws IOException {
+            return new ServerSocket(port, backlog, address);
+        }
     }
 
 }

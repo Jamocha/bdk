@@ -33,14 +33,14 @@ public class LineNumberReaderBuilder
     private Integer size = DEFAULT_SIZE;
 
     @Required
-    public LineNumberReaderBuilder setReader(Reader reader) {
+    public LineNumberReaderBuilder reader(Reader reader) {
         this.reader = reader;
 
         return this;
     }
 
     @Optional
-    public LineNumberReaderBuilder setSize(Integer size) {
+    public LineNumberReaderBuilder size(Integer size) {
         this.size = size;
 
         return this;

@@ -31,7 +31,7 @@ public class ObjectOutputStreamBuilder
     private OutputStream outputStream;
 
     @Required
-    public ObjectOutputStreamBuilder setOutput(OutputStream outputStream) {
+    public ObjectOutputStreamBuilder output(OutputStream outputStream) {
         this.outputStream = outputStream;
 
         return this;

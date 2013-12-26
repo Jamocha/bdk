@@ -29,35 +29,35 @@ public class ThreadBuilder implements Builder<Thread> {
 
     private static final Long DEFAULT_SIZE = 0L;
     private static final String DEFAULT_NAME = "Thread";
-    private static final AtomicInteger THREAD_NUMBER = new AtomicInteger();
+    private final AtomicInteger threadCount = new AtomicInteger();
     private Runnable runnable;
     private ThreadGroup threadGroup;
     private String name;
     private Long size = DEFAULT_SIZE;
 
     @Required
-    public ThreadBuilder setRunnable(Runnable runnable) {
+    public ThreadBuilder runnable(Runnable runnable) {
         this.runnable = runnable;
 
         return this;
     }
 
     @Optional
-    public ThreadBuilder setThreadGroup(ThreadGroup threadGroup) {
+    public ThreadBuilder group(ThreadGroup threadGroup) {
         this.threadGroup = threadGroup;
 
         return this;
     }
 
     @Optional
-    public ThreadBuilder setName(String name) {
+    public ThreadBuilder name(String name) {
         this.name = name;
 
         return this;
     }
 
     @Optional
-    public ThreadBuilder setSize(long size) {
+    public ThreadBuilder size(long size) {
         this.size = size;
 
         return this;
@@ -66,7 +66,7 @@ public class ThreadBuilder implements Builder<Thread> {
     @Override
     public Thread build() {
         if (isNullOrEmpty(name)) {
-            name = DEFAULT_NAME + "-" + THREAD_NUMBER.getAndIncrement();
+            name = DEFAULT_NAME + "-" + threadCount.getAndIncrement();
         }
 
         return new Thread(threadGroup, runnable, name, size);

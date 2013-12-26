@@ -35,7 +35,7 @@ public class TreeMapBuilder implements Builder<TreeMap> {
 
     @Alternate
     @Optional
-    public TreeMapBuilder setEntries(Map entries) {
+    public TreeMapBuilder entries(Map entries) {
         this.entries = entries;
 
         return this;
@@ -43,14 +43,14 @@ public class TreeMapBuilder implements Builder<TreeMap> {
 
     @Alternate
     @Optional
-    public TreeMapBuilder setSortedElements(SortedMap entries) {
+    public TreeMapBuilder entries(SortedMap entries) {
         this.sortedEntries = entries;
 
         return this;
     }
 
     @Optional
-    public TreeMapBuilder setComparator(Comparator comparator) {
+    public TreeMapBuilder comparator(Comparator comparator) {
         this.comparator = comparator;
 
         return this;

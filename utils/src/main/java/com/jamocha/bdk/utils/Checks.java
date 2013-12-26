@@ -17,7 +17,7 @@ package com.jamocha.bdk.utils;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class Checks {
 
@@ -80,6 +80,9 @@ public class Checks {
         }
 
         return true;
+    }
+
+    private Checks() {
     }
 
 }

@@ -30,14 +30,14 @@ public class ThreadGroupBuilder implements Builder<ThreadGroup> {
     private String name = DEFAULT_NAME;
 
     @Required
-    public ThreadGroupBuilder setName(String name) {
+    public ThreadGroupBuilder name(String name) {
         this.name = name;
 
         return this;
     }
 
     @Optional
-    public ThreadGroupBuilder setParent(ThreadGroup parent) {
+    public ThreadGroupBuilder parent(ThreadGroup parent) {
         this.parent = parent;
 
         return this;

@@ -16,6 +16,8 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Alternate;
+import com.jamocha.bdk.api.annotation.Optional;
 import com.jamocha.bdk.api.annotation.Required;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,28 +28,107 @@ import java.io.RandomAccessFile;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class RandomAccessFileBuilder implements Builder<RandomAccessFile> {
+public class RandomAccessFileBuilder {
 
-    private File file;
-    private String mode;
+    public static final String DEFAULT_MODE = "r";
 
     @Required
-    public RandomAccessFileBuilder setName(String name) {
-        this.file = new File(name);
-
-        return this;
+    @Alternate
+    public NameBuilder name(String name) {
+        return new NameBuilder(name);
     }
 
     @Required
-    public RandomAccessFileBuilder setMode(String mode) {
-        this.mode = mode;
-
-        return this;
+    @Alternate
+    public FileBuilder file(File file) {
+        return new FileBuilder(file);
     }
 
-    @Override
-    public RandomAccessFile build() throws FileNotFoundException {
-        return new RandomAccessFile(file, mode);
+    public static abstract class BaseBuilder implements Builder<RandomAccessFile> {
+
+    }
+
+    public static class NameBuilder extends BaseBuilder {
+
+        private final String name;
+        private final String mode = DEFAULT_MODE;
+
+        private NameBuilder(String name) {
+            this.name = name;
+        }
+
+        @Optional("r")
+        public ModeBuilder mode() {
+            return new ModeBuilder(new File(name));
+        }
+
+        @Override
+        public RandomAccessFile build() throws FileNotFoundException {
+            return new RandomAccessFile(name, mode);
+        }
+
+    }
+
+    public static class FileBuilder extends BaseBuilder {
+
+        private final File file;
+        private final String mode = DEFAULT_MODE;
+
+        private FileBuilder(File file) {
+            this.file = file;
+        }
+
+        @Optional("r")
+        public ModeBuilder mode() {
+            return new ModeBuilder(file);
+        }
+
+        @Override
+        public RandomAccessFile build() throws FileNotFoundException {
+            return new RandomAccessFile(file, mode);
+        }
+
+    }
+
+    public static class ModeBuilder {
+
+        private final File file;
+
+        private ModeBuilder(File file) {
+            this.file = file;
+        }
+
+        public FileModeBuilder readOnly() {
+            return new FileModeBuilder(file, "r");
+        }
+
+        public FileModeBuilder readWrite() {
+            return new FileModeBuilder(file, "rw");
+        }
+
+        public FileModeBuilder updateContent() {
+            return new FileModeBuilder(file, "rwd");
+        }
+
+        public FileModeBuilder updateMetadata() {
+            return new FileModeBuilder(file, "rws");
+        }
+    }
+
+    public static class FileModeBuilder extends BaseBuilder {
+
+        private final File file;
+        private final String mode;
+
+        private FileModeBuilder(File file, String mode) {
+            this.file = file;
+            this.mode = mode;
+        }
+
+        @Override
+        public RandomAccessFile build() throws FileNotFoundException {
+            return new RandomAccessFile(file, mode);
+        }
     }
 
 }

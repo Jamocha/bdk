@@ -22,7 +22,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class LinkedBlockingDequeBuilder implements Builder<LinkedBlockingDeque> {
 
@@ -31,14 +31,14 @@ public class LinkedBlockingDequeBuilder implements Builder<LinkedBlockingDeque> 
     private Collection elements;
 
     @Optional
-    public LinkedBlockingDequeBuilder setCapacity(int capacity) {
+    public LinkedBlockingDequeBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public LinkedBlockingDequeBuilder setElements(Collection elements) {
+    public LinkedBlockingDequeBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

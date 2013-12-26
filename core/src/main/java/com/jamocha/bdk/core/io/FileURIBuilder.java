@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ public class FileURIBuilder implements Builder<File> {
     private URI uri;
 
     @Required
-    public FileURIBuilder setUri(URI uri) {
+    public FileURIBuilder uri(URI uri) {
         this.uri = uri;
 
         return this;

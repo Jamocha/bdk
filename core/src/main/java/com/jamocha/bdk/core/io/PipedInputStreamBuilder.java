@@ -33,14 +33,14 @@ public class PipedInputStreamBuilder implements Builder<PipedInputStream> {
     private Integer size = DEFAULT_SIZE;
 
     @Required
-    public PipedInputStreamBuilder setOutput(PipedOutputStream output) {
+    public PipedInputStreamBuilder output(PipedOutputStream output) {
         this.output = output;
 
         return this;
     }
 
     @Optional
-    public PipedInputStreamBuilder setSize(Integer size) {
+    public PipedInputStreamBuilder size(Integer size) {
         this.size = size;
 
         return this;

@@ -34,14 +34,14 @@ public class ByteArrayInputStreamBuilder
     private Integer length;
 
     @Required
-    public ByteArrayInputStreamBuilder setBuffer(byte[] buffer) {
+    public ByteArrayInputStreamBuilder buffer(byte[] buffer) {
         this.buffer = buffer;
 
         return this;
     }
 
     @Optional
-    public ByteArrayInputStreamBuilder setOffset(int offset) {
+    public ByteArrayInputStreamBuilder offset(int offset) {
         this.offset = offset;
 
         return this;
@@ -49,7 +49,7 @@ public class ByteArrayInputStreamBuilder
 
     @Derived("buffer.length")
     @Optional
-    public ByteArrayInputStreamBuilder setLength(int length) {
+    public ByteArrayInputStreamBuilder length(int length) {
         this.length = length;
 
         return this;

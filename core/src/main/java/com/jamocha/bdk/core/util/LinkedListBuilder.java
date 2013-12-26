@@ -29,7 +29,7 @@ public class LinkedListBuilder implements Builder<LinkedList> {
     private Collection elements;
 
     @Optional
-    public LinkedListBuilder setElements(Collection elements) {
+    public LinkedListBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

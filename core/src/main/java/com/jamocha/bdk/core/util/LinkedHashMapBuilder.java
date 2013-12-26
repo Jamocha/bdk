@@ -36,29 +36,29 @@ public class LinkedHashMapBuilder implements Builder<LinkedHashMap> {
     private Boolean ordering = DEFAULT_ORDERING;
 
     @Optional
-    public LinkedHashMapBuilder setEntries(Map entries) {
+    public LinkedHashMapBuilder entries(Map entries) {
         this.entries = entries;
 
         return this;
     }
 
     @Optional
-    public LinkedHashMapBuilder setCapacity(int capacity) {
+    public LinkedHashMapBuilder capacity(int capacity) {
         this.capacity = capacity;
 
         return this;
     }
 
     @Optional
-    public LinkedHashMapBuilder setFactor(float factor) {
+    public LinkedHashMapBuilder factor(float factor) {
         this.factor = factor;
 
         return this;
     }
 
     @Optional
-    public LinkedHashMapBuilder setOrdering(boolean ordering) {
-        this.ordering = ordering;
+    public LinkedHashMapBuilder ordered() {
+        this.ordering = true;
 
         return this;
     }

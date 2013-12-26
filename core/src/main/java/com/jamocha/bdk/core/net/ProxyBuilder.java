@@ -30,14 +30,14 @@ public class ProxyBuilder implements Builder<Proxy> {
     private SocketAddress address;
 
     @Required
-    public ProxyBuilder setType(Proxy.Type type) {
+    public ProxyBuilder type(Proxy.Type type) {
         this.type = type;
 
         return this;
     }
 
     @Required
-    public ProxyBuilder setAddress(SocketAddress address) {
+    public ProxyBuilder address(SocketAddress address) {
         this.address = address;
 
         return this;

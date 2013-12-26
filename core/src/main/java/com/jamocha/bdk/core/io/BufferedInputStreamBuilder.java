@@ -33,14 +33,14 @@ public class BufferedInputStreamBuilder
     private Integer size = DEFAULT_SIZE;
 
     @Required
-    public BufferedInputStreamBuilder setInput(InputStream inputStream) {
+    public BufferedInputStreamBuilder input(InputStream inputStream) {
         this.inputStream = inputStream;
 
         return this;
     }
 
     @Optional
-    public BufferedInputStreamBuilder setSize(Integer size) {
+    public BufferedInputStreamBuilder size(Integer size) {
         this.size = size;
 
         return this;

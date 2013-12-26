@@ -35,7 +35,7 @@ public class TreeSetBuilder implements Builder<TreeSet> {
 
     @Alternate
     @Optional
-    public TreeSetBuilder setElements(Collection elements) {
+    public TreeSetBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;
@@ -43,14 +43,14 @@ public class TreeSetBuilder implements Builder<TreeSet> {
 
     @Alternate
     @Optional
-    public TreeSetBuilder setSortedElements(SortedSet elements) {
+    public TreeSetBuilder elements(SortedSet elements) {
         this.sortedElements = elements;
 
         return this;
     }
 
     @Optional
-    public TreeSetBuilder setComparator(Comparator comparator) {
+    public TreeSetBuilder comparator(Comparator comparator) {
         this.comparator = comparator;
 
         return this;

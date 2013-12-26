@@ -29,12 +29,12 @@ public class HttpCookieBuilder implements Builder<HttpCookie> {
     private String value;
 
     @Required
-    public void setName(String name) {
+    public void name(String name) {
         this.name = name;
     }
 
     @Required
-    public void setValue(String value) {
+    public void value(String value) {
         this.value = value;
     }
 

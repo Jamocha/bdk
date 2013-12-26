@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ public class StringReaderBuilder implements Builder<StringReader> {
     private String input;
 
     @Required
-    public void setInput(String input) {
+    public void input(String input) {
         this.input = input;
     }
 

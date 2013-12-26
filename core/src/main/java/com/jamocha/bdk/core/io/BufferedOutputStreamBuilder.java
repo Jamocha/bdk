@@ -33,14 +33,14 @@ public class BufferedOutputStreamBuilder
     private Integer size = DEFAULT_SIZE;
 
     @Required
-    public BufferedOutputStreamBuilder setOutput(OutputStream outputStream) {
+    public BufferedOutputStreamBuilder output(OutputStream outputStream) {
         this.outputStream = outputStream;
 
         return this;
     }
 
     @Optional
-    public BufferedOutputStreamBuilder setSize(Integer size) {
+    public BufferedOutputStreamBuilder size(Integer size) {
         this.size = size;
 
         return this;

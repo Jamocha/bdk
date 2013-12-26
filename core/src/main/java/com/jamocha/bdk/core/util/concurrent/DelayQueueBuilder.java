@@ -22,14 +22,14 @@ import java.util.concurrent.DelayQueue;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class DelayQueueBuilder implements Builder<DelayQueue> {
 
     private Collection elements;
 
     @Optional
-    public DelayQueueBuilder setElements(Collection elements) {
+    public DelayQueueBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

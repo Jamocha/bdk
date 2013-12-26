@@ -22,7 +22,7 @@ import java.util.concurrent.CyclicBarrier;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class CyclicBarrierBuilder implements Builder<CyclicBarrier> {
 
@@ -30,14 +30,14 @@ public class CyclicBarrierBuilder implements Builder<CyclicBarrier> {
     private Runnable runnable;
 
     @Required
-    public CyclicBarrierBuilder setParties(int parties) {
+    public CyclicBarrierBuilder parties(int parties) {
         this.parties = parties;
 
         return this;
     }
 
     @Optional
-    public CyclicBarrierBuilder setAction(Runnable runnable) {
+    public CyclicBarrierBuilder action(Runnable runnable) {
         this.runnable = runnable;
 
         return this;

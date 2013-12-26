@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.IOException;
 import java.io.PipedReader;
 import java.io.PipedWriter;
@@ -28,31 +27,73 @@ import java.io.PipedWriter;
  */
 public class PipedReaderBuilder implements Builder<PipedReader> {
 
-    public static final Integer DEFAULT_SIZE = 1_024;
-    private PipedWriter writer;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public PipedReaderBuilder setWriter(PipedWriter writer) {
-        this.writer = writer;
-
-        return this;
+    public WriterBuilder connect(PipedWriter writer) {
+        return new WriterBuilder(writer);
     }
 
-    @Optional
-    public PipedReaderBuilder setSize(Integer size) {
-        this.size = size;
+    public SizeBuilder size(int size) {
+        return new SizeBuilder(size);
+    }
 
-        return this;
+    public static abstract class BaseBuilder implements Builder<PipedReader> {
+
+    }
+
+    public static class SizeBuilder extends BaseBuilder {
+
+        private final Integer size;
+        private PipedWriter writer;
+
+        private SizeBuilder(int size) {
+            this.size = size;
+        }
+
+        @Optional("unconnected")
+        public SizeBuilder connect(PipedWriter writer) {
+            this.writer = writer;
+
+            return this;
+        }
+
+        @Override
+        public PipedReader build() throws IOException {
+            if (writer == null) {
+                return new PipedReader(size);
+            }
+
+            return new PipedReader(writer, size);
+        }
+
+    }
+
+    public static class WriterBuilder extends BaseBuilder {
+
+        public static final Integer DEFAULT_SIZE = 1_024;
+
+        private final PipedWriter writer;
+        private Integer size = DEFAULT_SIZE;
+
+        private WriterBuilder(PipedWriter writer) {
+            this.writer = writer;
+        }
+
+        @Optional("1024")
+        public WriterBuilder size(int size) {
+            this.size = size;
+
+            return this;
+        }
+
+        @Override
+        public PipedReader build() throws IOException {
+            return new PipedReader(writer, size);
+        }
+
     }
 
     @Override
     public PipedReader build() throws IOException {
-        if (writer == null) {
-            return new PipedReader(size);
-        }
-
-        return new PipedReader(writer, size);
+        return new PipedReader();
     }
 
 }

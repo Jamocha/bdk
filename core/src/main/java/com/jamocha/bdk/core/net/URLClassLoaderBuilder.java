@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,21 +33,21 @@ public class URLClassLoaderBuilder implements Builder<URLClassLoader> {
     private URLStreamHandlerFactory factory;
 
     @Required
-    public URLClassLoaderBuilder setUrls(URL[] urls) {
+    public URLClassLoaderBuilder urls(URL[] urls) {
         this.urls = urls;
 
         return this;
     }
 
     @Optional
-    public URLClassLoaderBuilder setParent(ClassLoader parent) {
+    public URLClassLoaderBuilder parent(ClassLoader parent) {
         this.parent = parent;
 
         return this;
     }
 
     @Optional
-    public URLClassLoaderBuilder setFactory(URLStreamHandlerFactory factory) {
+    public URLClassLoaderBuilder factory(URLStreamHandlerFactory factory) {
         this.factory = factory;
 
         return this;

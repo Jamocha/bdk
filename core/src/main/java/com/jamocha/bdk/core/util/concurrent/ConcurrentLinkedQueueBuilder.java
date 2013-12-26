@@ -22,14 +22,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class ConcurrentLinkedQueueBuilder implements Builder<ConcurrentLinkedQueue> {
 
     private Collection elements;
 
     @Optional
-    public ConcurrentLinkedQueueBuilder setElements(Collection elements) {
+    public ConcurrentLinkedQueueBuilder elements(Collection elements) {
         this.elements = elements;
 
         return this;

@@ -33,14 +33,14 @@ public class BufferedWriterBuilder
     private Integer size = DEFAULT_SIZE;
 
     @Required
-    public BufferedWriterBuilder setWriter(Writer writer) {
+    public BufferedWriterBuilder writer(Writer writer) {
         this.writer = writer;
 
         return this;
     }
 
     @Optional
-    public BufferedWriterBuilder setSize(Integer size) {
+    public BufferedWriterBuilder size(Integer size) {
         this.size = size;
 
         return this;

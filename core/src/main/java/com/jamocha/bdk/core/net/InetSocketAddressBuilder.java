@@ -16,10 +16,6 @@
 package com.jamocha.bdk.core.net;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
@@ -27,46 +23,61 @@ import java.net.InetSocketAddress;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class InetSocketAddressBuilder implements Builder<InetSocketAddress> {
+public class InetSocketAddressBuilder {
 
-    private Integer port;
-    private InetAddress address;
-    private String host;
-
-    @Required
-    public InetSocketAddressBuilder setPort(int port) {
-        this.port = port;
-
-        return this;
+    public PortBuilder port(int port) {
+        return new PortBuilder(port);
     }
 
-    @Alternate
-    @Optional
-    public InetSocketAddressBuilder setAddress(InetAddress address) {
-        this.address = address;
-
-        return this;
+    public static abstract class BaseBuilder<T> implements Builder<InetSocketAddress> {
     }
 
-    @Alternate
-    @Optional
-    public InetSocketAddressBuilder setHost(String host) {
-        this.host = host;
+    public static class PortBuilder implements Builder<InetSocketAddress> {
+        private final Integer port;
 
-        return this;
-    }
+        private PortBuilder(Integer port) {
+            this.port = port;
+        }
+        public InetBuilder inet(InetAddress address) {
+            return new InetBuilder(address, port);
+        }
 
-    @Override
-    public InetSocketAddress build() throws IOException {
-        if (host == null && address == null) {
+        @Override
+        public InetSocketAddress build() {
             return new InetSocketAddress(port);
         }
 
-        if (host != null) {
-            address = InetAddress.getByName(host);
+    }
+
+    public static class InetBuilder extends BaseBuilder<InetBuilder> {
+        private final InetAddress address;
+        private final Integer port;
+
+        private InetBuilder(InetAddress address, Integer port) {
+            this.address = address;
+            this.port = port;
+        }
+        @Override
+        public InetSocketAddress build() {
+            return new InetSocketAddress(address, port);
         }
 
-        return new InetSocketAddress(address, port);
+    }
+
+    public static class HostBuilder extends BaseBuilder<HostBuilder> {
+
+        private final String host;
+        private final Integer port;
+
+        private HostBuilder(String host, Integer port) {
+            this.host = host;
+            this.port = port;
+        }
+
+        @Override
+        public InetSocketAddress build() {
+            return new InetSocketAddress(host, port);
+        }
 
     }
 

@@ -16,7 +16,7 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
+import com.jamocha.bdk.api.annotation.Optional;
 import java.io.IOException;
 import java.io.PipedReader;
 import java.io.PipedWriter;
@@ -27,18 +27,33 @@ import java.io.PipedWriter;
  */
 public class PipedWriterBuilder implements Builder<PipedWriter> {
 
-    private PipedReader reader;
+    public static abstract class BaseBuilder implements Builder<PipedWriter> {
 
-    @Required
-    public PipedWriterBuilder setReader(PipedReader reader) {
-        this.reader = reader;
+    }
 
-        return this;
+    public static class ReaderBuilder extends BaseBuilder {
+
+        private final PipedReader reader;
+
+        private ReaderBuilder(PipedReader reader) {
+            this.reader = reader;
+        }
+
+        @Override
+        public PipedWriter build() throws IOException {
+            return new PipedWriter(reader);
+        }
+
+    }
+
+    @Optional("unconnected")
+    public ReaderBuilder connect(PipedReader reader) {
+        return new ReaderBuilder(reader);
     }
 
     @Override
     public PipedWriter build() throws IOException {
-        return new PipedWriter(reader);
+        return new PipedWriter();
     }
 
 }

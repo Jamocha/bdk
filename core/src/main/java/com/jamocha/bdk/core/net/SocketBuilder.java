@@ -16,11 +16,10 @@
 package com.jamocha.bdk.core.net;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.Proxy;
 import java.net.Socket;
 
 /**
@@ -29,47 +28,134 @@ import java.net.Socket;
  */
 public class SocketBuilder implements Builder<Socket> {
 
-    private Integer port;
-    private InetAddress address;
-    private String host;
-
-    @Alternate
-    @Required
-    public SocketBuilder setAddress(InetAddress address) {
-        this.address = address;
-
-        return this;
-    }
-
-    @Alternate
-    @Required
-    public SocketBuilder setHost(String host) {
-        this.host = host;
-
-        return this;
-    }
-
-    @Required
-    @Optional
-    public SocketBuilder setPort(int port) {
-        this.port = port;
-
-        return this;
-    }
-
     @Override
-    public Socket build() throws IOException {
-        if ((address == null || host == null)
-                && port == null) {
-            return new Socket();
+    public Socket build() {
+        return new Socket();
+    }
+
+    public PortBuilder port(int port) {
+        return new PortBuilder(port);
+    }
+
+    public ProxyBuilder proxy(Proxy proxy) {
+        return new ProxyBuilder(proxy);
+    }
+
+    public static abstract class BaseBuilder<T> implements Builder<Socket> {
+
+    }
+
+    public static class ProxyBuilder extends BaseBuilder<ProxyBuilder> {
+
+        private final Proxy proxy;
+
+        private ProxyBuilder(Proxy proxy) {
+            this.proxy = proxy;
         }
 
-        if (host != null) {
-            address = InetAddress.getByName(host);
+        @Override
+        public Socket build() {
+            return new Socket(proxy);
+        }
+    }
+
+    public static class HostBuilder extends BaseBuilder<HostBuilder> {
+
+        final String host;
+        final Integer port;
+
+        private HostBuilder(String host, Integer port) {
+            this.port = port;
+            this.host = host;
         }
 
-        return new Socket(address, port);
+        @Optional
+        public HostBinderBuilder bind(InetAddress address, int port) {
+            return new HostBinderBuilder(host, this.port, address, port);
+        }
 
+        @Override
+        public Socket build() throws IOException {
+            return new Socket(host, port);
+        }
+    }
+
+    public static class HostBinderBuilder extends HostBuilder {
+
+        private final InetAddress localAddress;
+        private final Integer localPort;
+
+        private HostBinderBuilder(String host,
+                Integer port,
+                InetAddress localAddress,
+                Integer localPort) {
+            super(host, port);
+            this.localAddress = localAddress;
+            this.localPort = localPort;
+        }
+
+        @Override
+        public Socket build() throws IOException {
+            return new Socket(host, port, localAddress, localPort);
+        }
+    }
+
+    public static class InetBuilder extends BaseBuilder<InetBuilder> {
+
+        final InetAddress address;
+        final Integer port;
+
+        private InetBuilder(InetAddress address, Integer port) {
+            this.address = address;
+            this.port = port;
+        }
+
+        @Optional
+        public BoundInetBuilder bind(InetAddress address, int port) {
+            return new BoundInetBuilder(this.address, this.port, address, port);
+        }
+
+        @Override
+        public Socket build() throws IOException {
+            return new Socket(address, port);
+        }
+    }
+
+    public static class BoundInetBuilder extends InetBuilder {
+
+        private final InetAddress localAddress;
+        private final Integer localPort;
+
+        private BoundInetBuilder(InetAddress address,
+                Integer port,
+                InetAddress localAddress,
+                Integer localPort) {
+            super(address, port);
+            this.localAddress = localAddress;
+            this.localPort = localPort;
+        }
+
+        @Override
+        public Socket build() throws IOException {
+            return new Socket(address, port, localAddress, localPort);
+        }
+    }
+
+    public static class PortBuilder {
+
+        private final Integer port;
+
+        private PortBuilder(Integer port) {
+            this.port = port;
+        }
+
+        public HostBuilder host(String host) {
+            return new HostBuilder(host, port);
+        }
+
+        public InetBuilder inet(InetAddress address) {
+            return new InetBuilder(address, port);
+        }
     }
 
 }

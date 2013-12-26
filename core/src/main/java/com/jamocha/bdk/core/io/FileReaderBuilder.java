@@ -32,21 +32,21 @@ public class FileReaderBuilder implements Builder<FileReader> {
     private FileDescriptor descriptor;
 
     @Alternate
-    public FileReaderBuilder setFile(String name) {
+    public FileReaderBuilder file(String name) {
         this.file = new File(name);
 
         return this;
     }
 
     @Alternate
-    public FileReaderBuilder setFile(File file) {
+    public FileReaderBuilder file(File file) {
         this.file = file;
 
         return this;
     }
 
     @Alternate
-    public FileReaderBuilder setDescriptor(FileDescriptor descriptor) {
+    public FileReaderBuilder descriptor(FileDescriptor descriptor) {
         this.descriptor = descriptor;
 
         return this;

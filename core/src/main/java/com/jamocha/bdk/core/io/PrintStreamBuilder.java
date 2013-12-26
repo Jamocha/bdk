@@ -21,9 +21,8 @@ import com.jamocha.bdk.api.annotation.Optional;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import static java.nio.charset.Charset.defaultCharset;
 
@@ -31,11 +30,7 @@ import static java.nio.charset.Charset.defaultCharset;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class PrintWriterBuilder {
-
-    public WriterBuilder writer(Writer writer) {
-        return new WriterBuilder(writer);
-    }
+public class PrintStreamBuilder {
 
     public FileBuilder file(File file) {
         return new FileBuilder(file);
@@ -49,34 +44,13 @@ public class PrintWriterBuilder {
         return new StreamBuilder(output);
     }
 
-    public static abstract class BaseBuilder implements Builder<PrintWriter> {
+    public static abstract class BaseBuilder implements Builder<PrintStream> {
 
-        public static final Boolean DEFAULT_AUTOFLUSH = false;
-    }
-
-    public static class WriterBuilder extends BaseBuilder {
-
-        private Boolean autoflush = DEFAULT_AUTOFLUSH;
-        private final Writer writer;
-
-        private WriterBuilder(Writer writer) {
-            this.writer = writer;
-        }
-
-        @Optional("false")
-        public WriterBuilder autoFlush() {
-            this.autoflush = true;
-
-            return this;
-        }
-
-        @Override
-        public PrintWriter build() {
-            return new PrintWriter(writer, autoflush);
-        }
     }
 
     public static class StreamBuilder extends BaseBuilder {
+
+        public static final Boolean DEFAULT_AUTOFLUSH = false;
 
         private final OutputStream output;
         private Boolean autoflush = DEFAULT_AUTOFLUSH;
@@ -93,8 +67,8 @@ public class PrintWriterBuilder {
         }
 
         @Override
-        public PrintWriter build() {
-            return new PrintWriter(output, autoflush);
+        public PrintStream build() {
+            return new PrintStream(output, autoflush);
         }
     }
 
@@ -124,9 +98,10 @@ public class PrintWriterBuilder {
         }
 
         @Override
-        public PrintWriter build() throws FileNotFoundException,
+        public PrintStream build() throws FileNotFoundException,
                 UnsupportedEncodingException {
-            return new PrintWriter(file, charset);
+            return new PrintStream(file, charset);
         }
     }
+
 }

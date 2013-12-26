@@ -19,17 +19,37 @@ import static com.jamocha.bdk.utils.Messages.format;
 
 /**
  *
- * @author saden
+ * @author Sharmarke Aden <www.github.com/saden1>
  */
 public class Throws {
 
-    public static void illegalState(String messageFormat, Object... messageArgs) {
+    public static void illegalState(String messageFormat,
+            Object... messageArgs) {
         throw new IllegalStateException(
                 format(messageFormat, messageFormat));
     }
 
-    public static void illegalArgument(String messageFormat, Object... messageArgs) {
+    public static void illegalArgument(String messageFormat,
+            Object... messageArgs) {
         throw new IllegalArgumentException(
                 format(messageFormat, messageFormat));
+    }
+
+    public static void illegalState(Throwable cause,
+            String messageFormat,
+            Object... messageArgs) {
+        throw new IllegalStateException(
+                format(messageFormat, messageFormat), cause);
+
+    }
+
+    public static void illegalArgument(Throwable cause,
+            String messageFormat,
+            Object... messageArgs) {
+        throw new IllegalArgumentException(
+                format(messageFormat, messageFormat), cause);
+    }
+
+    private Throws() {
     }
 }
