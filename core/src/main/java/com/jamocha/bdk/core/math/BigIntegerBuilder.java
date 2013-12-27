@@ -16,6 +16,7 @@
 package com.jamocha.bdk.core.math;
 
 import com.jamocha.bdk.api.Builder;
+import com.jamocha.bdk.api.annotation.Optional;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -26,26 +27,24 @@ import java.util.Random;
  */
 public class BigIntegerBuilder {
 
-    public NumBitsBuilder numBitsBuilder() {
-        return new NumBitsBuilder();
+    public NumBitsBuilder numBits(int numBits) {
+        return new NumBitsBuilder(numBits);
     }
 
-    public BitLengthBuilder bitLengthBuilder() {
-        return new BitLengthBuilder();
+    public BitLengthBuilder bitLength(int bitLength, int certainty) {
+        return new BitLengthBuilder(bitLength, certainty);
     }
 
-    public StringBuilder stringBuilder() {
-        return new StringBuilder();
+    public StringBuilder value(String value) {
+        return new StringBuilder(value);
     }
 
-    public static abstract class BaseBuilder implements Builder<BigInteger> {
-    }
-
-    public static abstract class RandomBuilder<T> extends BaseBuilder {
+    public static abstract class RandomBuilder<T> implements Builder<BigInteger> {
 
         private static final Random DEFAULT_RANDOM = new SecureRandom();
         protected Random random = DEFAULT_RANDOM;
 
+        @Optional("SecureRandom")
         public T random(Random random) {
             this.random = random;
 
@@ -55,12 +54,10 @@ public class BigIntegerBuilder {
 
     public static class NumBitsBuilder extends RandomBuilder<NumBitsBuilder> {
 
-        private Integer numBits;
+        private final Integer numBits;
 
-        public NumBitsBuilder numBits(int numBits) {
+        private NumBitsBuilder(Integer numBits) {
             this.numBits = numBits;
-
-            return this;
         }
 
         @Override
@@ -71,19 +68,12 @@ public class BigIntegerBuilder {
 
     public static class BitLengthBuilder extends RandomBuilder<BitLengthBuilder> {
 
-        private Integer bitLength;
-        private Integer certainty;
+        private final Integer bitLength;
+        private final Integer certainty;
 
-        public BitLengthBuilder bitLength(int bitLength) {
+        private BitLengthBuilder(Integer bitLength, Integer certainty) {
             this.bitLength = bitLength;
-
-            return this;
-        }
-
-        public BitLengthBuilder certainty(int certainty) {
             this.certainty = certainty;
-
-            return this;
         }
 
         @Override
@@ -92,19 +82,18 @@ public class BigIntegerBuilder {
         }
     }
 
-    public static class StringBuilder extends BaseBuilder {
+    public static class StringBuilder implements Builder<BigInteger> {
 
         public static final Integer DEFAULT_RADIX = 10;
 
-        private String value;
+        private final String value;
         private Integer radix = DEFAULT_RADIX;
 
-        public StringBuilder value(String value) {
+        private StringBuilder(String value) {
             this.value = value;
-
-            return this;
         }
 
+        @Optional("10")
         public StringBuilder radix(int radix) {
             this.radix = radix;
 

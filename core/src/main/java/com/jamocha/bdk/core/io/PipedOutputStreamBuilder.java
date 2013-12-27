@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -27,18 +26,28 @@ import java.io.PipedOutputStream;
  */
 public class PipedOutputStreamBuilder implements Builder<PipedOutputStream> {
 
-    private PipedInputStream input;
-
-    @Required
-    public PipedOutputStreamBuilder input(PipedInputStream input) {
-        this.input = input;
-
-        return this;
+    public StreamBuilder connect(PipedInputStream input) {
+        return new StreamBuilder(input);
     }
 
     @Override
     public PipedOutputStream build() throws IOException {
-        return new PipedOutputStream(input);
+        return new PipedOutputStream();
+    }
+
+    public static class StreamBuilder implements Builder<PipedOutputStream> {
+
+        private final PipedInputStream input;
+
+        private StreamBuilder(PipedInputStream input) {
+            this.input = input;
+        }
+
+        @Override
+        public PipedOutputStream build() throws Exception {
+            return new PipedOutputStream(input);
+        }
+
     }
 
 }

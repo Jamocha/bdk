@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.net;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
@@ -26,40 +25,62 @@ import java.net.URLStreamHandlerFactory;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class URLClassLoaderBuilder implements Builder<URLClassLoader> {
+public class URLClassLoaderBuilder {
 
     private URL[] urls;
-    private ClassLoader parent;
+    private ClassLoader loader;
     private URLStreamHandlerFactory factory;
 
-    @Required
-    public URLClassLoaderBuilder urls(URL[] urls) {
-        this.urls = urls;
-
-        return this;
+    public UrlsBuilder urls(URL[] urls) {
+        return new UrlsBuilder(urls);
     }
 
-    @Optional
-    public URLClassLoaderBuilder parent(ClassLoader parent) {
-        this.parent = parent;
+    public static class UrlsBuilder implements Builder<URLClassLoader> {
 
-        return this;
-    }
+        private final URL[] urls;
 
-    @Optional
-    public URLClassLoaderBuilder factory(URLStreamHandlerFactory factory) {
-        this.factory = factory;
+        private UrlsBuilder(URL[] urls) {
+            this.urls = urls;
+        }
 
-        return this;
-    }
+        @Optional
+        public LoaderBuilder loader(ClassLoader loader) {
+            return new LoaderBuilder(urls, loader);
+        }
 
-    @Override
-    public URLClassLoader build() {
-        if (parent == null && factory == null) {
+        @Override
+        public URLClassLoader build() {
             return new URLClassLoader(urls);
         }
 
-        return new URLClassLoader(urls, parent, factory);
+    }
+
+    public static class LoaderBuilder implements Builder<URLClassLoader> {
+
+        private final URL[] urls;
+        private final ClassLoader loader;
+        private URLStreamHandlerFactory factory;
+
+        private LoaderBuilder(URL[] urls, ClassLoader loader) {
+            this.urls = urls;
+            this.loader = loader;
+        }
+
+        @Optional
+        public LoaderBuilder factory(URLStreamHandlerFactory factory) {
+            this.factory = factory;
+
+            return this;
+        }
+
+        @Override
+        public URLClassLoader build() {
+            if (factory == null) {
+                return new URLClassLoader(urls, loader);
+            }
+
+            return new URLClassLoader(urls, loader, factory);
+        }
     }
 
 }

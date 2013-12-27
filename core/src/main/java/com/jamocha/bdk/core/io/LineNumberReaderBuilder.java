@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.LineNumberReader;
 import java.io.Reader;
 
@@ -25,30 +24,46 @@ import java.io.Reader;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class LineNumberReaderBuilder
-        implements Builder<LineNumberReader> {
+public class LineNumberReaderBuilder {
 
-    public static final Integer DEFAULT_SIZE = 8_192;
-    private Reader reader;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public LineNumberReaderBuilder reader(Reader reader) {
-        this.reader = reader;
-
-        return this;
+    public ReaderBuilder reader(Reader reader) {
+        return new ReaderBuilder(reader);
     }
 
-    @Optional
-    public LineNumberReaderBuilder size(Integer size) {
-        this.size = size;
+    public static class ReaderBuilder implements Builder<LineNumberReader> {
 
-        return this;
+        private final Reader reader;
+
+        private ReaderBuilder(Reader reader) {
+            this.reader = reader;
+        }
+
+        @Optional
+        public SizeBuilder size(int size) {
+            return new SizeBuilder(reader, size);
+        }
+
+        @Override
+        public LineNumberReader build() {
+            return new LineNumberReader(reader);
+        }
+
     }
 
-    @Override
-    public LineNumberReader build() {
-        return new LineNumberReader(reader, size);
+    public static class SizeBuilder implements Builder<LineNumberReader> {
+
+        private final Reader reader;
+        private final Integer size;
+
+        public SizeBuilder(Reader reader, Integer size) {
+            this.reader = reader;
+            this.size = size;
+        }
+
+        @Override
+        public LineNumberReader build() {
+            return new LineNumberReader(reader, size);
+        }
     }
 
 }

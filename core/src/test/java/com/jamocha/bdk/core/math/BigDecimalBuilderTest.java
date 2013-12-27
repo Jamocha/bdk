@@ -30,7 +30,7 @@ public class BigDecimalBuilderTest {
 
     @Test
     public void verifyIntBuilder() {
-        BigDecimal result = new BigDecimalBuilder().intBuilder()
+        BigDecimal result = new BigDecimalBuilder()
                 .value(1_979)
                 .build();
 
@@ -40,7 +40,7 @@ public class BigDecimalBuilderTest {
 
     @Test
     public void verifyLongBuilder() {
-        BigDecimal result = new BigDecimalBuilder().longBuilder()
+        BigDecimal result = new BigDecimalBuilder()
                 .value(1_979L)
                 .build();
 
@@ -50,7 +50,7 @@ public class BigDecimalBuilderTest {
 
     @Test
     public void verifyDoubleBuilder() {
-        BigDecimal result = new BigDecimalBuilder().doubleBuilder()
+        BigDecimal result = new BigDecimalBuilder()
                 .value(1979d)
                 .build();
 
@@ -60,7 +60,7 @@ public class BigDecimalBuilderTest {
 
     @Test
     public void verifyBigIntBuilder() {
-        BigDecimal result = new BigDecimalBuilder().bigIntBuilder()
+        BigDecimal result = new BigDecimalBuilder()
                 .value(new BigInteger(EXPECTED))
                 .build();
 
@@ -70,7 +70,7 @@ public class BigDecimalBuilderTest {
 
     @Test
     public void verifyStringBuilder() {
-        BigDecimal result = new BigDecimalBuilder().stringBuilder()
+        BigDecimal result = new BigDecimalBuilder()
                 .value(EXPECTED)
                 .build();
 
@@ -80,7 +80,7 @@ public class BigDecimalBuilderTest {
 
     @Test
     public void verifyCharBuilder() {
-        BigDecimal result = new BigDecimalBuilder().charsBuilder()
+        BigDecimal result = new BigDecimalBuilder()
                 .value(EXPECTED.toCharArray())
                 .build();
 
@@ -90,7 +90,7 @@ public class BigDecimalBuilderTest {
 
     @Test
     public void verifyCharOffsetBuilder() {
-        BigDecimal result = new BigDecimalBuilder().charsBuilder()
+        BigDecimal result = new BigDecimalBuilder()
                 .value(EXPECTED.toCharArray())
                 .offset(1)
                 .length(2)

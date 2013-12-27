@@ -18,11 +18,9 @@ package com.jamocha.bdk.core.io;
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Alternate;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import static java.nio.charset.Charset.defaultCharset;
 import static java.nio.charset.Charset.forName;
 import java.nio.charset.CharsetDecoder;
 
@@ -30,49 +28,75 @@ import java.nio.charset.CharsetDecoder;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class InputStreamReaderBuilder implements Builder<InputStreamReader> {
+public class InputStreamReaderBuilder {
 
-    private InputStream inputStream;
-    private Charset charset = defaultCharset();
-    private CharsetDecoder decoder;
-
-    @Required
-    public InputStreamReaderBuilder input(InputStream inputStream) {
-        this.inputStream = inputStream;
-
-        return this;
+    public StreamBuilder input(InputStream input) {
+        return new StreamBuilder(input);
     }
 
-    @Alternate
-    @Optional
-    public InputStreamReaderBuilder charset(Charset charset) {
-        this.charset = charset;
+    public static class StreamBuilder implements Builder<InputStreamReader> {
 
-        return this;
-    }
+        private final InputStream input;
 
-    @Alternate
-    @Optional
-    public InputStreamReaderBuilder charset(String charname) {
-        this.charset = forName(charname);
-
-        return this;
-    }
-
-    @Optional
-    public InputStreamReaderBuilder decoder(CharsetDecoder decoder) {
-        this.decoder = decoder;
-
-        return this;
-    }
-
-    @Override
-    public InputStreamReader build() {
-        if (decoder == null) {
-            return new InputStreamReader(inputStream, charset);
+        public StreamBuilder(InputStream input) {
+            this.input = input;
         }
 
-        return new InputStreamReader(inputStream, decoder);
+        @Alternate
+        @Optional
+        public CharsetBuilder charset(String charset) {
+            return new CharsetBuilder(input, forName(charset));
+        }
+
+        @Alternate
+        @Optional
+        public CharsetBuilder charset(Charset charset) {
+            return new CharsetBuilder(input, charset);
+        }
+
+        @Alternate
+        @Optional
+        public DecoderBuilder charset(CharsetDecoder decoder) {
+            return new DecoderBuilder(input, decoder);
+        }
+
+        @Override
+        public InputStreamReader build() throws Exception {
+            return new InputStreamReader(input);
+        }
+
+    }
+
+    public static class CharsetBuilder implements Builder<InputStreamReader> {
+
+        private final InputStream input;
+        private final Charset charset;
+
+        public CharsetBuilder(InputStream input, Charset charset) {
+            this.input = input;
+            this.charset = charset;
+        }
+
+        @Override
+        public InputStreamReader build() {
+            return new InputStreamReader(input, charset);
+        }
+    }
+
+    public static class DecoderBuilder implements Builder<InputStreamReader> {
+
+        private final InputStream input;
+        private final CharsetDecoder decoder;
+
+        public DecoderBuilder(InputStream input, CharsetDecoder decoder) {
+            this.input = input;
+            this.decoder = decoder;
+        }
+
+        @Override
+        public InputStreamReader build() {
+            return new InputStreamReader(input, decoder);
+        }
     }
 
 }

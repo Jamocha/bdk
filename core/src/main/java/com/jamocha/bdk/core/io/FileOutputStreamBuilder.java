@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
 import com.jamocha.bdk.api.annotation.Optional;
 import java.io.File;
 import java.io.FileDescriptor;
@@ -27,49 +26,68 @@ import java.io.FileOutputStream;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class FileOutputStreamBuilder
-        implements Builder<FileOutputStream> {
+public class FileOutputStreamBuilder {
 
-    private static final Boolean DEFAULT_APPEND = Boolean.FALSE;
-    private File file;
-    private FileDescriptor descriptor;
-    private Boolean append = DEFAULT_APPEND;
-
-    @Alternate
-    public FileOutputStreamBuilder file(String name) {
-        this.file = new File(name);
-
-        return this;
+    public FileBuilder name(String name) {
+        return new FileBuilder(new File(name));
     }
 
-    @Alternate
-    public FileOutputStreamBuilder file(File file) {
-        this.file = file;
-
-        return this;
+    public FileBuilder file(File file) {
+        return new FileBuilder(file);
     }
 
-    @Alternate
-    public FileOutputStreamBuilder descriptor(FileDescriptor descriptor) {
-        this.descriptor = descriptor;
-
-        return this;
+    public DescriptorBuilder descriptor(FileDescriptor descriptor) {
+        return new DescriptorBuilder(descriptor);
     }
 
-    @Optional
-    public FileOutputStreamBuilder append() {
-        this.append = true;
+    public static class FileBuilder implements Builder<FileOutputStream> {
 
-        return this;
-    }
+        private final File file;
 
-    @Override
-    public FileOutputStream build() throws FileNotFoundException {
-        if (descriptor == null) {
-            return new FileOutputStream(file, append);
+        private FileBuilder(File file) {
+            this.file = file;
         }
 
-        return new FileOutputStream(descriptor);
+        @Optional
+        public AppendBuilder append() {
+            return new AppendBuilder(file, true);
+        }
+
+        @Override
+        public FileOutputStream build() throws Exception {
+            return new FileOutputStream(file);
+        }
+
     }
 
+    public static class DescriptorBuilder implements Builder<FileOutputStream> {
+
+        private final FileDescriptor descriptor;
+
+        private DescriptorBuilder(FileDescriptor descriptor) {
+            this.descriptor = descriptor;
+        }
+
+        @Override
+        public FileOutputStream build() {
+            return new FileOutputStream(descriptor);
+        }
+
+    }
+
+    public static class AppendBuilder implements Builder<FileOutputStream> {
+
+        private final File file;
+        private final Boolean append;
+
+        private AppendBuilder(File file, Boolean append) {
+            this.file = file;
+            this.append = append;
+        }
+
+        @Override
+        public FileOutputStream build() throws FileNotFoundException {
+            return new FileOutputStream(file, append);
+        }
+    }
 }

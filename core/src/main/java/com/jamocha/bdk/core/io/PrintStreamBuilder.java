@@ -44,11 +44,7 @@ public class PrintStreamBuilder {
         return new StreamBuilder(output);
     }
 
-    public static abstract class BaseBuilder implements Builder<PrintStream> {
-
-    }
-
-    public static class StreamBuilder extends BaseBuilder {
+    public static class StreamBuilder implements Builder<PrintStream> {
 
         public static final Boolean DEFAULT_AUTOFLUSH = false;
 
@@ -72,7 +68,7 @@ public class PrintStreamBuilder {
         }
     }
 
-    public static class FileBuilder extends BaseBuilder {
+    public static class FileBuilder implements Builder<PrintStream> {
 
         private final File file;
         private String charset = defaultCharset().name();

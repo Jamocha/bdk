@@ -33,6 +33,8 @@ import static java.nio.charset.Charset.defaultCharset;
  */
 public class PrintWriterBuilder {
 
+    public static final Boolean DEFAULT_AUTOFLUSH = false;
+
     public WriterBuilder writer(Writer writer) {
         return new WriterBuilder(writer);
     }
@@ -49,12 +51,7 @@ public class PrintWriterBuilder {
         return new StreamBuilder(output);
     }
 
-    public static abstract class BaseBuilder implements Builder<PrintWriter> {
-
-        public static final Boolean DEFAULT_AUTOFLUSH = false;
-    }
-
-    public static class WriterBuilder extends BaseBuilder {
+    public static class WriterBuilder implements Builder<PrintWriter> {
 
         private Boolean autoflush = DEFAULT_AUTOFLUSH;
         private final Writer writer;
@@ -76,7 +73,7 @@ public class PrintWriterBuilder {
         }
     }
 
-    public static class StreamBuilder extends BaseBuilder {
+    public static class StreamBuilder implements Builder<PrintWriter> {
 
         private final OutputStream output;
         private Boolean autoflush = DEFAULT_AUTOFLUSH;
@@ -98,7 +95,7 @@ public class PrintWriterBuilder {
         }
     }
 
-    public static class FileBuilder extends BaseBuilder {
+    public static class FileBuilder implements Builder<PrintWriter> {
 
         private final File file;
         private String charset = defaultCharset().name();

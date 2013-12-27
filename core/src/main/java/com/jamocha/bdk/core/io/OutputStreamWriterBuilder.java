@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,9 @@ package com.jamocha.bdk.core.io;
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Alternate;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
-import static java.nio.charset.Charset.defaultCharset;
 import static java.nio.charset.Charset.forName;
 import java.nio.charset.CharsetEncoder;
 
@@ -30,49 +28,75 @@ import java.nio.charset.CharsetEncoder;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class OutputStreamWriterBuilder implements Builder<OutputStreamWriter> {
+public class OutputStreamWriterBuilder {
 
-    private OutputStream outputStream;
-    private Charset charset = defaultCharset();
-    private CharsetEncoder encoder;
-
-    @Required
-    public OutputStreamWriterBuilder output(OutputStream outputStream) {
-        this.outputStream = outputStream;
-
-        return this;
+    public StreamBuilder output(OutputStream output) {
+        return new StreamBuilder(output);
     }
 
-    @Alternate
-    @Optional
-    public OutputStreamWriterBuilder charset(Charset charset) {
-        this.charset = charset;
+    public static class StreamBuilder implements Builder<OutputStreamWriter> {
 
-        return this;
-    }
+        private final OutputStream output;
 
-    @Alternate
-    @Optional
-    public OutputStreamWriterBuilder charset(String charname) {
-        this.charset = forName(charname);
-
-        return this;
-    }
-
-    @Optional
-    public OutputStreamWriterBuilder decoder(CharsetEncoder encoder) {
-        this.encoder = encoder;
-
-        return this;
-    }
-
-    @Override
-    public OutputStreamWriter build() {
-        if (encoder == null) {
-            return new OutputStreamWriter(outputStream, charset);
+        public StreamBuilder(OutputStream output) {
+            this.output = output;
         }
 
-        return new OutputStreamWriter(outputStream, encoder);
+        @Alternate
+        @Optional
+        public CharsetBuilder charset(String charset) {
+            return new CharsetBuilder(output, forName(charset));
+        }
+
+        @Alternate
+        @Optional
+        public CharsetBuilder charset(Charset charset) {
+            return new CharsetBuilder(output, charset);
+        }
+
+        @Alternate
+        @Optional
+        public EncoderBuilder charset(CharsetEncoder encoder) {
+            return new EncoderBuilder(output, encoder);
+        }
+
+        @Override
+        public OutputStreamWriter build() throws Exception {
+            return new OutputStreamWriter(output);
+        }
+
+    }
+
+    public static class CharsetBuilder implements Builder<OutputStreamWriter> {
+
+        private final OutputStream output;
+        private final Charset charset;
+
+        public CharsetBuilder(OutputStream output, Charset charset) {
+            this.output = output;
+            this.charset = charset;
+        }
+
+        @Override
+        public OutputStreamWriter build() {
+            return new OutputStreamWriter(output, charset);
+        }
+    }
+
+    public static class EncoderBuilder implements Builder<OutputStreamWriter> {
+
+        private final OutputStream output;
+        private final CharsetEncoder encoder;
+
+        public EncoderBuilder(OutputStream output, CharsetEncoder encoder) {
+            this.output = output;
+            this.encoder = encoder;
+        }
+
+        @Override
+        public OutputStreamWriter build() {
+            return new OutputStreamWriter(output, encoder);
+        }
     }
 
 }

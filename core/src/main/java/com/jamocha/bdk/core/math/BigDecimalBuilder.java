@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.math;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -28,50 +27,47 @@ import java.math.MathContext;
  */
 public class BigDecimalBuilder {
 
-    public StringBuilder stringBuilder() {
-        return new StringBuilder();
+    public StringBuilder value(String value) {
+        return new StringBuilder(value);
     }
 
-    public CharsBuilder charsBuilder() {
-        return new CharsBuilder();
+    public CharsBuilder value(char[] value) {
+        return new CharsBuilder(value);
     }
 
-    public IntegerBuilder intBuilder() {
-        return new IntegerBuilder();
+    public IntegerBuilder value(int value) {
+        return new IntegerBuilder(value);
     }
 
-    public LongBuilder longBuilder() {
-        return new LongBuilder();
+    public LongBuilder value(long value) {
+        return new LongBuilder(value);
     }
 
-    public DoubleBuilder doubleBuilder() {
-        return new DoubleBuilder();
+    public DoubleBuilder value(double value) {
+        return new DoubleBuilder(value);
     }
 
-    public BigIntegerBuilder bigIntBuilder() {
-        return new BigIntegerBuilder();
+    public BigIntegerBuilder value(BigInteger value) {
+        return new BigIntegerBuilder(value);
     }
 
-    public static abstract class BaseBuilder implements Builder<BigDecimal> {
+    public static abstract class ContextBuilder implements Builder<BigDecimal> {
 
         MathContext context;
 
-        public BaseBuilder context(MathContext context) {
+        public ContextBuilder context(MathContext context) {
             this.context = context;
 
             return this;
         }
     }
 
-    public static class StringBuilder extends BaseBuilder {
+    public static class StringBuilder extends ContextBuilder {
 
-        private String value;
+        private final String value;
 
-        @Required
-        public StringBuilder value(String value) {
+        private StringBuilder(String value) {
             this.value = value;
-
-            return this;
         }
 
         @Override
@@ -84,15 +80,12 @@ public class BigDecimalBuilder {
         }
     }
 
-    public static class IntegerBuilder extends BaseBuilder {
+    public static class IntegerBuilder extends ContextBuilder {
 
-        private Integer value;
+        private final Integer value;
 
-        @Required
-        public IntegerBuilder value(Integer value) {
+        private IntegerBuilder(int value) {
             this.value = value;
-
-            return this;
         }
 
         @Override
@@ -105,15 +98,12 @@ public class BigDecimalBuilder {
         }
     }
 
-    public static class LongBuilder extends BaseBuilder {
+    public static class LongBuilder extends ContextBuilder {
 
-        private Long value;
+        private final Long value;
 
-        @Required
-        public LongBuilder value(Long value) {
+        private LongBuilder(long value) {
             this.value = value;
-
-            return this;
         }
 
         @Override
@@ -126,15 +116,12 @@ public class BigDecimalBuilder {
         }
     }
 
-    public static class DoubleBuilder extends BaseBuilder {
+    public static class DoubleBuilder extends ContextBuilder {
 
-        private Double value;
+        private final Double value;
 
-        @Required
-        public DoubleBuilder value(Double value) {
+        private DoubleBuilder(double value) {
             this.value = value;
-
-            return this;
         }
 
         @Override
@@ -147,15 +134,12 @@ public class BigDecimalBuilder {
         }
     }
 
-    public static class BigIntegerBuilder extends BaseBuilder {
+    public static class BigIntegerBuilder extends ContextBuilder {
 
-        private BigInteger value;
+        private final BigInteger value;
 
-        @Required
-        public BigIntegerBuilder value(BigInteger value) {
+        private BigIntegerBuilder(BigInteger value) {
             this.value = value;
-
-            return this;
         }
 
         @Override
@@ -168,19 +152,16 @@ public class BigDecimalBuilder {
         }
     }
 
-    public static class CharsBuilder extends BaseBuilder {
+    public static class CharsBuilder extends ContextBuilder {
 
         public static final Integer DEFAULT_OFFSET = 0;
 
-        private char[] value;
+        private final char[] value;
         private Integer offset = DEFAULT_OFFSET;
         private Integer length;
 
-        @Required
-        public CharsBuilder value(char[] value) {
+        private CharsBuilder(char[] value) {
             this.value = value;
-
-            return this;
         }
 
         @Optional

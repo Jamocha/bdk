@@ -28,29 +28,22 @@ import java.net.URLStreamHandler;
  */
 public class URLBuilder {
 
-    public StringBuilder stringBuilder() {
-        return new StringBuilder();
+    public StringBuilder uri(String uri) {
+        return new StringBuilder(uri);
     }
 
-    public ComponentBuilder componentBuilder() {
+    public ComponentBuilder component() {
         return new ComponentBuilder();
     }
 
-    public static abstract class BaseBuilder implements Builder<URL> {
+    public static class StringBuilder implements Builder<URL> {
 
-    }
-
-    public static class StringBuilder extends BaseBuilder {
-
-        private String value;
+        private final String uri;
         private URL context;
         private URLStreamHandler handler;
 
-        @Required
-        public StringBuilder value(String value) {
-            this.value = value;
-
-            return this;
+        private StringBuilder(String uri) {
+            this.uri = uri;
         }
 
         @Optional
@@ -69,11 +62,11 @@ public class URLBuilder {
 
         @Override
         public URL build() throws MalformedURLException {
-            return new URL(context, value, handler);
+            return new URL(context, uri, handler);
         }
     }
 
-    public static class ComponentBuilder extends BaseBuilder {
+    public static class ComponentBuilder implements Builder<URL> {
 
         public static final Integer DEFAULT_PORT = -1;
         private String protocol;

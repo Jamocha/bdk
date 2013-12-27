@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -26,39 +25,48 @@ import java.io.FileNotFoundException;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class FileInputStreamBuilder implements Builder<FileInputStream> {
+public class FileInputStreamBuilder {
 
-    private File file;
-    private FileDescriptor descriptor;
-
-    @Alternate
-    public FileInputStreamBuilder file(String name) {
-        this.file = new File(name);
-
-        return this;
+    public FileBuilder name(String name) {
+        return new FileBuilder(new File(name));
     }
 
-    @Alternate
-    public FileInputStreamBuilder file(File file) {
-        this.file = file;
-
-        return this;
+    public FileBuilder file(File file) {
+        return new FileBuilder(file);
     }
 
-    @Alternate
-    public FileInputStreamBuilder descriptor(FileDescriptor descriptor) {
-        this.descriptor = descriptor;
-
-        return this;
+    public DescriptorBuilder descriptor(FileDescriptor descriptor) {
+        return new DescriptorBuilder(descriptor);
     }
 
-    @Override
-    public FileInputStream build() throws FileNotFoundException {
-        if (descriptor == null) {
+    public static class FileBuilder implements Builder<FileInputStream> {
+
+        private final File file;
+
+        private FileBuilder(File file) {
+            this.file = file;
+        }
+
+        @Override
+        public FileInputStream build() throws FileNotFoundException {
             return new FileInputStream(file);
         }
 
-        return new FileInputStream(descriptor);
+    }
+
+    public static class DescriptorBuilder implements Builder<FileInputStream> {
+
+        private final FileDescriptor descriptor;
+
+        private DescriptorBuilder(FileDescriptor descriptor) {
+            this.descriptor = descriptor;
+        }
+
+        @Override
+        public FileInputStream build() {
+            return new FileInputStream(descriptor);
+        }
+
     }
 
 }

@@ -41,11 +41,7 @@ public class DatagramSocketBuilder implements Builder<DatagramSocket> {
         return new DatagramSocket();
     }
 
-    public static abstract class BaseBuilder implements Builder<DatagramSocket> {
-
-    }
-
-    public static class SocketBuilder extends BaseBuilder {
+    public static class SocketBuilder implements Builder<DatagramSocket> {
 
         private final SocketAddress address;
 
@@ -60,7 +56,7 @@ public class DatagramSocketBuilder implements Builder<DatagramSocket> {
 
     }
 
-    public static class InetBuilder extends BaseBuilder {
+    public static class InetBuilder implements Builder<DatagramSocket> {
 
         private InetAddress address;
         private final Integer port;

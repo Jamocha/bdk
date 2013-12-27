@@ -16,36 +16,85 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.FilePermission;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * TODO: enhance actions permissions
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class FilePermissionBuilder implements Builder<FilePermission> {
+public class FilePermissionBuilder {
 
-    private String path;
-    private String actions;
-
-    @Required
-    public FilePermissionBuilder path(String path) {
-        this.path = path;
-
-        return this;
+    public PermissionBuilder path(String path) {
+        return new PermissionBuilder(path);
     }
 
-    @Required
-    public FilePermissionBuilder actions(String actions) {
-        this.actions = actions;
+    public static class PermissionBuilder implements Builder<FilePermission> {
 
-        return this;
-    }
+        private final String path;
+        private final Set actions = new HashSet(5);
 
-    @Override
-    public FilePermission build() {
-        return new FilePermission(path, actions);
+        private PermissionBuilder(String path) {
+            this.path = path;
+        }
+
+        public PermissionBuilder read() {
+            this.actions.add("read");
+
+            return this;
+        }
+
+        public PermissionBuilder write() {
+            this.actions.add("write");
+
+            return this;
+        }
+
+        public PermissionBuilder delete() {
+            this.actions.add("delete");
+
+            return this;
+        }
+
+        public PermissionBuilder execute() {
+            this.actions.add("execute");
+
+            return this;
+        }
+
+        public PermissionBuilder readlink() {
+            this.actions.add("readlink");
+
+            return this;
+        }
+
+        @Override
+        public FilePermission build() {
+            StringBuilder builder = new StringBuilder();
+
+            if (!actions.isEmpty()) {
+                Iterator<String> iter = actions.iterator();
+
+                char separator = ',';
+
+                if (iter.hasNext()) {
+                    builder.append(iter.next());
+
+                    while (iter.hasNext()) {
+                        builder.append(separator)
+                                .append(iter.next());
+                    }
+                }
+            }
+
+            String result = builder.toString();
+
+            return new FilePermission(path, result);
+        }
+
     }
 
 }

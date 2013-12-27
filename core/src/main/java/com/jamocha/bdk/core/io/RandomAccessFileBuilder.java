@@ -44,11 +44,7 @@ public class RandomAccessFileBuilder {
         return new FileBuilder(file);
     }
 
-    public static abstract class BaseBuilder implements Builder<RandomAccessFile> {
-
-    }
-
-    public static class NameBuilder extends BaseBuilder {
+    public static class NameBuilder implements Builder<RandomAccessFile> {
 
         private final String name;
         private final String mode = DEFAULT_MODE;
@@ -69,7 +65,7 @@ public class RandomAccessFileBuilder {
 
     }
 
-    public static class FileBuilder extends BaseBuilder {
+    public static class FileBuilder implements Builder<RandomAccessFile> {
 
         private final File file;
         private final String mode = DEFAULT_MODE;
@@ -115,7 +111,7 @@ public class RandomAccessFileBuilder {
         }
     }
 
-    public static class FileModeBuilder extends BaseBuilder {
+    public static class FileModeBuilder implements Builder<RandomAccessFile> {
 
         private final File file;
         private final String mode;

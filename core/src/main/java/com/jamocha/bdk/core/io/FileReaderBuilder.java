@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -26,39 +25,48 @@ import java.io.FileReader;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class FileReaderBuilder implements Builder<FileReader> {
+public class FileReaderBuilder {
 
-    private File file;
-    private FileDescriptor descriptor;
-
-    @Alternate
-    public FileReaderBuilder file(String name) {
-        this.file = new File(name);
-
-        return this;
+    public FileBuilder name(String name) {
+        return new FileBuilder(new File(name));
     }
 
-    @Alternate
-    public FileReaderBuilder file(File file) {
-        this.file = file;
-
-        return this;
+    public FileBuilder file(File file) {
+        return new FileBuilder(file);
     }
 
-    @Alternate
-    public FileReaderBuilder descriptor(FileDescriptor descriptor) {
-        this.descriptor = descriptor;
-
-        return this;
+    public DescriptorBuilder descriptor(FileDescriptor descriptor) {
+        return new DescriptorBuilder(descriptor);
     }
 
-    @Override
-    public FileReader build() throws FileNotFoundException {
-        if (descriptor == null) {
+    public static class FileBuilder implements Builder<FileReader> {
+
+        private final File file;
+
+        private FileBuilder(File file) {
+            this.file = file;
+        }
+
+        @Override
+        public FileReader build() throws FileNotFoundException {
             return new FileReader(file);
         }
 
-        return new FileReader(descriptor);
+    }
+
+    public static class DescriptorBuilder implements Builder<FileReader> {
+
+        private final FileDescriptor descriptor;
+
+        private DescriptorBuilder(FileDescriptor descriptor) {
+            this.descriptor = descriptor;
+        }
+
+        @Override
+        public FileReader build() {
+            return new FileReader(descriptor);
+        }
+
     }
 
 }

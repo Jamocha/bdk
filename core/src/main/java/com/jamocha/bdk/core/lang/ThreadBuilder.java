@@ -17,9 +17,7 @@ package com.jamocha.bdk.core.lang;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import static com.jamocha.bdk.utils.Checks.isNullOrEmpty;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -28,48 +26,101 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ThreadBuilder implements Builder<Thread> {
 
     private static final Long DEFAULT_SIZE = 0L;
-    private static final String DEFAULT_NAME = "Thread";
-    private final AtomicInteger threadCount = new AtomicInteger();
-    private Runnable runnable;
-    private ThreadGroup threadGroup;
-    private String name;
-    private Long size = DEFAULT_SIZE;
 
-    @Required
-    public ThreadBuilder runnable(Runnable runnable) {
-        this.runnable = runnable;
-
-        return this;
+    public NameBuilder name(String name) {
+        return new NameBuilder(name);
     }
 
-    @Optional
-    public ThreadBuilder group(ThreadGroup threadGroup) {
-        this.threadGroup = threadGroup;
-
-        return this;
-    }
-
-    @Optional
-    public ThreadBuilder name(String name) {
-        this.name = name;
-
-        return this;
-    }
-
-    @Optional
-    public ThreadBuilder size(long size) {
-        this.size = size;
-
-        return this;
+    public RunnableBuilder runnable(Runnable runnable) {
+        return new RunnableBuilder(runnable);
     }
 
     @Override
     public Thread build() {
-        if (isNullOrEmpty(name)) {
-            name = DEFAULT_NAME + "-" + threadCount.getAndIncrement();
-        }
-
-        return new Thread(threadGroup, runnable, name, size);
+        return new Thread();
     }
 
+    public static class NameBuilder implements Builder<Thread> {
+
+        private final String name;
+        private Runnable runnable;
+
+        private NameBuilder(String name) {
+            this.name = name;
+        }
+
+        @Optional
+        public NameBuilder runnable(Runnable runnable) {
+            this.runnable = runnable;
+
+            return this;
+        }
+
+        @Optional
+        public GroupBuilder group(ThreadGroup group) {
+            return new GroupBuilder(runnable, name);
+        }
+
+        @Override
+        public Thread build() {
+            return new Thread(runnable, name);
+        }
+
+    }
+
+    public static class RunnableBuilder implements Builder<Thread> {
+
+        private final Runnable runnable;
+        private String name;
+
+        private RunnableBuilder(Runnable runnable) {
+            this.runnable = runnable;
+        }
+
+        @Optional
+        public GroupBuilder name(String name) {
+            return new GroupBuilder(runnable, name);
+        }
+
+        @Override
+        public Thread build() {
+            if (isNullOrEmpty(name)) {
+                return new Thread(runnable);
+            }
+
+            return new Thread(runnable, name);
+        }
+    }
+
+    public static class GroupBuilder implements Builder<Thread> {
+
+        private final Runnable runnable;
+        private final String name;
+        private ThreadGroup group;
+        private Long size = DEFAULT_SIZE;
+
+        private GroupBuilder(Runnable runnable, String name) {
+            this.runnable = runnable;
+            this.name = name;
+        }
+
+        @Optional("parent")
+        public GroupBuilder group(ThreadGroup group) {
+            this.group = group;
+
+            return this;
+        }
+
+        @Optional("0")
+        public GroupBuilder size(long size) {
+            this.size = size;
+
+            return this;
+        }
+
+        @Override
+        public Thread build() {
+            return new Thread(group, runnable, name, size);
+        }
+    }
 }

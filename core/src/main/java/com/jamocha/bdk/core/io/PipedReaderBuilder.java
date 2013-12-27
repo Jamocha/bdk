@@ -35,11 +35,12 @@ public class PipedReaderBuilder implements Builder<PipedReader> {
         return new SizeBuilder(size);
     }
 
-    public static abstract class BaseBuilder implements Builder<PipedReader> {
-
+    @Override
+    public PipedReader build() throws IOException {
+        return new PipedReader();
     }
 
-    public static class SizeBuilder extends BaseBuilder {
+    public static class SizeBuilder implements Builder<PipedReader> {
 
         private final Integer size;
         private PipedWriter writer;
@@ -66,7 +67,7 @@ public class PipedReaderBuilder implements Builder<PipedReader> {
 
     }
 
-    public static class WriterBuilder extends BaseBuilder {
+    public static class WriterBuilder implements Builder<PipedReader> {
 
         public static final Integer DEFAULT_SIZE = 1_024;
 
@@ -89,11 +90,6 @@ public class PipedReaderBuilder implements Builder<PipedReader> {
             return new PipedReader(writer, size);
         }
 
-    }
-
-    @Override
-    public PipedReader build() throws IOException {
-        return new PipedReader();
     }
 
 }

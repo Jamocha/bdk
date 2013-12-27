@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
 import com.jamocha.bdk.api.annotation.Optional;
 import java.io.File;
 import java.io.FileDescriptor;
@@ -27,49 +26,69 @@ import java.io.IOException;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class FileWriterBuilder
-        implements Builder<FileWriter> {
+public class FileWriterBuilder {
 
-    private static final Boolean DEFAULT_APPEND = Boolean.FALSE;
-    private File file;
-    private FileDescriptor descriptor;
-    private Boolean append = DEFAULT_APPEND;
-
-    @Alternate
-    public FileWriterBuilder file(String name) {
-        this.file = new File(name);
-
-        return this;
+    public FileBuilder name(String name) {
+        return new FileBuilder(new File(name));
     }
 
-    @Alternate
-    public FileWriterBuilder file(File file) {
-        this.file = file;
-
-        return this;
+    public FileBuilder file(File file) {
+        return new FileBuilder(file);
     }
 
-    @Alternate
-    public FileWriterBuilder descriptor(FileDescriptor descriptor) {
-        this.descriptor = descriptor;
-
-        return this;
+    public DescriptorBuilder descriptor(FileDescriptor descriptor) {
+        return new DescriptorBuilder(descriptor);
     }
 
-    @Optional
-    public FileWriterBuilder append() {
-        this.append = true;
+    public static class FileBuilder implements Builder<FileWriter> {
 
-        return this;
-    }
+        private final File file;
 
-    @Override
-    public FileWriter build() throws IOException {
-        if (descriptor == null) {
-            return new FileWriter(file, append);
+        private FileBuilder(File file) {
+            this.file = file;
         }
 
-        return new FileWriter(descriptor);
+        @Optional
+        public AppendBuilder append() {
+            return new AppendBuilder(file, true);
+        }
+
+        @Override
+        public FileWriter build() throws Exception {
+            return new FileWriter(file);
+        }
+
+    }
+
+    public static class DescriptorBuilder implements Builder<FileWriter> {
+
+        private final FileDescriptor descriptor;
+
+        private DescriptorBuilder(FileDescriptor descriptor) {
+            this.descriptor = descriptor;
+        }
+
+        @Override
+        public FileWriter build() {
+            return new FileWriter(descriptor);
+        }
+
+    }
+
+    public static class AppendBuilder implements Builder<FileWriter> {
+
+        private final File file;
+        private final Boolean append;
+
+        private AppendBuilder(File file, Boolean append) {
+            this.file = file;
+            this.append = append;
+        }
+
+        @Override
+        public FileWriter build() throws IOException {
+            return new FileWriter(file, append);
+        }
     }
 
 }

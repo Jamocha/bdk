@@ -27,11 +27,17 @@ import java.io.PipedWriter;
  */
 public class PipedWriterBuilder implements Builder<PipedWriter> {
 
-    public static abstract class BaseBuilder implements Builder<PipedWriter> {
-
+    @Optional("unconnected")
+    public ReaderBuilder connect(PipedReader reader) {
+        return new ReaderBuilder(reader);
     }
 
-    public static class ReaderBuilder extends BaseBuilder {
+    @Override
+    public PipedWriter build() throws IOException {
+        return new PipedWriter();
+    }
+
+    public static class ReaderBuilder implements Builder<PipedWriter> {
 
         private final PipedReader reader;
 
@@ -44,16 +50,6 @@ public class PipedWriterBuilder implements Builder<PipedWriter> {
             return new PipedWriter(reader);
         }
 
-    }
-
-    @Optional("unconnected")
-    public ReaderBuilder connect(PipedReader reader) {
-        return new ReaderBuilder(reader);
-    }
-
-    @Override
-    public PipedWriter build() throws IOException {
-        return new PipedWriter();
     }
 
 }

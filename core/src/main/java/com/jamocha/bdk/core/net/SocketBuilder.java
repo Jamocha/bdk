@@ -41,11 +41,7 @@ public class SocketBuilder implements Builder<Socket> {
         return new ProxyBuilder(proxy);
     }
 
-    public static abstract class BaseBuilder<T> implements Builder<Socket> {
-
-    }
-
-    public static class ProxyBuilder extends BaseBuilder<ProxyBuilder> {
+    public static class ProxyBuilder implements Builder<Socket> {
 
         private final Proxy proxy;
 
@@ -59,7 +55,7 @@ public class SocketBuilder implements Builder<Socket> {
         }
     }
 
-    public static class HostBuilder extends BaseBuilder<HostBuilder> {
+    public static class HostBuilder implements Builder<Socket> {
 
         final String host;
         final Integer port;
@@ -100,7 +96,7 @@ public class SocketBuilder implements Builder<Socket> {
         }
     }
 
-    public static class InetBuilder extends BaseBuilder<InetBuilder> {
+    public static class InetBuilder implements Builder<Socket> {
 
         final InetAddress address;
         final Integer port;

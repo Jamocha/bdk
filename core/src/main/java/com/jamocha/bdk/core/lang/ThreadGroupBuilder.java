@@ -17,39 +17,53 @@ package com.jamocha.bdk.core.lang;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ThreadGroupBuilder implements Builder<ThreadGroup> {
+public class ThreadGroupBuilder {
 
-    public static final String DEFAULT_NAME = "system";
-    private ThreadGroup parent;
-    private String name = DEFAULT_NAME;
-
-    @Required
-    public ThreadGroupBuilder name(String name) {
-        this.name = name;
-
-        return this;
+    public NameBuilder name(String name) {
+        return new NameBuilder(name);
     }
 
-    @Optional
-    public ThreadGroupBuilder parent(ThreadGroup parent) {
-        this.parent = parent;
+    public static class NameBuilder implements Builder<ThreadGroup> {
 
-        return this;
-    }
+        private final String name;
 
-    @Override
-    public ThreadGroup build() {
-        if (parent == null) {
-            parent = new ThreadGroup(name);
+        private NameBuilder(String name) {
+            this.name = name;
         }
 
-        return new ThreadGroup(parent, name);
+        @Optional
+        public GroupBuilder group(ThreadGroup group) {
+            return new GroupBuilder(name, group);
+        }
+
+        @Override
+        public ThreadGroup build() throws Exception {
+            return new ThreadGroup(name);
+
+        }
+
+    }
+
+    public static class GroupBuilder implements Builder<ThreadGroup> {
+
+        private final String name;
+        private final ThreadGroup group;
+
+        private GroupBuilder(String name, ThreadGroup group) {
+            this.name = name;
+            this.group = group;
+        }
+
+        @Override
+        public ThreadGroup build() throws Exception {
+            return new ThreadGroup(group, name);
+        }
+
     }
 
 }

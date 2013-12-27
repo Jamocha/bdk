@@ -29,15 +29,14 @@ public class InetSocketAddressBuilder {
         return new PortBuilder(port);
     }
 
-    public static abstract class BaseBuilder<T> implements Builder<InetSocketAddress> {
-    }
-
     public static class PortBuilder implements Builder<InetSocketAddress> {
+
         private final Integer port;
 
         private PortBuilder(Integer port) {
             this.port = port;
         }
+
         public InetBuilder inet(InetAddress address) {
             return new InetBuilder(address, port);
         }
@@ -49,7 +48,8 @@ public class InetSocketAddressBuilder {
 
     }
 
-    public static class InetBuilder extends BaseBuilder<InetBuilder> {
+    public static class InetBuilder implements Builder<InetSocketAddress> {
+
         private final InetAddress address;
         private final Integer port;
 
@@ -57,6 +57,7 @@ public class InetSocketAddressBuilder {
             this.address = address;
             this.port = port;
         }
+
         @Override
         public InetSocketAddress build() {
             return new InetSocketAddress(address, port);
@@ -64,7 +65,7 @@ public class InetSocketAddressBuilder {
 
     }
 
-    public static class HostBuilder extends BaseBuilder<HostBuilder> {
+    public static class HostBuilder implements Builder<InetSocketAddress> {
 
         private final String host;
         private final Integer port;

@@ -41,7 +41,7 @@ public class DatagramPacketBuilder {
         return new InetBuilder(address, port);
     }
 
-    public static abstract class BaseBuilder<T> implements Builder<DatagramPacket> {
+    public static abstract class BaseBufferBuilder<T> implements Builder<DatagramPacket> {
 
         public static final Integer DEFAULT_OFFSET = 0;
         byte[] buffer;
@@ -70,7 +70,7 @@ public class DatagramPacketBuilder {
         }
     }
 
-    public static class BufferBuilder extends BaseBuilder<BufferBuilder> {
+    public static class BufferBuilder extends BaseBufferBuilder<BufferBuilder> {
 
         @Override
         public DatagramPacket build() throws Exception {
@@ -78,7 +78,7 @@ public class DatagramPacketBuilder {
         }
     }
 
-    public static class InetBuilder extends BaseBuilder<InetBuilder> {
+    public static class InetBuilder extends BaseBufferBuilder<InetBuilder> {
 
         private final InetAddress address;
         private final Integer port;
@@ -94,7 +94,7 @@ public class DatagramPacketBuilder {
         }
     }
 
-    public static class SocketBuilder extends BaseBuilder<SocketBuilder> {
+    public static class SocketBuilder extends BaseBufferBuilder<SocketBuilder> {
 
         private final SocketAddress address;
 

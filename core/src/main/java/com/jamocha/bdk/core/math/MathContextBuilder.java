@@ -16,7 +16,7 @@
 package com.jamocha.bdk.core.math;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
+import com.jamocha.bdk.api.annotation.Optional;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
@@ -26,26 +26,20 @@ import java.math.RoundingMode;
  */
 public class MathContextBuilder {
 
-    public StringBuilder stringBuilder() {
-        return new StringBuilder();
+    public StringBuilder value(String value) {
+        return new StringBuilder(value);
     }
 
-    public PercisionBuilder percisionBuilder() {
-        return new PercisionBuilder();
+    public PercisionBuilder percision(int precision) {
+        return new PercisionBuilder(precision);
     }
 
-    public static abstract class BaseBuilder implements Builder<MathContext> {
-    }
+    public static class StringBuilder implements Builder<MathContext> {
 
-    public static class StringBuilder extends BaseBuilder {
+        private final String value;
 
-        private String value;
-
-        @Required
-        public StringBuilder value(String value) {
+        private StringBuilder(String value) {
             this.value = value;
-
-            return this;
         }
 
         @Override
@@ -54,19 +48,18 @@ public class MathContextBuilder {
         }
     }
 
-    public static class PercisionBuilder extends BaseBuilder {
+    public static class PercisionBuilder implements Builder<MathContext> {
 
         public static final RoundingMode DEFAULT_MODE = RoundingMode.HALF_UP;
 
-        private Integer precision;
+        private final Integer precision;
         private RoundingMode mode = DEFAULT_MODE;
 
-        public PercisionBuilder precision(Integer precision) {
+        private PercisionBuilder(Integer precision) {
             this.precision = precision;
-
-            return this;
         }
 
+        @Optional("HALF_UP")
         public PercisionBuilder mode(RoundingMode mode) {
             this.mode = mode;
 

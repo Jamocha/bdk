@@ -27,36 +27,29 @@ import java.net.URISyntaxException;
  */
 public class URIBuilder {
 
-    public StringBuilder stringBuilder() {
-        return new StringBuilder();
+    public StringBuilder uri(String uri) {
+        return new StringBuilder(uri);
     }
 
-    public SchemaBuilder schemaBuilder(String scheme) {
+    public SchemaBuilder schema(String scheme) {
         return new SchemaBuilder(scheme);
     }
 
-    public static abstract class BaseBuilder<T> implements Builder<URI> {
+    public static class StringBuilder implements Builder<URI> {
 
-    }
+        private final String uri;
 
-    public static class StringBuilder extends BaseBuilder {
-
-        private String value;
-
-        @Required
-        public StringBuilder value(String value) {
-            this.value = value;
-
-            return this;
+        private StringBuilder(String uri) {
+            this.uri = uri;
         }
 
         @Override
         public URI build() throws URISyntaxException {
-            return new URI(value);
+            return new URI(uri);
         }
     }
 
-    public static class SpecificBuilder extends BaseBuilder<SpecificBuilder> {
+    public static class SpecificBuilder implements Builder<URI> {
 
         private final String scheme;
         private String part;
@@ -87,7 +80,7 @@ public class URIBuilder {
 
     }
 
-    public static class ComponentBuilder extends BaseBuilder<ComponentBuilder> {
+    public static class ComponentBuilder implements Builder<URI> {
 
         public static final Integer DEFAULT_PORT = -1;
         private final String scheme;
@@ -99,11 +92,11 @@ public class URIBuilder {
         private String query;
         private String fragment;
 
-                private ComponentBuilder(String scheme) {
-                    this.scheme = scheme;
-                }
+        private ComponentBuilder(String scheme) {
+            this.scheme = scheme;
+        }
 
-                @Optional
+        @Optional
         public ComponentBuilder userInfo(String userInfo) {
             this.userInfo = userInfo;
 
@@ -153,7 +146,7 @@ public class URIBuilder {
 
     }
 
-    public static class AuthorityBuilder extends BaseBuilder<AuthorityBuilder> {
+    public static class AuthorityBuilder implements Builder<URI> {
 
         private final String scheme;
         private String authority;

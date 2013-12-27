@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -28,31 +27,69 @@ import java.io.PipedOutputStream;
  */
 public class PipedInputStreamBuilder implements Builder<PipedInputStream> {
 
-    public static final Integer DEFAULT_SIZE = 1_024;
-    private PipedOutputStream output;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public PipedInputStreamBuilder output(PipedOutputStream output) {
-        this.output = output;
-
-        return this;
+    public StreamBuilder connect(PipedOutputStream writer) {
+        return new StreamBuilder(writer);
     }
 
-    @Optional
-    public PipedInputStreamBuilder size(Integer size) {
-        this.size = size;
-
-        return this;
+    public SizeBuilder size(int size) {
+        return new SizeBuilder(size);
     }
 
     @Override
     public PipedInputStream build() throws IOException {
-        if (output == null) {
-            return new PipedInputStream(size);
+        return new PipedInputStream();
+    }
+
+    public static class SizeBuilder implements Builder<PipedInputStream> {
+
+        private final Integer size;
+        private PipedOutputStream writer;
+
+        private SizeBuilder(int size) {
+            this.size = size;
         }
 
-        return new PipedInputStream(output, size);
+        @Optional("unconnected")
+        public SizeBuilder connect(PipedOutputStream writer) {
+            this.writer = writer;
+
+            return this;
+        }
+
+        @Override
+        public PipedInputStream build() throws IOException {
+            if (writer == null) {
+                return new PipedInputStream(size);
+            }
+
+            return new PipedInputStream(writer, size);
+        }
+
+    }
+
+    public static class StreamBuilder implements Builder<PipedInputStream> {
+
+        public static final Integer DEFAULT_SIZE = 1_024;
+
+        private final PipedOutputStream writer;
+        private Integer size = DEFAULT_SIZE;
+
+        private StreamBuilder(PipedOutputStream writer) {
+            this.writer = writer;
+        }
+
+        @Optional("1024")
+        public StreamBuilder size(int size) {
+            this.size = size;
+
+            return this;
+        }
+
+        @Override
+        public PipedInputStream build() throws IOException {
+            return new PipedInputStream(writer, size);
+        }
+
     }
 
 }
