@@ -16,36 +16,51 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.util.concurrent.CyclicBarrier;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class CyclicBarrierBuilder implements Builder<CyclicBarrier> {
+public class CyclicBarrierBuilder {
 
-    private Integer parties;
-    private Runnable runnable;
-
-    @Required
-    public CyclicBarrierBuilder parties(int parties) {
-        this.parties = parties;
-
-        return this;
+    public PartiesBuilder parties(int parties) {
+        return new PartiesBuilder(parties);
     }
 
-    @Optional
-    public CyclicBarrierBuilder action(Runnable runnable) {
-        this.runnable = runnable;
+    public static class PartiesBuilder implements Builder<CyclicBarrier> {
 
-        return this;
+        private final int parties;
+
+        private PartiesBuilder(int parties) {
+            this.parties = parties;
+        }
+
+        public ActionBuilder action(Runnable action) {
+            return new ActionBuilder(parties, action);
+        }
+
+        @Override
+        public CyclicBarrier build() {
+            return new CyclicBarrier(parties);
+        }
+
     }
 
-    @Override
-    public CyclicBarrier build() throws Exception {
-        return new CyclicBarrier(parties, runnable);
+    public static class ActionBuilder implements Builder<CyclicBarrier> {
+
+        private final int parties;
+        private final Runnable action;
+
+        private ActionBuilder(int parties, Runnable action) {
+            this.parties = parties;
+            this.action = action;
+        }
+
+        @Override
+        public CyclicBarrier build() {
+            return new CyclicBarrier(parties, action);
+        }
     }
 
 }

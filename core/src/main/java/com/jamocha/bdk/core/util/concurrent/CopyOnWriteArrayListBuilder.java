@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -26,29 +25,45 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class CopyOnWriteArrayListBuilder implements Builder<CopyOnWriteArrayList> {
 
-    private Object[] elements;
-
-    @Optional
-    public CopyOnWriteArrayListBuilder elements(Collection elements) {
-        this.elements = elements.toArray();
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
-    @Optional
-    public CopyOnWriteArrayListBuilder elements(Object[] elements) {
-        this.elements = elements;
-
-        return this;
+    public ArrayBuilder elements(Object[] elements) {
+        return new ArrayBuilder(elements);
     }
 
     @Override
     public CopyOnWriteArrayList build() {
-        if (elements == null) {
-            return new CopyOnWriteArrayList();
+        return new CopyOnWriteArrayList();
+    }
+
+    public static class ArrayBuilder implements Builder<CopyOnWriteArrayList> {
+
+        private final Object[] elements;
+
+        private ArrayBuilder(Object[] elements) {
+            this.elements = elements;
         }
 
-        return new CopyOnWriteArrayList<>(elements);
+        @Override
+        public CopyOnWriteArrayList build() {
+            return new CopyOnWriteArrayList(elements);
+        }
+    }
+
+    public static class ElementsBuilder implements Builder<CopyOnWriteArrayList> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
+        }
+
+        @Override
+        public CopyOnWriteArrayList build() {
+            return new CopyOnWriteArrayList(elements);
+        }
     }
 
 }

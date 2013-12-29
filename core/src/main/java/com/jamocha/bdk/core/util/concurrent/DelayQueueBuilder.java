@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.concurrent.DelayQueue;
 
@@ -26,22 +25,28 @@ import java.util.concurrent.DelayQueue;
  */
 public class DelayQueueBuilder implements Builder<DelayQueue> {
 
-    private Collection elements;
-
-    @Optional
-    public DelayQueueBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
     @Override
     public DelayQueue build() {
-        if (elements == null) {
-            return new DelayQueue();
+        return new DelayQueue();
+    }
+
+    public static class ElementsBuilder implements Builder<DelayQueue> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
         }
 
-        return new DelayQueue(elements);
+        @Override
+        public DelayQueue build() {
+            return new DelayQueue(elements);
+        }
+
     }
 
 }

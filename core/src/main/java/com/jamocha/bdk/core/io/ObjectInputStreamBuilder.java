@@ -28,18 +28,18 @@ import java.io.ObjectInputStream;
 public class ObjectInputStreamBuilder
         implements Builder<ObjectInputStream> {
 
-    private InputStream inputStream;
+    private InputStream input;
 
     @Required
-    public ObjectInputStreamBuilder input(InputStream inputStream) {
-        this.inputStream = inputStream;
+    public ObjectInputStreamBuilder input(InputStream input) {
+        this.input = input;
 
         return this;
     }
 
     @Override
     public ObjectInputStream build() throws IOException {
-        return new ObjectInputStream(inputStream);
+        return new ObjectInputStream(input);
     }
 
 }

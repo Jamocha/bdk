@@ -16,8 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorCompletionService;
@@ -26,32 +24,46 @@ import java.util.concurrent.ExecutorCompletionService;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ExecutorCompletionServiceBuilder implements Builder<ExecutorCompletionService> {
+public class ExecutorCompletionServiceBuilder {
 
-    private Executor executor;
-    private BlockingQueue queue;
-
-    @Required
-    public ExecutorCompletionServiceBuilder executor(Executor executor) {
-        this.executor = executor;
-
-        return this;
+    public ExecutorBuilder executor(Executor executor) {
+        return new ExecutorBuilder(executor);
     }
 
-    @Optional
-    public ExecutorCompletionServiceBuilder queue(BlockingQueue queue) {
-        this.queue = queue;
+    public static class ExecutorBuilder implements Builder<ExecutorCompletionService> {
 
-        return this;
-    }
+        private final Executor executor;
 
-    @Override
-    public ExecutorCompletionService build() throws Exception {
-        if (queue == null) {
+        private ExecutorBuilder(Executor executor) {
+            this.executor = executor;
+        }
+
+        public QueueBuilder queue(BlockingQueue queue) {
+            return new QueueBuilder(executor, queue);
+        }
+
+        @Override
+        public ExecutorCompletionService build() {
             return new ExecutorCompletionService(executor);
         }
 
-        return new ExecutorCompletionService(executor, queue);
+    }
+
+    public static class QueueBuilder implements Builder<ExecutorCompletionService> {
+
+        private final Executor executor;
+        private final BlockingQueue queue;
+
+        private QueueBuilder(Executor executor, BlockingQueue queue) {
+            this.executor = executor;
+            this.queue = queue;
+        }
+
+        @Override
+        public ExecutorCompletionService build() {
+            return new ExecutorCompletionService(executor, queue);
+        }
+
     }
 
 }

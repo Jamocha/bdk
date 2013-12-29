@@ -28,8 +28,8 @@ import java.io.PipedWriter;
 public class PipedWriterBuilder implements Builder<PipedWriter> {
 
     @Optional("unconnected")
-    public ReaderBuilder connect(PipedReader reader) {
-        return new ReaderBuilder(reader);
+    public InputBuilder connect(PipedReader input) {
+        return new InputBuilder(input);
     }
 
     @Override
@@ -37,17 +37,17 @@ public class PipedWriterBuilder implements Builder<PipedWriter> {
         return new PipedWriter();
     }
 
-    public static class ReaderBuilder implements Builder<PipedWriter> {
+    public static class InputBuilder implements Builder<PipedWriter> {
 
-        private final PipedReader reader;
+        private final PipedReader input;
 
-        private ReaderBuilder(PipedReader reader) {
-            this.reader = reader;
+        private InputBuilder(PipedReader input) {
+            this.input = input;
         }
 
         @Override
         public PipedWriter build() throws IOException {
-            return new PipedWriter(reader);
+            return new PipedWriter(input);
         }
 
     }

@@ -16,8 +16,6 @@
 package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedSet;
@@ -29,44 +27,65 @@ import java.util.TreeSet;
  */
 public class TreeSetBuilder implements Builder<TreeSet> {
 
-    private Collection elements;
-    private Comparator comparator;
-    private SortedSet sortedElements;
-
-    @Alternate
-    @Optional
-    public TreeSetBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
-    @Alternate
-    @Optional
-    public TreeSetBuilder elements(SortedSet elements) {
-        this.sortedElements = elements;
-
-        return this;
+    public SortedBuilder elements(SortedSet elements) {
+        return new SortedBuilder(elements);
     }
 
-    @Optional
-    public TreeSetBuilder comparator(Comparator comparator) {
-        this.comparator = comparator;
-
-        return this;
+    public ComparatorBuilder comparator(Comparator comparator) {
+        return new ComparatorBuilder(comparator);
     }
 
     @Override
     public TreeSet build() {
-        if (elements != null) {
-            return new TreeSet<>(elements);
-        }
-
-        if (sortedElements != null) {
-            return new TreeSet<>(sortedElements);
-        }
-
-        return new TreeSet(comparator);
+        return new TreeSet();
     }
 
+    public class ElementsBuilder implements Builder<TreeSet> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
+        }
+
+        @Override
+        public TreeSet build() {
+            return new TreeSet(elements);
+        }
+
+    }
+
+    public class SortedBuilder implements Builder<TreeSet> {
+
+        private final SortedSet elements;
+
+        private SortedBuilder(SortedSet elements) {
+            this.elements = elements;
+        }
+
+        @Override
+        public TreeSet build() {
+            return new TreeSet(elements);
+        }
+
+    }
+
+    public class ComparatorBuilder implements Builder<TreeSet> {
+
+        private final Comparator comparator;
+
+        private ComparatorBuilder(Comparator comparator) {
+            this.comparator = comparator;
+        }
+
+        @Override
+        public TreeSet build() {
+            return new TreeSet(comparator);
+        }
+
+    }
 }

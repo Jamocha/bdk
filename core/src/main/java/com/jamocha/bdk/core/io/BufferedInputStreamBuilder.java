@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
@@ -25,30 +24,47 @@ import java.io.InputStream;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class BufferedInputStreamBuilder
-        implements Builder<BufferedInputStream> {
+public class BufferedInputStreamBuilder {
 
-    public static final Integer DEFAULT_SIZE = 8_192;
-    private InputStream inputStream;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public BufferedInputStreamBuilder input(InputStream inputStream) {
-        this.inputStream = inputStream;
-
-        return this;
+    public InputBuilder input(InputStream input) {
+        return new InputBuilder(input);
     }
 
-    @Optional
-    public BufferedInputStreamBuilder size(Integer size) {
-        this.size = size;
+    public static class InputBuilder implements Builder<BufferedInputStream> {
 
-        return this;
+        private final InputStream input;
+
+        private InputBuilder(InputStream input) {
+            this.input = input;
+        }
+
+        @Optional("8192")
+        public SizeBuilder size(int size) {
+            return new SizeBuilder(input, size);
+        }
+
+        @Override
+        public BufferedInputStream build() {
+            return new BufferedInputStream(input);
+        }
+
     }
 
-    @Override
-    public BufferedInputStream build() {
-        return new BufferedInputStream(inputStream, size);
+    public static class SizeBuilder implements Builder<BufferedInputStream> {
+
+        private final InputStream input;
+        private final Integer size;
+
+        private SizeBuilder(InputStream input, int size) {
+            this.input = input;
+            this.size = size;
+        }
+
+        @Override
+        public BufferedInputStream build() {
+            return new BufferedInputStream(input, size);
+        }
+
     }
 
 }

@@ -26,8 +26,8 @@ import java.io.PipedOutputStream;
  */
 public class PipedOutputStreamBuilder implements Builder<PipedOutputStream> {
 
-    public StreamBuilder connect(PipedInputStream input) {
-        return new StreamBuilder(input);
+    public InputBuilder connect(PipedInputStream input) {
+        return new InputBuilder(input);
     }
 
     @Override
@@ -35,11 +35,11 @@ public class PipedOutputStreamBuilder implements Builder<PipedOutputStream> {
         return new PipedOutputStream();
     }
 
-    public static class StreamBuilder implements Builder<PipedOutputStream> {
+    public static class InputBuilder implements Builder<PipedOutputStream> {
 
         private final PipedInputStream input;
 
-        private StreamBuilder(PipedInputStream input) {
+        private InputBuilder(PipedInputStream input) {
             this.input = input;
         }
 

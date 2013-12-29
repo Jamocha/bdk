@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -28,39 +27,51 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class PriorityBlockingQueueBuilder implements Builder<PriorityBlockingQueue> {
 
-    public static final Integer DEFAULT_CAPACITY = 11;
-    private Integer capacity = DEFAULT_CAPACITY;
-    private Collection elements;
-    private Comparator comparator;
-
-    @Required
-    public PriorityBlockingQueueBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
-    }
-
-    @Optional
-    public PriorityBlockingQueueBuilder comparator(Comparator comparator) {
-        this.comparator = comparator;
-
-        return this;
-    }
-
-    @Optional
-    public PriorityBlockingQueueBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public PriorityBlockingQueue build() {
-        if (elements == null) {
+        return new PriorityBlockingQueue();
+    }
+
+    public static class ElementsBuilder implements Builder<PriorityBlockingQueue> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
+        }
+
+        @Override
+        public PriorityBlockingQueue build() {
+            return new PriorityBlockingQueue(elements);
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<PriorityBlockingQueue> {
+
+        private final Integer capacity;
+        private Comparator comparator;
+
+        private CapacityBuilder(Integer capacity) {
+            this.capacity = capacity;
+        }
+
+        @Optional
+        public CapacityBuilder comparator(Comparator comparator) {
+            this.comparator = comparator;
+
+            return this;
+        }
+
+        @Override
+        public PriorityBlockingQueue build() {
             return new PriorityBlockingQueue(capacity, comparator);
         }
 
-        return new PriorityBlockingQueue(elements);
     }
 
 }

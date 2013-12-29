@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.concurrent.LinkedTransferQueue;
 
@@ -26,22 +25,28 @@ import java.util.concurrent.LinkedTransferQueue;
  */
 public class LinkedTransferQueueBuilder implements Builder<LinkedTransferQueue> {
 
-    private Collection elements;
-
-    @Optional
-    public LinkedTransferQueueBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
     @Override
     public LinkedTransferQueue build() {
-        if (elements == null) {
-            return new LinkedTransferQueue();
+        return new LinkedTransferQueue();
+    }
+
+    public static class ElementsBuilder implements Builder<LinkedTransferQueue> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
         }
 
-        return new LinkedTransferQueue(elements);
+        @Override
+        public LinkedTransferQueue build() {
+            return new LinkedTransferQueue(elements);
+        }
+
     }
 
 }

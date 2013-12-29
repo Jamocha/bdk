@@ -25,23 +25,29 @@ import java.util.concurrent.SynchronousQueue;
  */
 public class SynchronousQueueBuilder implements Builder<SynchronousQueue> {
 
-    public static final Boolean DEFAULT_FAIR = false;
-    private Boolean fair = DEFAULT_FAIR;
-
     @Optional
-    public SynchronousQueueBuilder fair() {
-        this.fair = true;
-
-        return this;
+    public FairBuilder fair() {
+        return new FairBuilder(true);
     }
 
     @Override
     public SynchronousQueue build() {
-        if (fair == null) {
-            return new SynchronousQueue();
+        return new SynchronousQueue();
+    }
+
+    public static class FairBuilder implements Builder<SynchronousQueue> {
+
+        private final Boolean fair;
+
+        private FairBuilder(Boolean fair) {
+            this.fair = fair;
         }
 
-        return new SynchronousQueue(fair);
+        @Override
+        public SynchronousQueue build() {
+            return new SynchronousQueue(fair);
+        }
+
     }
 
 }

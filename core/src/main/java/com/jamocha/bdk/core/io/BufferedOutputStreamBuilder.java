@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 
@@ -25,30 +24,47 @@ import java.io.OutputStream;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class BufferedOutputStreamBuilder
-        implements Builder<BufferedOutputStream> {
+public class BufferedOutputStreamBuilder {
 
-    public static final Integer DEFAULT_SIZE = 8_192;
-    private OutputStream outputStream;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public BufferedOutputStreamBuilder output(OutputStream outputStream) {
-        this.outputStream = outputStream;
-
-        return this;
+    public OutputBuilder output(OutputStream output) {
+        return new OutputBuilder(output);
     }
 
-    @Optional
-    public BufferedOutputStreamBuilder size(Integer size) {
-        this.size = size;
+    public static class OutputBuilder implements Builder<BufferedOutputStream> {
 
-        return this;
+        private final OutputStream output;
+
+        private OutputBuilder(OutputStream output) {
+            this.output = output;
+        }
+
+        @Optional("8192")
+        public SizeBuilder size(int size) {
+            return new SizeBuilder(output, size);
+        }
+
+        @Override
+        public BufferedOutputStream build() {
+            return new BufferedOutputStream(output);
+        }
+
     }
 
-    @Override
-    public BufferedOutputStream build() {
-        return new BufferedOutputStream(outputStream, size);
+    public static class SizeBuilder implements Builder<BufferedOutputStream> {
+
+        private final OutputStream output;
+        private final Integer size;
+
+        private SizeBuilder(OutputStream output, int size) {
+            this.output = output;
+            this.size = size;
+        }
+
+        @Override
+        public BufferedOutputStream build() {
+            return new BufferedOutputStream(output, size);
+        }
+
     }
 
 }

@@ -16,27 +16,31 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Required;
 import java.util.concurrent.CountDownLatch;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class CountDownLatchBuilder implements Builder<CountDownLatch> {
+public class CountDownLatchBuilder {
 
-    private Integer count;
-
-    @Required
-    public CountDownLatchBuilder count(int count) {
-        this.count = count;
-
-        return this;
+    public CountBuilder count(int count) {
+        return new CountBuilder(count);
     }
 
-    @Override
-    public CountDownLatch build() throws Exception {
-        return new CountDownLatch(count);
+    public static class CountBuilder implements Builder<CountDownLatch> {
+
+        private final Integer count;
+
+        private CountBuilder(Integer count) {
+            this.count = count;
+        }
+
+        @Override
+        public CountDownLatch build() {
+            return new CountDownLatch(count);
+        }
+
     }
 
 }

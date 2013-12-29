@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -26,22 +25,28 @@ import java.util.LinkedList;
  */
 public class LinkedListBuilder implements Builder<LinkedList> {
 
-    private Collection elements;
-
-    @Optional
-    public LinkedListBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
     @Override
     public LinkedList build() {
-        if (elements == null) {
-            return new LinkedList();
+        return new LinkedList();
+    }
+
+    public static class ElementsBuilder implements Builder<LinkedList> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
         }
 
-        return new LinkedList<>(elements);
+        @Override
+        public LinkedList build() {
+            return new LinkedList(elements);
+        }
+
     }
 
 }

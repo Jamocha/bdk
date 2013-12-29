@@ -16,8 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedSet;
@@ -29,44 +27,65 @@ import java.util.concurrent.ConcurrentSkipListSet;
  */
 public class ConcurrentSkipListSetBuilder implements Builder<ConcurrentSkipListSet> {
 
-    private Collection elements;
-    private Comparator comparator;
-    private SortedSet sortedElements;
-
-    @Alternate
-    @Optional
-    public ConcurrentSkipListSetBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
-    @Alternate
-    @Optional
-    public ConcurrentSkipListSetBuilder elements(SortedSet elements) {
-        this.sortedElements = elements;
-
-        return this;
+    public SortedBuilder elements(SortedSet elements) {
+        return new SortedBuilder(elements);
     }
 
-    @Optional
-    public ConcurrentSkipListSetBuilder comparator(Comparator comparator) {
-        this.comparator = comparator;
-
-        return this;
+    public ComparatorBuilder comparator(Comparator comparator) {
+        return new ComparatorBuilder(comparator);
     }
 
     @Override
     public ConcurrentSkipListSet build() {
-        if (elements != null) {
-            return new ConcurrentSkipListSet<>(elements);
-        }
-
-        if (sortedElements != null) {
-            return new ConcurrentSkipListSet<>(sortedElements);
-        }
-
-        return new ConcurrentSkipListSet(comparator);
+        return new ConcurrentSkipListSet();
     }
 
+    public class ElementsBuilder implements Builder<ConcurrentSkipListSet> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
+        }
+
+        @Override
+        public ConcurrentSkipListSet build() {
+            return new ConcurrentSkipListSet(elements);
+        }
+
+    }
+
+    public class SortedBuilder implements Builder<ConcurrentSkipListSet> {
+
+        private final SortedSet elements;
+
+        private SortedBuilder(SortedSet elements) {
+            this.elements = elements;
+        }
+
+        @Override
+        public ConcurrentSkipListSet build() {
+            return new ConcurrentSkipListSet(elements);
+        }
+
+    }
+
+    public class ComparatorBuilder implements Builder<ConcurrentSkipListSet> {
+
+        private final Comparator comparator;
+
+        private ComparatorBuilder(Comparator comparator) {
+            this.comparator = comparator;
+        }
+
+        @Override
+        public ConcurrentSkipListSet build() {
+            return new ConcurrentSkipListSet(comparator);
+        }
+
+    }
 }

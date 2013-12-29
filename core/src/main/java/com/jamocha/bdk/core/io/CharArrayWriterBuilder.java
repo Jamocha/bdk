@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ public class CharArrayWriterBuilder
     public static final Integer DEFAULT_SIZE = 32;
     private Integer size = DEFAULT_SIZE;
 
-    @Optional
+    @Optional("32")
     public CharArrayWriterBuilder size(int size) {
         this.size = size;
 

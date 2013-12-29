@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.BufferedWriter;
 import java.io.Writer;
 
@@ -25,30 +24,47 @@ import java.io.Writer;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class BufferedWriterBuilder
-        implements Builder<BufferedWriter> {
+public class BufferedWriterBuilder {
 
-    public static final Integer DEFAULT_SIZE = 8_192;
-    private Writer writer;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public BufferedWriterBuilder writer(Writer writer) {
-        this.writer = writer;
-
-        return this;
+    public OutputBuilder output(Writer output) {
+        return new OutputBuilder(output);
     }
 
-    @Optional
-    public BufferedWriterBuilder size(Integer size) {
-        this.size = size;
+    public static class OutputBuilder implements Builder<BufferedWriter> {
 
-        return this;
+        private final Writer output;
+
+        private OutputBuilder(Writer output) {
+            this.output = output;
+        }
+
+        @Optional("8192")
+        public SizeBuilder size(int size) {
+            return new SizeBuilder(output, size);
+        }
+
+        @Override
+        public BufferedWriter build() {
+            return new BufferedWriter(output);
+        }
+
     }
 
-    @Override
-    public BufferedWriter build() {
-        return new BufferedWriter(writer, size);
+    public static class SizeBuilder implements Builder<BufferedWriter> {
+
+        private final Writer output;
+        private final Integer size;
+
+        private SizeBuilder(Writer output, int size) {
+            this.output = output;
+            this.size = size;
+        }
+
+        @Override
+        public BufferedWriter build() {
+            return new BufferedWriter(output, size);
+        }
+
     }
 
 }

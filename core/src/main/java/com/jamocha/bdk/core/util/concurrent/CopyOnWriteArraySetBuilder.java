@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -26,22 +25,27 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class CopyOnWriteArraySetBuilder implements Builder<CopyOnWriteArraySet> {
 
-    private Collection elements;
-
-    @Optional
-    public CopyOnWriteArraySetBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
     @Override
     public CopyOnWriteArraySet build() {
-        if (elements == null) {
-            return new CopyOnWriteArraySet();
+        return new CopyOnWriteArraySet();
+    }
+
+    public static class ElementsBuilder implements Builder<CopyOnWriteArraySet> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
         }
 
-        return new CopyOnWriteArraySet<>(elements);
+        @Override
+        public CopyOnWriteArraySet build() {
+            return new CopyOnWriteArraySet(elements);
+        }
     }
 
 }

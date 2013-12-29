@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.util.Collection;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -25,41 +24,46 @@ import java.util.concurrent.ArrayBlockingQueue;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class ArrayBlockingQueueBuilder implements Builder<ArrayBlockingQueue> {
+public class ArrayBlockingQueueBuilder {
 
-    public static final Boolean DEFAULT_FAIR = false;
-    private Integer capacity;
-    private Boolean fair = DEFAULT_FAIR;
-    private Collection elements;
-
-    @Required
-    public ArrayBlockingQueueBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
-    @Optional
-    public ArrayBlockingQueueBuilder fair() {
-        this.fair = true;
+    public static class CapacityBuilder implements Builder<ArrayBlockingQueue> {
 
-        return this;
-    }
+        public static final boolean DEFAULT_FAIR = false;
+        private final Integer capacity;
+        private boolean fair = DEFAULT_FAIR;
+        private Collection elements;
 
-    @Optional
-    public ArrayBlockingQueueBuilder elements(Collection elements) {
-        this.elements = elements;
+        private CapacityBuilder(Integer capacity) {
+            this.capacity = capacity;
+        }
 
-        return this;
-    }
+        @Optional
+        public CapacityBuilder fair() {
+            this.fair = true;
 
-    @Override
-    public ArrayBlockingQueue build() {
-        if (elements == null) {
+            return this;
+        }
+
+        @Optional
+        public CapacityBuilder elements(Collection elements) {
+            this.elements = elements;
+
+            return this;
+        }
+
+        @Override
+        public ArrayBlockingQueue build() {
+            if (elements == null) {
+                return new ArrayBlockingQueue(capacity, fair);
+            }
+
             return new ArrayBlockingQueue(capacity, fair, elements);
         }
 
-        return new ArrayBlockingQueue(capacity, fair);
     }
 
 }

@@ -26,41 +26,55 @@ import java.util.WeakHashMap;
  */
 public class WeakHashMapBuilder implements Builder<WeakHashMap> {
 
-    public static final Integer DEFAULT_CAPACITY = 16;
-    public static final Float DEFAULT_FACTOR = 0.75f;
-
-    private Map entries;
-    private Integer capacity = DEFAULT_CAPACITY;
-    private Float factor = DEFAULT_FACTOR;
-
-    @Optional
-    public WeakHashMapBuilder entries(Map entries) {
-        this.entries = entries;
-
-        return this;
+    public EntriesBuilder entries(Map entries) {
+        return new EntriesBuilder(entries);
     }
 
-    @Optional
-    public WeakHashMapBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
-    }
-
-    @Optional
-    public WeakHashMapBuilder factor(float factor) {
-        this.factor = factor;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public WeakHashMap build() {
-        if (entries == null) {
-            return new WeakHashMap(capacity, factor);
-        }
-
-        return new WeakHashMap<>(entries);
+        return new WeakHashMap();
     }
 
+    public static class EntriesBuilder implements Builder<WeakHashMap> {
+
+        private final Map entries;
+
+        private EntriesBuilder(Map entries) {
+            this.entries = entries;
+        }
+
+        @Override
+        public WeakHashMap build() {
+            return new WeakHashMap(entries);
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<WeakHashMap> {
+
+        public static final Float DEFAULT_FACTOR = 0.75f;
+
+        private final int capacity;
+        private Float factor = DEFAULT_FACTOR;
+
+        private CapacityBuilder(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Optional("0.75")
+        public CapacityBuilder factor(float factor) {
+            this.factor = factor;
+
+            return this;
+        }
+
+        @Override
+        public WeakHashMap build() {
+            return new WeakHashMap(capacity, factor);
+        }
+    }
 }

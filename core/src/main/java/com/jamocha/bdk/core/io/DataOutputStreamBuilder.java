@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,18 +27,18 @@ import java.io.OutputStream;
 public class DataOutputStreamBuilder
         implements Builder<DataOutputStream> {
 
-    private OutputStream outputStream;
+    private OutputStream output;
 
     @Required
-    public DataOutputStreamBuilder output(OutputStream outputStream) {
-        this.outputStream = outputStream;
+    public DataOutputStreamBuilder output(OutputStream output) {
+        this.output = output;
 
         return this;
     }
 
     @Override
     public DataOutputStream build() {
-        return new DataOutputStream(outputStream);
+        return new DataOutputStream(output);
     }
 
 }

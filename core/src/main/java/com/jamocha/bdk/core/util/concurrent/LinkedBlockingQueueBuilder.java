@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -26,31 +25,46 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class LinkedBlockingQueueBuilder implements Builder<LinkedBlockingQueue> {
 
-    public static final Integer DEFAULT_CAPACITY = Integer.MAX_VALUE;
-    private Integer capacity = DEFAULT_CAPACITY;
-    private Collection elements;
-
-    @Optional
-    public LinkedBlockingQueueBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
-    @Optional
-    public LinkedBlockingQueueBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public LinkedBlockingQueue build() {
-        if (elements == null) {
-            return new LinkedBlockingQueue(capacity);
+        return new LinkedBlockingQueue();
+    }
+
+    public static class ElementsBuilder implements Builder<LinkedBlockingQueue> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
         }
 
-        return new LinkedBlockingQueue(elements);
+        @Override
+        public LinkedBlockingQueue build() {
+            return new LinkedBlockingQueue(elements);
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<LinkedBlockingQueue> {
+
+        private final int capacity;
+
+        private CapacityBuilder(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Override
+        public LinkedBlockingQueue build() {
+            return new LinkedBlockingQueue(capacity);
+        }
     }
 
 }

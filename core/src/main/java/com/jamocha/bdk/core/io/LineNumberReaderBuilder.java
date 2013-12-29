@@ -26,43 +26,43 @@ import java.io.Reader;
  */
 public class LineNumberReaderBuilder {
 
-    public ReaderBuilder reader(Reader reader) {
-        return new ReaderBuilder(reader);
+    public InputBuilder input(Reader input) {
+        return new InputBuilder(input);
     }
 
-    public static class ReaderBuilder implements Builder<LineNumberReader> {
+    public static class InputBuilder implements Builder<LineNumberReader> {
 
-        private final Reader reader;
+        private final Reader input;
 
-        private ReaderBuilder(Reader reader) {
-            this.reader = reader;
+        private InputBuilder(Reader input) {
+            this.input = input;
         }
 
         @Optional
         public SizeBuilder size(int size) {
-            return new SizeBuilder(reader, size);
+            return new SizeBuilder(input, size);
         }
 
         @Override
         public LineNumberReader build() {
-            return new LineNumberReader(reader);
+            return new LineNumberReader(input);
         }
 
     }
 
     public static class SizeBuilder implements Builder<LineNumberReader> {
 
-        private final Reader reader;
+        private final Reader input;
         private final Integer size;
 
-        public SizeBuilder(Reader reader, Integer size) {
-            this.reader = reader;
+        public SizeBuilder(Reader input, Integer size) {
+            this.input = input;
             this.size = size;
         }
 
         @Override
         public LineNumberReader build() {
-            return new LineNumberReader(reader, size);
+            return new LineNumberReader(input, size);
         }
     }
 

@@ -16,8 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
@@ -29,44 +27,65 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class ConcurrentSkipListMapBuilder implements Builder<ConcurrentSkipListMap> {
 
-    private Map entries;
-    private Comparator comparator;
-    private SortedMap sortedEntries;
-
-    @Alternate
-    @Optional
-    public ConcurrentSkipListMapBuilder entries(Map entries) {
-        this.entries = entries;
-
-        return this;
+    public EntriesBuilder entries(Map entries) {
+        return new EntriesBuilder(entries);
     }
 
-    @Alternate
-    @Optional
-    public ConcurrentSkipListMapBuilder entries(SortedMap entries) {
-        this.sortedEntries = entries;
-
-        return this;
+    public SortedBuilder entries(SortedMap entries) {
+        return new SortedBuilder(entries);
     }
 
-    @Optional
-    public ConcurrentSkipListMapBuilder comparator(Comparator comparator) {
-        this.comparator = comparator;
-
-        return this;
+    public ComparatorBuilder comparator(Comparator comparator) {
+        return new ComparatorBuilder(comparator);
     }
 
     @Override
     public ConcurrentSkipListMap build() {
-        if (entries != null) {
+        return new ConcurrentSkipListMap();
+    }
+
+    public class EntriesBuilder implements Builder<ConcurrentSkipListMap> {
+
+        private final Map entries;
+
+        private EntriesBuilder(Map entries) {
+            this.entries = entries;
+        }
+
+        @Override
+        public ConcurrentSkipListMap build() {
             return new ConcurrentSkipListMap(entries);
         }
 
-        if (sortedEntries != null) {
-            return new ConcurrentSkipListMap(sortedEntries);
-        }
-
-        return new ConcurrentSkipListMap(comparator);
     }
 
+    public class SortedBuilder implements Builder<ConcurrentSkipListMap> {
+
+        private final SortedMap entries;
+
+        private SortedBuilder(SortedMap entries) {
+            this.entries = entries;
+        }
+
+        @Override
+        public ConcurrentSkipListMap build() {
+            return new ConcurrentSkipListMap(entries);
+        }
+
+    }
+
+    public class ComparatorBuilder implements Builder<ConcurrentSkipListMap> {
+
+        private final Comparator comparator;
+
+        private ComparatorBuilder(Comparator comparator) {
+            this.comparator = comparator;
+        }
+
+        @Override
+        public ConcurrentSkipListMap build() {
+            return new ConcurrentSkipListMap(comparator);
+        }
+
+    }
 }

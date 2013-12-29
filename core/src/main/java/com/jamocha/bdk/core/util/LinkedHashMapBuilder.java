@@ -26,50 +26,64 @@ import java.util.Map;
  */
 public class LinkedHashMapBuilder implements Builder<LinkedHashMap> {
 
-    public static final Integer DEFAULT_CAPACITY = 16;
-    public static final Float DEFAULT_FACTOR = 0.75f;
-    public static final Boolean DEFAULT_ORDERING = false;
-
-    private Map entries;
-    private Integer capacity = DEFAULT_CAPACITY;
-    private Float factor = DEFAULT_FACTOR;
-    private Boolean ordering = DEFAULT_ORDERING;
-
-    @Optional
-    public LinkedHashMapBuilder entries(Map entries) {
-        this.entries = entries;
-
-        return this;
+    public EntriesBuilder entries(Map entries) {
+        return new EntriesBuilder(entries);
     }
 
-    @Optional
-    public LinkedHashMapBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
-    }
-
-    @Optional
-    public LinkedHashMapBuilder factor(float factor) {
-        this.factor = factor;
-
-        return this;
-    }
-
-    @Optional
-    public LinkedHashMapBuilder ordered() {
-        this.ordering = true;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public LinkedHashMap build() {
-        if (entries == null) {
-            return new LinkedHashMap(capacity, factor, ordering);
-        }
-
-        return new LinkedHashMap<>(entries);
+        return new LinkedHashMap();
     }
 
+    public static class EntriesBuilder implements Builder<LinkedHashMap> {
+
+        private final Map entries;
+
+        private EntriesBuilder(Map entries) {
+            this.entries = entries;
+        }
+
+        @Override
+        public LinkedHashMap build() {
+            return new LinkedHashMap(entries);
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<LinkedHashMap> {
+
+        public static final Float DEFAULT_FACTOR = 0.75f;
+        public static final Boolean DEFAULT_ORDERING = false;
+
+        private final int capacity;
+        private Float factor = DEFAULT_FACTOR;
+        private Boolean ordering = DEFAULT_ORDERING;
+
+        private CapacityBuilder(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Optional("0.75")
+        public CapacityBuilder factor(float factor) {
+            this.factor = factor;
+
+            return this;
+        }
+
+        @Optional("false")
+        public CapacityBuilder ordered() {
+            this.ordering = true;
+
+            return this;
+        }
+
+        @Override
+        public LinkedHashMap build() {
+            return new LinkedHashMap(capacity, factor, ordering);
+        }
+    }
 }

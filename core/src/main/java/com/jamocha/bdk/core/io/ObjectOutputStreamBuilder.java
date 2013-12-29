@@ -28,18 +28,18 @@ import java.io.OutputStream;
 public class ObjectOutputStreamBuilder
         implements Builder<ObjectOutputStream> {
 
-    private OutputStream outputStream;
+    private OutputStream output;
 
     @Required
-    public ObjectOutputStreamBuilder output(OutputStream outputStream) {
-        this.outputStream = outputStream;
+    public ObjectOutputStreamBuilder output(OutputStream output) {
+        this.output = output;
 
         return this;
     }
 
     @Override
     public ObjectOutputStream build() throws IOException {
-        return new ObjectOutputStream(outputStream);
+        return new ObjectOutputStream(output);
     }
 
 }

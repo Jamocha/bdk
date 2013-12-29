@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@ package com.jamocha.bdk.core.io;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.BufferedReader;
 import java.io.Reader;
 
@@ -25,30 +24,47 @@ import java.io.Reader;
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class BufferedReaderBuilder
-        implements Builder<BufferedReader> {
+public class BufferedReaderBuilder {
 
-    public static final Integer DEFAULT_SIZE = 8_192;
-    private Reader reader;
-    private Integer size = DEFAULT_SIZE;
-
-    @Required
-    public BufferedReaderBuilder reader(Reader reader) {
-        this.reader = reader;
-
-        return this;
+    public InputBuilder input(Reader input) {
+        return new InputBuilder(input);
     }
 
-    @Optional
-    public BufferedReaderBuilder size(Integer size) {
-        this.size = size;
+    public static class InputBuilder implements Builder<BufferedReader> {
 
-        return this;
+        private final Reader input;
+
+        private InputBuilder(Reader input) {
+            this.input = input;
+        }
+
+        @Optional("8192")
+        public SizeBuilder size(int size) {
+            return new SizeBuilder(input, size);
+        }
+
+        @Override
+        public BufferedReader build() {
+            return new BufferedReader(input);
+        }
+
     }
 
-    @Override
-    public BufferedReader build() {
-        return new BufferedReader(reader, size);
+    public static class SizeBuilder implements Builder<BufferedReader> {
+
+        private final Reader input;
+        private final Integer size;
+
+        private SizeBuilder(Reader input, int size) {
+            this.input = input;
+            this.size = size;
+        }
+
+        @Override
+        public BufferedReader build() {
+            return new BufferedReader(input, size);
+        }
+
     }
 
 }

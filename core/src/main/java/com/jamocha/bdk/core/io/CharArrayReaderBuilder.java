@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,49 +18,71 @@ package com.jamocha.bdk.core.io;
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Derived;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.io.CharArrayReader;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class CharArrayReaderBuilder
-        implements Builder<CharArrayReader> {
+public class CharArrayReaderBuilder {
 
-    public static final Integer DEFAULT_OFFSET = 0;
-    private char[] buffer;
-    private Integer offset = DEFAULT_OFFSET;
-    private Integer length;
-
-    @Required
-    public CharArrayReaderBuilder buffer(char[] buffer) {
-        this.buffer = buffer;
-
-        return this;
+    public BufferBuilder buffer(char[] buffer) {
+        return new BufferBuilder(buffer);
     }
 
-    @Optional
-    public CharArrayReaderBuilder offset(int offset) {
-        this.offset = offset;
-
-        return this;
+    public BufferBuilder buffer(String buffer) {
+        return new BufferBuilder(buffer.toCharArray());
     }
 
-    @Derived("buffer.length")
-    public CharArrayReaderBuilder length(int length) {
-        this.length = length;
+    public static class BufferBuilder implements Builder<CharArrayReader> {
 
-        return this;
-    }
+        private final char[] buffer;
 
-    @Override
-    public CharArrayReader build() {
-        if (length == null) {
-            length = buffer.length;
+        private BufferBuilder(char[] buffer) {
+            this.buffer = buffer;
         }
 
-        return new CharArrayReader(buffer, offset, length);
+        @Optional("0")
+        public OffsetBuilder offset(int offset) {
+            return new OffsetBuilder(buffer, offset);
+        }
+
+        @Override
+        public CharArrayReader build() {
+            return new CharArrayReader(buffer);
+        }
+
+    }
+
+    public static class OffsetBuilder implements Builder<CharArrayReader> {
+
+        private final char[] buffer;
+        private final int offset;
+        private Integer length;
+
+        private OffsetBuilder(char[] buffer, int offset) {
+            this.buffer = buffer;
+            this.offset = offset;
+        }
+
+        @Optional
+        @Derived("buffer.length")
+        public OffsetBuilder length(int length) {
+            this.length = length;
+
+            return this;
+
+        }
+
+        @Override
+        public CharArrayReader build() {
+            if (length == null) {
+                length = buffer.length;
+            }
+
+            return new CharArrayReader(buffer, offset, length);
+        }
+
     }
 
 }

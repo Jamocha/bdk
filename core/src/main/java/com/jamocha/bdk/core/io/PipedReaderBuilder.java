@@ -27,8 +27,8 @@ import java.io.PipedWriter;
  */
 public class PipedReaderBuilder implements Builder<PipedReader> {
 
-    public WriterBuilder connect(PipedWriter writer) {
-        return new WriterBuilder(writer);
+    public OutputBuilder connect(PipedWriter output) {
+        return new OutputBuilder(output);
     }
 
     public SizeBuilder size(int size) {
@@ -43,43 +43,43 @@ public class PipedReaderBuilder implements Builder<PipedReader> {
     public static class SizeBuilder implements Builder<PipedReader> {
 
         private final Integer size;
-        private PipedWriter writer;
+        private PipedWriter output;
 
         private SizeBuilder(int size) {
             this.size = size;
         }
 
         @Optional("unconnected")
-        public SizeBuilder connect(PipedWriter writer) {
-            this.writer = writer;
+        public SizeBuilder connect(PipedWriter output) {
+            this.output = output;
 
             return this;
         }
 
         @Override
         public PipedReader build() throws IOException {
-            if (writer == null) {
+            if (output == null) {
                 return new PipedReader(size);
             }
 
-            return new PipedReader(writer, size);
+            return new PipedReader(output, size);
         }
 
     }
 
-    public static class WriterBuilder implements Builder<PipedReader> {
+    public static class OutputBuilder implements Builder<PipedReader> {
 
         public static final Integer DEFAULT_SIZE = 1_024;
 
-        private final PipedWriter writer;
+        private final PipedWriter output;
         private Integer size = DEFAULT_SIZE;
 
-        private WriterBuilder(PipedWriter writer) {
-            this.writer = writer;
+        private OutputBuilder(PipedWriter output) {
+            this.output = output;
         }
 
         @Optional("1024")
-        public WriterBuilder size(int size) {
+        public OutputBuilder size(int size) {
             this.size = size;
 
             return this;
@@ -87,7 +87,7 @@ public class PipedReaderBuilder implements Builder<PipedReader> {
 
         @Override
         public PipedReader build() throws IOException {
-            return new PipedReader(writer, size);
+            return new PipedReader(output, size);
         }
 
     }

@@ -30,15 +30,15 @@ import java.nio.charset.CharsetEncoder;
  */
 public class OutputStreamWriterBuilder {
 
-    public StreamBuilder output(OutputStream output) {
-        return new StreamBuilder(output);
+    public OutputBuilder output(OutputStream output) {
+        return new OutputBuilder(output);
     }
 
-    public static class StreamBuilder implements Builder<OutputStreamWriter> {
+    public static class OutputBuilder implements Builder<OutputStreamWriter> {
 
         private final OutputStream output;
 
-        public StreamBuilder(OutputStream output) {
+        public OutputBuilder(OutputStream output) {
             this.output = output;
         }
 

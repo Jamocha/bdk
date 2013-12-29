@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -26,31 +25,47 @@ import java.util.Collection;
  */
 public class ArrayListBuilder implements Builder<ArrayList> {
 
-    public static final Integer DEFAULT_CAPACITY = 10;
-    private Collection elements;
-    private Integer capacity = DEFAULT_CAPACITY;
-
-    @Optional
-    public ArrayListBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
-    @Optional
-    public ArrayListBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public ArrayList build() {
-        if (elements == null) {
-            return new ArrayList(capacity);
+        return new ArrayList();
+    }
+
+    public static class ElementsBuilder implements Builder<ArrayList> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
         }
 
-        return new ArrayList<>(elements);
+        @Override
+        public ArrayList build() {
+            return new ArrayList(elements);
+
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<ArrayList> {
+
+        private final int capacity;
+
+        private CapacityBuilder(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Override
+        public ArrayList build() {
+            return new ArrayList(capacity);
+        }
     }
 
 }

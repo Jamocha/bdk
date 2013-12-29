@@ -35,8 +35,8 @@ public class PrintWriterBuilder {
 
     public static final Boolean DEFAULT_AUTOFLUSH = false;
 
-    public WriterBuilder writer(Writer writer) {
-        return new WriterBuilder(writer);
+    public WriterBuilder output(Writer output) {
+        return new WriterBuilder(output);
     }
 
     public FileBuilder file(File file) {
@@ -47,17 +47,17 @@ public class PrintWriterBuilder {
         return new FileBuilder(new File(name));
     }
 
-    public StreamBuilder output(OutputStream output) {
-        return new StreamBuilder(output);
+    public OutputBuilder output(OutputStream output) {
+        return new OutputBuilder(output);
     }
 
     public static class WriterBuilder implements Builder<PrintWriter> {
 
         private Boolean autoflush = DEFAULT_AUTOFLUSH;
-        private final Writer writer;
+        private final Writer output;
 
-        private WriterBuilder(Writer writer) {
-            this.writer = writer;
+        private WriterBuilder(Writer output) {
+            this.output = output;
         }
 
         @Optional("false")
@@ -69,21 +69,21 @@ public class PrintWriterBuilder {
 
         @Override
         public PrintWriter build() {
-            return new PrintWriter(writer, autoflush);
+            return new PrintWriter(output, autoflush);
         }
     }
 
-    public static class StreamBuilder implements Builder<PrintWriter> {
+    public static class OutputBuilder implements Builder<PrintWriter> {
 
         private final OutputStream output;
         private Boolean autoflush = DEFAULT_AUTOFLUSH;
 
-        private StreamBuilder(OutputStream output) {
+        private OutputBuilder(OutputStream output) {
             this.output = output;
         }
 
         @Optional("false")
-        public StreamBuilder autoFlush() {
+        public OutputBuilder autoFlush() {
             this.autoflush = true;
 
             return this;

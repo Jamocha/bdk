@@ -30,15 +30,15 @@ import java.nio.charset.CharsetDecoder;
  */
 public class InputStreamReaderBuilder {
 
-    public StreamBuilder input(InputStream input) {
-        return new StreamBuilder(input);
+    public InputBuilder input(InputStream input) {
+        return new InputBuilder(input);
     }
 
-    public static class StreamBuilder implements Builder<InputStreamReader> {
+    public static class InputBuilder implements Builder<InputStreamReader> {
 
         private final InputStream input;
 
-        public StreamBuilder(InputStream input) {
+        public InputBuilder(InputStream input) {
             this.input = input;
         }
 

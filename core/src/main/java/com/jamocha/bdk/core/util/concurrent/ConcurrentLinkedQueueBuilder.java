@@ -16,7 +16,6 @@
 package com.jamocha.bdk.core.util.concurrent;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -26,22 +25,27 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class ConcurrentLinkedQueueBuilder implements Builder<ConcurrentLinkedQueue> {
 
-    private Collection elements;
-
-    @Optional
-    public ConcurrentLinkedQueueBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
     @Override
     public ConcurrentLinkedQueue build() {
-        if (elements == null) {
-            return new ConcurrentLinkedQueue();
-        }
-
-        return new ConcurrentLinkedQueue(elements);
+        return new ConcurrentLinkedQueue();
     }
 
+    public static class ElementsBuilder implements Builder<ConcurrentLinkedQueue> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
+        }
+
+        @Override
+        public ConcurrentLinkedQueue build() {
+            return new ConcurrentLinkedQueue(elements);
+        }
+
+    }
 }

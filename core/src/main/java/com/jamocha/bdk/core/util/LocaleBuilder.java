@@ -17,46 +17,47 @@ package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
 import com.jamocha.bdk.api.annotation.Optional;
-import com.jamocha.bdk.api.annotation.Required;
 import java.util.Locale;
 
 /**
  *
  * @author Sharmarke Aden <www.github.com/saden1>
  */
-public class LocaleBuilder implements Builder<Locale> {
+public class LocaleBuilder {
 
-    public static final String DEFAULT_COUNTRY = "";
-    public static final String DEFAULT_VARIANT = "";
-
-    private String language;
-    private String country = DEFAULT_COUNTRY;
-    private String variant = DEFAULT_VARIANT;
-
-    @Required
-    public LocaleBuilder language(String language) {
-        this.language = language;
-
-        return this;
+    public LanguageBuilder language(String language) {
+        return new LanguageBuilder(language);
     }
 
-    @Optional
-    public LocaleBuilder country(String country) {
-        this.country = country;
+    public static class LanguageBuilder implements Builder<Locale> {
 
-        return this;
+        public static final String DEFAULT_COUNTRY = "";
+        public static final String DEFAULT_VARIANT = "";
+        private final String language;
+        private String country = DEFAULT_COUNTRY;
+        private String variant = DEFAULT_VARIANT;
+
+        private LanguageBuilder(String language) {
+            this.language = language;
+        }
+
+        @Optional
+        public LanguageBuilder country(String country) {
+            this.country = country;
+
+            return this;
+        }
+
+        @Optional
+        public LanguageBuilder variant(String variant) {
+            this.variant = variant;
+
+            return this;
+        }
+
+        @Override
+        public Locale build() {
+            return new Locale(language, country, variant);
+        }
     }
-
-    @Optional
-    public LocaleBuilder variant(String variant) {
-        this.variant = variant;
-
-        return this;
-    }
-
-    @Override
-    public Locale build() {
-        return new Locale(language, country, variant);
-    }
-
 }

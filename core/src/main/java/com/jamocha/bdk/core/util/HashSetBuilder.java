@@ -26,40 +26,56 @@ import java.util.HashSet;
  */
 public class HashSetBuilder implements Builder<HashSet> {
 
-    public static final Integer DEFAULT_CAPACITY = 16;
-    public static final Float DEFAULT_FACTOR = 0.75f;
-    private Collection elements;
-    private Integer capacity = DEFAULT_CAPACITY;
-    private Float factor = DEFAULT_FACTOR;
-
-    @Optional
-    public HashSetBuilder elements(Collection elements) {
-        this.elements = elements;
-
-        return this;
+    public ElementsBuilder elements(Collection elements) {
+        return new ElementsBuilder(elements);
     }
 
-    @Optional
-    public HashSetBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
-    }
-
-    @Optional
-    public HashSetBuilder factor(float factor) {
-        this.factor = factor;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public HashSet build() {
-        if (elements == null) {
-            return new HashSet(capacity, factor);
+        return new HashSet();
+    }
+
+    public static class ElementsBuilder implements Builder<HashSet> {
+
+        private final Collection elements;
+
+        private ElementsBuilder(Collection elements) {
+            this.elements = elements;
         }
 
-        return new HashSet<>(elements);
+        @Override
+        public HashSet build() {
+            return new HashSet(elements);
+
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<HashSet> {
+
+        public static final Float DEFAULT_FACTOR = 0.75f;
+        private final int capacity;
+        private Float factor = DEFAULT_FACTOR;
+
+        private CapacityBuilder(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Optional("0.75")
+        public CapacityBuilder factor(float factor) {
+            this.factor = factor;
+
+            return this;
+        }
+
+        @Override
+        public HashSet build() {
+            return new HashSet(capacity, factor);
+        }
     }
 
 }

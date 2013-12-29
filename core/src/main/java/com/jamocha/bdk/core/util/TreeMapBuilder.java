@@ -16,8 +16,6 @@
 package com.jamocha.bdk.core.util;
 
 import com.jamocha.bdk.api.Builder;
-import com.jamocha.bdk.api.annotation.Alternate;
-import com.jamocha.bdk.api.annotation.Optional;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
@@ -29,44 +27,66 @@ import java.util.TreeMap;
  */
 public class TreeMapBuilder implements Builder<TreeMap> {
 
-    private Map entries;
-    private Comparator comparator;
-    private SortedMap sortedEntries;
-
-    @Alternate
-    @Optional
-    public TreeMapBuilder entries(Map entries) {
-        this.entries = entries;
-
-        return this;
+    public EntriesBuilder entries(Map entries) {
+        return new EntriesBuilder(entries);
     }
 
-    @Alternate
-    @Optional
-    public TreeMapBuilder entries(SortedMap entries) {
-        this.sortedEntries = entries;
-
-        return this;
+    public SortedBuilder entries(SortedMap entries) {
+        return new SortedBuilder(entries);
     }
 
-    @Optional
-    public TreeMapBuilder comparator(Comparator comparator) {
-        this.comparator = comparator;
-
-        return this;
+    public ComparatorBuilder comparator(Comparator comparator) {
+        return new ComparatorBuilder(comparator);
     }
 
     @Override
     public TreeMap build() {
-        if (entries != null) {
+        return new TreeMap();
+    }
+
+    public class EntriesBuilder implements Builder<TreeMap> {
+
+        private final Map entries;
+
+        private EntriesBuilder(Map entries) {
+            this.entries = entries;
+        }
+
+        @Override
+        public TreeMap build() {
             return new TreeMap(entries);
         }
 
-        if (sortedEntries != null) {
-            return new TreeMap(sortedEntries);
+    }
+
+    public class SortedBuilder implements Builder<TreeMap> {
+
+        private final SortedMap entries;
+
+        private SortedBuilder(SortedMap entries) {
+            this.entries = entries;
         }
 
-        return new TreeMap(comparator);
+        @Override
+        public TreeMap build() {
+            return new TreeMap(entries);
+        }
+
+    }
+
+    public class ComparatorBuilder implements Builder<TreeMap> {
+
+        private final Comparator comparator;
+
+        private ComparatorBuilder(Comparator comparator) {
+            this.comparator = comparator;
+        }
+
+        @Override
+        public TreeMap build() {
+            return new TreeMap(comparator);
+        }
+
     }
 
 }

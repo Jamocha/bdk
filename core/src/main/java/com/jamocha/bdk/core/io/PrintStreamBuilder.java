@@ -40,23 +40,23 @@ public class PrintStreamBuilder {
         return new FileBuilder(new File(name));
     }
 
-    public StreamBuilder output(OutputStream output) {
-        return new StreamBuilder(output);
+    public OutputBuilder output(OutputStream output) {
+        return new OutputBuilder(output);
     }
 
-    public static class StreamBuilder implements Builder<PrintStream> {
+    public static class OutputBuilder implements Builder<PrintStream> {
 
         public static final Boolean DEFAULT_AUTOFLUSH = false;
 
         private final OutputStream output;
         private Boolean autoflush = DEFAULT_AUTOFLUSH;
 
-        private StreamBuilder(OutputStream output) {
+        private OutputBuilder(OutputStream output) {
             this.output = output;
         }
 
         @Optional("false")
-        public StreamBuilder autoFlush() {
+        public OutputBuilder autoFlush() {
             this.autoflush = true;
 
             return this;

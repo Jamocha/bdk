@@ -26,41 +26,55 @@ import java.util.Map;
  */
 public class HashMapBuilder implements Builder<HashMap> {
 
-    public static final Integer DEFAULT_CAPACITY = 16;
-    public static final Float DEFAULT_FACTOR = 0.75f;
-
-    private Map entries;
-    private Integer capacity = DEFAULT_CAPACITY;
-    private Float factor = DEFAULT_FACTOR;
-
-    @Optional
-    public HashMapBuilder entries(Map entries) {
-        this.entries = entries;
-
-        return this;
+    public EntriesBuilder entries(Map entries) {
+        return new EntriesBuilder(entries);
     }
 
-    @Optional
-    public HashMapBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
-    }
-
-    @Optional
-    public HashMapBuilder factor(float factor) {
-        this.factor = factor;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public HashMap build() {
-        if (entries == null) {
-            return new HashMap(capacity, factor);
-        }
-
-        return new HashMap<>(entries);
+        return new HashMap();
     }
 
+    public static class EntriesBuilder implements Builder<HashMap> {
+
+        private final Map entries;
+
+        private EntriesBuilder(Map entries) {
+            this.entries = entries;
+        }
+
+        @Override
+        public HashMap build() {
+            return new HashMap(entries);
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<HashMap> {
+
+        public static final Float DEFAULT_FACTOR = 0.75f;
+
+        private final int capacity;
+        private Float factor = DEFAULT_FACTOR;
+
+        private CapacityBuilder(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Optional("0.75")
+        public CapacityBuilder factor(float factor) {
+            this.factor = factor;
+
+            return this;
+        }
+
+        @Override
+        public HashMap build() {
+            return new HashMap(capacity, factor);
+        }
+    }
 }

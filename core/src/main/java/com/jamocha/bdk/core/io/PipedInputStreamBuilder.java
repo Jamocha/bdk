@@ -27,8 +27,8 @@ import java.io.PipedOutputStream;
  */
 public class PipedInputStreamBuilder implements Builder<PipedInputStream> {
 
-    public StreamBuilder connect(PipedOutputStream writer) {
-        return new StreamBuilder(writer);
+    public OutputBuilder connect(PipedOutputStream output) {
+        return new OutputBuilder(output);
     }
 
     public SizeBuilder size(int size) {
@@ -43,43 +43,43 @@ public class PipedInputStreamBuilder implements Builder<PipedInputStream> {
     public static class SizeBuilder implements Builder<PipedInputStream> {
 
         private final Integer size;
-        private PipedOutputStream writer;
+        private PipedOutputStream output;
 
         private SizeBuilder(int size) {
             this.size = size;
         }
 
         @Optional("unconnected")
-        public SizeBuilder connect(PipedOutputStream writer) {
-            this.writer = writer;
+        public SizeBuilder connect(PipedOutputStream output) {
+            this.output = output;
 
             return this;
         }
 
         @Override
         public PipedInputStream build() throws IOException {
-            if (writer == null) {
+            if (output == null) {
                 return new PipedInputStream(size);
             }
 
-            return new PipedInputStream(writer, size);
+            return new PipedInputStream(output, size);
         }
 
     }
 
-    public static class StreamBuilder implements Builder<PipedInputStream> {
+    public static class OutputBuilder implements Builder<PipedInputStream> {
 
         public static final Integer DEFAULT_SIZE = 1_024;
 
-        private final PipedOutputStream writer;
+        private final PipedOutputStream output;
         private Integer size = DEFAULT_SIZE;
 
-        private StreamBuilder(PipedOutputStream writer) {
-            this.writer = writer;
+        private OutputBuilder(PipedOutputStream output) {
+            this.output = output;
         }
 
         @Optional("1024")
-        public StreamBuilder size(int size) {
+        public OutputBuilder size(int size) {
             this.size = size;
 
             return this;
@@ -87,7 +87,7 @@ public class PipedInputStreamBuilder implements Builder<PipedInputStream> {
 
         @Override
         public PipedInputStream build() throws IOException {
-            return new PipedInputStream(writer, size);
+            return new PipedInputStream(output, size);
         }
 
     }

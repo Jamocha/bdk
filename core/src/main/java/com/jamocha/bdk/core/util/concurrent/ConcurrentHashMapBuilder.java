@@ -26,50 +26,65 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConcurrentHashMapBuilder implements Builder<ConcurrentHashMap> {
 
-    public static final Integer DEFAULT_CAPACITY = 16;
-    public static final Float DEFAULT_FACTOR = 0.75f;
-    public static final Integer DEFAULT_LEVEL = 16;
-
-    private Map entries;
-    private Integer capacity = DEFAULT_CAPACITY;
-    private Float factor = DEFAULT_FACTOR;
-    private Integer level = DEFAULT_LEVEL;
-
-    @Optional
-    public ConcurrentHashMapBuilder entries(Map entries) {
-        this.entries = entries;
-
-        return this;
+    public EntriesBuilder entries(Map entries) {
+        return new EntriesBuilder(entries);
     }
 
-    @Optional
-    public ConcurrentHashMapBuilder capacity(int capacity) {
-        this.capacity = capacity;
-
-        return this;
-    }
-
-    @Optional
-    public ConcurrentHashMapBuilder factor(float factor) {
-        this.factor = factor;
-
-        return this;
-    }
-
-    @Optional
-    public ConcurrentHashMapBuilder level(int level) {
-        this.level = level;
-
-        return this;
+    public CapacityBuilder capacity(int capacity) {
+        return new CapacityBuilder(capacity);
     }
 
     @Override
     public ConcurrentHashMap build() {
-        if (entries == null) {
-            return new ConcurrentHashMap(capacity, factor, level);
+        return new ConcurrentHashMap();
+    }
+
+    public static class EntriesBuilder implements Builder<ConcurrentHashMap> {
+
+        private final Map entries;
+
+        private EntriesBuilder(Map entries) {
+            this.entries = entries;
         }
 
-        return new ConcurrentHashMap<>(entries);
+        @Override
+        public ConcurrentHashMap build() {
+            return new ConcurrentHashMap(entries);
+        }
+
+    }
+
+    public static class CapacityBuilder implements Builder<ConcurrentHashMap> {
+
+        public static final Float DEFAULT_FACTOR = 0.75f;
+        public static final Integer DEFAULT_LEVEL = 16;
+
+        private final int capacity;
+        private Float factor = DEFAULT_FACTOR;
+        private Integer level = DEFAULT_LEVEL;
+
+        private CapacityBuilder(int capacity) {
+            this.capacity = capacity;
+        }
+
+        @Optional("0.75")
+        public CapacityBuilder factor(float factor) {
+            this.factor = factor;
+
+            return this;
+        }
+
+        @Optional("16")
+        public CapacityBuilder level(int level) {
+            this.level = level;
+
+            return this;
+        }
+
+        @Override
+        public ConcurrentHashMap build() {
+            return new ConcurrentHashMap(capacity, factor, level);
+        }
     }
 
 }

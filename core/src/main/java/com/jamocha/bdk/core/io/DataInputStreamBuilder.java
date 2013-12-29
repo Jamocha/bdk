@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2013 Sharmarke Aden <www.github.com/saden1>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,18 +27,18 @@ import java.io.InputStream;
 public class DataInputStreamBuilder
         implements Builder<DataInputStream> {
 
-    private InputStream inputStream;
+    private InputStream input;
 
     @Required
-    public DataInputStreamBuilder input(InputStream inputStream) {
-        this.inputStream = inputStream;
+    public DataInputStreamBuilder input(InputStream input) {
+        this.input = input;
 
         return this;
     }
 
     @Override
     public DataInputStream build() {
-        return new DataInputStream(inputStream);
+        return new DataInputStream(input);
     }
 
 }
