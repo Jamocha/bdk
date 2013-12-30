@@ -49,7 +49,6 @@ public class ArrayListBuilder implements Builder<ArrayList> {
         @Override
         public ArrayList build() {
             return new ArrayList(elements);
-
         }
 
     }
